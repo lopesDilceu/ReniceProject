@@ -1,6 +1,16 @@
 @extends('layouts.head')
 @section('titulo', 'Cadastro')
 
+@push('style')
+<style>
+    
+    body{
+      font-family: Akkurat-Mono, monospace;
+    }
+    
+</style>
+@endpush
+
 @section('main')
 
 <main class="container-sm container-md container-lg p-5 text-center mt-3 mb-3">
@@ -50,7 +60,7 @@
         <input type="password" class="form-control mb-4" id="senha" placeholder="Senha">
         <div class="d-grid d-md-flex gap-2 justify-content-md-end">
             <button type="button" class="btn btn-outline-secondary" id="voltar">Voltar </button>
-            <button class="btn btn-indigo" type="submit">Cadastrar</button>
+            <button class="w-80 btn btn-lg btn-dark" type="submit">Cadastrar</button>
         </div>
         <p class="mt-3 mb-1 text-muted">&copy; <a href="https://github.com/lopesDilceu" class="text-decoration-none text-body-secondary">2024 - Dilceu</a></p>
     </form>

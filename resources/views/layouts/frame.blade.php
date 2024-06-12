@@ -2,27 +2,33 @@
 
 @push('style')
 <style>
+    
+    body{
+      font-family: Akkurat-Mono, monospace;
+    }
+
     .home-container {
         position: relative;
     }
 
     .home {
-        position: absolute;
-        top: 50%;
-        right: 10px;
-        transform: translateY(-50%);
-        background-color: rgba(255, 255, 255, 0.96); /* Cor de fundo semi-transparente */
-        padding: 10px;
-        border-radius: 5px;
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      background-color: rgba(255, 255, 255, 0.96); /* Cor de fundo semi-transparente */
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); /* Sombra adicionada */
     }
 
     .home-in {
-        position: absolute;
-        bottom: 10px; /* Posiciona o elemento a 10px do fundo da div */
-        right: 4px;  /* Posiciona o elemento a 10px da direita da div */
-        background-color: rgba(255, 255, 255, 0); /* Cor de fundo semi-transparente */
-        padding: 10px;
-        border-radius: 10px;
+      position: absolute;
+      bottom: 10px; /* Posiciona o elemento a 10px do fundo da div */
+      right: 4px;  /* Posiciona o elemento a 10px da direita da div */
+      background-color: rgba(255, 255, 255, 0); /* Cor de fundo semi-transparente */
+      padding: 10px;
+      border-radius: 10px;
     }
 </style>
 @endpush
@@ -32,7 +38,7 @@
 @section('main')
 
 
-  <header class="p-3 mb-3 border-bottom h-25">
+  <header class="p-1 mb-3 border-bottom h-25">
       <nav class="navbar navbar-expand-lg">
         <div class="container">
           <a href="/" class="d-flex align-items-center me-2 mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
@@ -44,13 +50,13 @@
           <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav me-auto my-2 my-lg-0">
               <li class="nav-item">
-                <a class="nav-link @yield('home')" href="{{ route('home') }}">Home</a>
+                <a class="nav-link @yield('home')" href="{{ route('home') }}" style="font-family: Akkurat-Mono, monospace;">HOME</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link @yield('produtos')" href="{{ route('produtos') }}">Produtos</a>
+                <a class="nav-link @yield('produtos')" href="{{ route('produtos') }}" style="font-family: Akkurat-Mono, monospace;">PRODUTOS</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link  @yield('sobre')" href="{{ route('sobre') }}">Sobre</a>
+                <a class="nav-link  @yield('sobre')" href="{{ route('sobre') }}" style="font-family: Akkurat-Mono, monospace;">SOBRE O PROJETO</a>
               </li>
             </ul>
             <div class="d-flex justify-content-center">
@@ -67,7 +73,7 @@
                   <img src="{{ asset('images/perfil.png')}}" alt="perfil" width="30" height="30">
                 </a>
                 <ul class="dropdown-menu text-small">
-                  <li><a class="dropdown-item" href="{{route('usuarios.login')}}">Entrar</a></li>
+                  <li><a class="dropdown-item" href="{{route('usuarios.login')}}" style="font-family: Akkurat-Mono, monospace;">ENTRAR</a></li>
                 </ul>
               </div>
             </div>
@@ -82,14 +88,14 @@
   
   <footer class="border-top">
       <div class="container d-flex flex-wrap justify-content-between align-items-center py-1 my-4">
-          <p class="col-md-4 mb-0 text-body-secondary">&copy; 2024 - <a href="https://github.com/lopesDilceu" target="_blank" class="text-decoration-none text-body-secondary">Dilceu Lopes</a></p>
+          <p class="col-md-4 mb-0 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">&copy; 2024 - <a href="https://github.com/lopesDilceu" target="_blank" class="text-decoration-none text-body-secondary">Dilceu Lopes</a></p>
           <a href="{{ route('home') }}" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
               <img src="{{ asset('images/logo/renice-icon.png')}}" alt="renice-icon" width="60" height="60">
           </a>
           <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="{{ route('home') }}" class="nav-link px-2 text-body-secondary">Home</a></li>
-            <li class="nav-item"><a href="{{ route('sobre') }}" class="nav-link px-2 text-body-secondary">Sobre</a></li>
-            <li class="nav-item"><a href="{{ route('adm.home')}}" class="nav-link px-2 text-body-secondary">Administração</a></li>
+            <li class="nav-item"><a href="{{ route('home') }}" class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">HOME</a></li>
+            <li class="nav-item"><a href="{{ route('sobre') }}" class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">SOBRE O PROJETO</a></li>
+            <li class="nav-item"><a href="{{ route('adm.home')}}" class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">ADM</a></li>
           </ul>
       </div>
   </footer>
