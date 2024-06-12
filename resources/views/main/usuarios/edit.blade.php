@@ -1,4 +1,5 @@
 @extends('layouts.head')
+@include('layouts.frame')
 @section('titulo', 'Cadastro')
 
 @push('style')

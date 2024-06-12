@@ -16,7 +16,7 @@
 <main class="container-sm container-md container-lg p-5 text-center mt-3 mb-3">
     <form class="form-register">
         <a href="{{ route('home') }}" class="link-body-emphasis text-decoration-none">
-            <img class="mb-1" src="images/logo/renice-logo.png" alt="renice-logo" width="300" height="300">
+            <img src="{{asset('images/logo/renice-logo.png')}}" alt="renice-logo" width="300" height="300">
         </a>
         <h1 class="h3 mb-2">CADASTRO</h1>
         <h2 class="h5 text-start">Dados Pessoais</h2>
@@ -69,7 +69,7 @@
 <script>
     document.getElementById('voltar').addEventListener('click', function(event) {
         event.preventDefault();
-        window.location.href = '{{ route('home') }}';
+        window.location.href = '{{ route('usuarios.login') }}';
     });
 </script>
 

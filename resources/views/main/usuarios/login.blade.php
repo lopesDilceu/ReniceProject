@@ -16,7 +16,7 @@
 <main class="form-signin text-center">
   <form class="">
     <a href="{{ route('home') }}" class="link-body-emphasis text-decoration-none">
-      <img class="mb-2" src="images/logo/renice-logo.png" alt="renice-logo" width="300" height="300">
+      <img class="mb-2" src="{{asset('images/logo/renice-logo.png')}}" alt="renice-logo" width="300" height="300">
     </a>
     <h3 class="h3 mb-3">LOGIN</h3>
 
@@ -34,9 +34,19 @@
         <input type="checkbox" value="remember-me"> Lembrar de mim
       </label>
     </div>
-    <button class="w-80 btn btn-lg btn-dark" type="submit">Entrar</button>
+    <div >
+      <button type="button" class="w-80 btn btn-lg btn-outline-secondary" id="voltar">Voltar </button>
+      <button class="w-80 btn btn-lg btn-dark" type="submit">Entrar</button>
+    </div>
     <p class="mt-3">Não tem cadastro? <a class="text-indigo text-body-secondary text-decoration-none" href="{{ route('usuarios.cadastro') }}">Cadastre-se</a></p>
     <p class="mt-3 mb-3 text-muted">&copy; <a href="https://github.com/lopesDilceu" class="text-decoration-none text-body-secondary">2024 - Dilceu</a></p>
   </form>
+
+  <script>
+    document.getElementById('voltar').addEventListener('click', function(event) {
+        event.preventDefault();
+        window.location.href = '{{ route('home') }}';
+    });
+</script>
 </main>
 

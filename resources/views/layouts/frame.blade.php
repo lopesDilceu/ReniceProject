@@ -30,6 +30,19 @@
       padding: 10px;
       border-radius: 10px;
     }
+
+    /* Fixa o cabeçalho da tabela */
+.table-responsive {
+    position: relative;
+    overflow: auto;
+}
+
+.table thead th {
+    position: sticky;
+    top: 0;
+    background-color: white; /* Cor de fundo do cabeçalho */
+    z-index: 1;
+}
 </style>
 @endpush
 
