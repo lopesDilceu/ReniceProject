@@ -91,7 +91,15 @@
                   <img src="{{ asset('images/perfil.png')}}" alt="perfil" width="30" height="30">
                 </a>
                 <ul class="dropdown-menu text-small">
-                  <li><a class="dropdown-item" href="{{route('usuarios.login')}}" style="font-family: Akkurat-Mono, monospace;">ENTRAR</a></li>
+                    @if(auth()->check())
+                        <!-- Se o usuário estiver autenticado, exibe o menu de opções da conta -->
+                        <li><a class="dropdown-item" href="{{ route('usuarios.show') }}">Minha Conta</a></li>
+                        <li><a class="dropdown-item" href="{{ route('usuarios.minhas-compras') }}">Minhas Compras</a></li>
+                        <li><a class="dropdown-item" href="{{ route('logout') }}">Sair</a></li>
+                    @else
+                        <!-- Se o usuário não estiver autenticado, exibe o menu de login -->
+                        <li><a class="dropdown-item" href="{{ route('usuarios.login') }}">ENTRAR</a></li>
+                    @endif
                 </ul>
               </div>
             </div>
@@ -111,10 +119,15 @@
               <img src="{{ asset('images/logo/renice-icon.png')}}" alt="renice-icon" width="60" height="60">
           </a> -->
           <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="{{ route('home') }}" class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">HOME</a></li>
-            <li class="nav-item"><a href="{{ route('sobre') }}" class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">SOBRE O PROJETO</a></li>
-            <li class="nav-item"><a href="{{ route('adm.home')}}" class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">ADM</a></li>
-          </ul>
+          <li class="nav-item"><a href="{{ route('home') }}" class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">HOME</a></li>
+          <li class="nav-item"><a href="{{ route('sobre') }}" class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">SOBRE O PROJETO</a></li>
+          @auth
+              @if(auth()->user()->isAdmin())<!-- Verificar como funciona a função isAdmin()-->
+                  <!-- Verifica se o usuário é um administrador -->
+                  <li class="nav-item"><a href="{{ route('adm.home')}}" class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">ADM</a></li>
+              @endif
+          @endauth
+      </ul>
       </div>
   </footer>
 
