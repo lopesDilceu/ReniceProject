@@ -104,9 +104,9 @@
   <footer class="border-top">
       <div class="container d-flex flex-wrap justify-content-between align-items-center py-1 my-4">
           <p class="col-md-4 mb-0 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">&copy; 2024 - <a href="https://github.com/lopesDilceu" target="_blank" class="text-decoration-none text-body-secondary">Dilceu Lopes</a></p>
-          <a href="{{ route('home') }}" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+          <!-- <a href="{{ route('home') }}" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
               <img src="{{ asset('images/logo/renice-icon.png')}}" alt="renice-icon" width="60" height="60">
-          </a>
+          </a> -->
           <ul class="nav col-md-4 justify-content-end">
             <li class="nav-item"><a href="{{ route('home') }}" class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">HOME</a></li>
             <li class="nav-item"><a href="{{ route('sobre') }}" class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">SOBRE O PROJETO</a></li>
