@@ -2,14 +2,14 @@
 
 @extends('layouts.frame')
 @section('content')
-@include('layouts.components.produto-modal')
+@include('layouts.components.nova-compra-modal')
 <div class="text-center">
     <h1 class="h1 mb-4">COMPRAS</h1>
 </div>
 <div class="container mb-4">
     <div class="d-flex justify-content-between mb-3">
         <button class="btn btn-outline-secondary" onclick="window.history.back();">Voltar</button>
-        <button class="btn btn-outline-primary" onclick="window.location.href='nova-compra.html';">Nova Compra</button>
+        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#nova-compra-modal">Nova Compra</button>
     </div>
     <div class="table-responsive" style="height: 620px; overflow-y: auto;">
         <table class="table table-striped">
