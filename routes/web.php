@@ -20,6 +20,14 @@ Route::prefix('usuarios')->group(function () {
         return view('main.usuarios.create');
     })->name('usuarios.cadastro');
 
+    Route::get('/editar', function () {
+        return view('main.usuarios.edit');
+    })->name('usuarios.edit');
+
+    Route::get('/show', function () {
+        return view('main.usuarios.show');
+    })->name('usuarios.show');
+
     Route::get('/pagamento', function () {
         return view('main.usuarios.venda.create');
     })->name('usuarios.pagamento');
@@ -58,5 +66,5 @@ Route::prefix('adm')->group(function () {
 
 // Rotas relacionadas aos produtos
 Route::get('/produtos', function () {
-    return view('adm.produtos.home');
+    return view('main.home-produtos');
 })->name('produtos');

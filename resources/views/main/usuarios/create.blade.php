@@ -16,7 +16,7 @@
 <main class="container-sm container-md container-lg p-5 text-center mt-3 mb-3">
     <form class="form-register">
         <a href="{{ route('home') }}" class="link-body-emphasis text-decoration-none">
-            <img src="{{asset('images/logo/renice-logo.png')}}" alt="renice-logo" width="300" height="300">
+            <img src="{{asset('images/logo/renice-logo-side.png')}}" alt="renice-logo" width="30%">
         </a>
         <h1 class="h3 mb-2">CADASTRO</h1>
         <h2 class="h5 text-start">Dados Pessoais</h2>

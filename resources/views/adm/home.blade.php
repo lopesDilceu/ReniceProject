@@ -12,7 +12,7 @@
 <h1 class="h1 mb-4 text-center" style="font-family: Akkurat-Mono, monospace;">ADMINISTRAÇÃO</h1>
 <div class=" home-container text-center" style="height: 660px">
     <div class="d-flex justify-content-between mb-3">
-        <a href="{{ route('home')}}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
+        <a href="{{ route('usuarios.show')}}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
     </div>
     <div class="row" data-masonry='{"percentPosition": true }'>
         <div class="col-sm-6 col-lg-4 mb-4 ">
