@@ -1,4 +1,5 @@
-@section('titulo', 'Home')
+@section('titulo', 'Administração')
+
 
 @extends('layouts.frame')
 @section('content')
@@ -10,7 +11,7 @@
 <div class="container mb-4">
     <div class="d-flex justify-content-between mb-3">
         <button class="btn btn-outline-secondary" onclick="window.history.back();">Voltar</button>
-        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#novo-usuario-modal">Novo Usuário</button>
+        <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#novo-usuario-modal">Novo Usuário</button>
     </div>
     <div class="table-responsive" style="height: 620px; overflow-y: auto;">
         <table class="table table-striped ">

@@ -10,6 +10,10 @@ Route::get('/sobre', function () {
     return view('main.sobre');
 })->name('sobre');
 
+Route::get('/avaliacoes', function () {
+    return view('main.avaliacoes');
+})->name('avaliacoes');
+
 // Rotas relacionadas aos usuários
 Route::prefix('usuarios')->group(function () {
     Route::get('/login', function () {
@@ -28,9 +32,17 @@ Route::prefix('usuarios')->group(function () {
         return view('main.usuarios.show');
     })->name('usuarios.show');
 
+    Route::get('/carrinho', function () {
+        return view('main.usuarios.carrinho');
+    })->name('usuarios.carrinho');
+
     Route::get('/pagamento', function () {
-        return view('main.usuarios.venda.create');
+        return view('main.usuarios.pagamento');
     })->name('usuarios.pagamento');
+
+    Route::get('/minhas-compras', function () {
+        return view('main.usuarios.minhas-compras');
+    })->name('usuarios.minhas-compras');
 });
 
 // Rotas relacionadas à área administrativa

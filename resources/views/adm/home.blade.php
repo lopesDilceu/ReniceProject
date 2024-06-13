@@ -1,4 +1,5 @@
-@section('titulo', 'Home')
+@section('titulo', 'Administração')
+
 
 @extends('layouts.frame')
 
@@ -7,7 +8,7 @@
 
 @endpush
 
-@section('home', 'active')
+
 @section('content')
 <h1 class="h1 mb-4 text-center" style="font-family: Akkurat-Mono, monospace;">ADMINISTRAÇÃO</h1>
 <div class=" home-container text-center" style="height: 660px">

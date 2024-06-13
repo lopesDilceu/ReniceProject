@@ -1,8 +1,8 @@
 
-@section('titulo', 'Home')
-
-  @extends('layouts.frame')
-  @section('produtos', 'active')
+@section('titulo', 'Produtos')
+@section('produtos', 'active')
+@extends('layouts.frame')
+  
   @section('content')
   @include('layouts.components.produto-modal')
     <h1 class="h1 mb-4">PRODUTOS</h1>

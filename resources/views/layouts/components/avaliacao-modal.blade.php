@@ -52,7 +52,6 @@
                 </div>
             </div>
             <div class="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
-                <button type="button" class="btn btn-lg btn-indigo">Editar</button>
                 <button type="button" class="btn btn-lg btn-outline-secondary" data-bs-dismiss="modal">Fechar</button>
             </div>
         </div>

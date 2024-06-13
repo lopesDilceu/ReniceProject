@@ -42,3 +42,22 @@
         </div>
     </div>
 </div>
+
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.getElementById('saveNovaCompra').addEventListener('click', function() {
+            const novaCompra = {
+                codigoProduto: document.getElementById('produtoCodigo').value,
+                quantidade: document.getElementById('quantidade').value,
+                precoUnitario: document.getElementById('precoUnitario').value
+            };
+
+            console.log('Nova Compra:', novaCompra);
+            // Aqui você pode adicionar o código para enviar os dados para o servidor
+
+            // Fechar o modal após salvar
+            const novaCompraModal = new bootstrap.Modal(document.getElementById('nova-compra-modal'));
+            novaCompraModal.hide();
+        });
+    });
+</script> -->

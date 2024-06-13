@@ -69,6 +69,9 @@
                 <a class="nav-link @yield('produtos')" href="{{ route('produtos') }}" style="font-family: Akkurat-Mono, monospace;">PRODUTOS</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link  @yield('avaliacoes')" href="{{ route('avaliacoes') }}" style="font-family: Akkurat-Mono, monospace;">AVALIAÇÕES</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link  @yield('sobre')" href="{{ route('sobre') }}" style="font-family: Akkurat-Mono, monospace;">SOBRE O PROJETO</a>
               </li>
             </ul>
@@ -81,7 +84,7 @@
                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 </div>
               </form> -->
-              <a class="nav-link  @yield('sobre')" href="{{ route('sobre') }}" style="font-family: Akkurat-Mono, monospace; margin-right: 30px;">CARRINHO</a>
+              <a class="nav-link " href="{{ route('usuarios.carrinho') }}" style="font-family: Akkurat-Mono, monospace; margin-right: 30px;">CARRINHO</a>
               <div class="dropdown text-end">
                 
                 <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

@@ -1,4 +1,5 @@
-@section('titulo', 'Home')
+@section('titulo', 'Administração')
+
 
 @extends('layouts.frame')
 @section('content')
@@ -9,7 +10,7 @@
 <div class="container mb-4">
     <div class="d-flex justify-content-between mb-3">
         <button class="btn btn-outline-secondary" onclick="window.history.back();">Voltar</button>
-        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#nova-compra-modal">Nova Compra</button>
+        <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#nova-compra-modal">Nova Compra</button>
     </div>
     <div class="table-responsive" style="height: 620px; overflow-y: auto;">
         <table class="table table-striped">
@@ -34,9 +35,6 @@
                     <td>R$ 10,00</td>
                     <td>2024-06-12 10:30:00</td>
                     <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
@@ -53,9 +51,6 @@
                     <td>R$ 10,00</td>
                     <td>2024-06-12 10:30:00</td>
                     <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
@@ -72,9 +67,6 @@
                     <td>R$ 10,00</td>
                     <td>2024-06-12 10:30:00</td>
                     <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
@@ -91,9 +83,6 @@
                     <td>R$ 10,00</td>
                     <td>2024-06-12 10:30:00</td>
                     <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
@@ -110,9 +99,6 @@
                     <td>R$ 10,00</td>
                     <td>2024-06-12 10:30:00</td>
                     <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}

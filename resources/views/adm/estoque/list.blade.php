@@ -1,4 +1,5 @@
-@section('titulo', 'Home')
+@section('titulo', 'Administração')
+
 
 @extends('layouts.frame')
 @section('content')

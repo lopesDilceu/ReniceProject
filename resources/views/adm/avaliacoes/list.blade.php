@@ -1,4 +1,4 @@
-@section('titulo', 'Home')
+@section('titulo', 'Administração')
 
 @extends('layouts.frame')
 @section('content')
@@ -31,7 +31,6 @@
                     <td>
                         <button class="btn btn-secondary" data-bs-toggle="modal"
                             data-bs-target="#avaliacao-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
@@ -48,7 +47,6 @@
                     <td>
                         <button class="btn btn-secondary" data-bs-toggle="modal"
                             data-bs-target="#avaliacao-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
@@ -65,7 +63,6 @@
                     <td>
                         <button class="btn btn-secondary" data-bs-toggle="modal"
                             data-bs-target="#avaliacao-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
@@ -82,7 +79,6 @@
                     <td>
                         <button class="btn btn-secondary" data-bs-toggle="modal"
                             data-bs-target="#avaliacao-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
@@ -99,7 +95,6 @@
                     <td>
                         <button class="btn btn-secondary" data-bs-toggle="modal"
                             data-bs-target="#avaliacao-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
@@ -116,7 +111,6 @@
                     <td>
                         <button class="btn btn-secondary" data-bs-toggle="modal"
                             data-bs-target="#avaliacao-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
