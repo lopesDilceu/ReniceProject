@@ -9,9 +9,11 @@
 
 @section('home', 'active')
 @section('content')
-<a href="{{ route('home')}}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
 <h1 class="h1 mb-4 text-center" style="font-family: Akkurat-Mono, monospace;">ADMINISTRAÇÃO</h1>
-<div class=" home-container text-center">
+<div class=" home-container text-center" style="height: 660px">
+    <div class="d-flex justify-content-between mb-3">
+        <a href="{{ route('home')}}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
+    </div>
     <div class="row" data-masonry='{"percentPosition": true }'>
         <div class="col-sm-6 col-lg-4 mb-4 ">
             <div class="card shadow-sm ">
@@ -68,7 +70,7 @@
                 <div class="card-body">
                     <div class="d-flex gap-2 justify-content-center">
 
-                    <a href="{{ route('adm.produtos.list') }}" class="btn btn-outline-secondary">PRODUTOS</a>
+                        <a href="{{ route('adm.produtos.list') }}" class="btn btn-outline-secondary">PRODUTOS</a>
                     </div>
 
                 </div>
@@ -83,7 +85,7 @@
                 <div class="card-body">
                     <div class="d-flex gap-2 justify-content-center">
 
-                    <a href="{{ route('adm.usuarios.list') }}" class="btn btn-outline-secondary">USUÁRIOS</a>
+                        <a href="{{ route('adm.usuarios.list') }}" class="btn btn-outline-secondary">USUÁRIOS</a>
                     </div>
 
                 </div>
@@ -98,7 +100,7 @@
                 <div class="card-body">
                     <div class="d-flex gap-2 justify-content-center">
 
-                        <a href="{{ route('adm.estoque.list') }}" class="btn btn-outline-secondary">VENDAS</a>
+                        <a href="{{ route('adm.vendas.list') }}" class="btn btn-outline-secondary">VENDAS</a>
                     </div>
 
                 </div>

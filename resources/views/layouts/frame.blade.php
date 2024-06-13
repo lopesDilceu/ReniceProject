@@ -81,7 +81,9 @@
                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 </div>
               </form> -->
+              <a class="nav-link  @yield('sobre')" href="{{ route('sobre') }}" style="font-family: Akkurat-Mono, monospace; margin-right: 30px;">CARRINHO</a>
               <div class="dropdown text-end">
+                
                 <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src="{{ asset('images/perfil.png')}}" alt="perfil" width="30" height="30">
                 </a>

@@ -69,7 +69,7 @@
 <script>
     document.getElementById('voltar').addEventListener('click', function(event) {
         event.preventDefault();
-        window.location.href = '{{ route('usuarios.login') }}';
+        window.location.href = '{{ route('usuarios.login')}}';
     });
 </script>
 
