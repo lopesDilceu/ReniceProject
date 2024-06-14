@@ -1,4 +1,4 @@
-@section('titulo', 'Administração')
+@section('titulo', 'Estoque')
 
 
 @extends('layouts.frame')
@@ -27,11 +27,16 @@
                     <tr>
                         <td>00{{ $estoque->es_id_produto }}</td>
                         <td>{{ $estoque->es_nome_produto }}</td>
-                        <td>00{{ $estoque->es_quantidade}}</td>
-                        @foreach ($produtos as $produto)
-                            <td>{{$produto->pr_preco}}</td>
-                        @endforeach
-                        <td>{{ $estoque->es_data_atualizacao}}</td>
+                        <td>00{{ $estoque->es_quantidade }}</td>
+                        <td>
+                            @foreach ($produtos as $produto)
+                                @if ($produto->pr_id === $estoque->es_id_produto)
+                                    {{ $produto->pr_preco }}
+                                    @break
+                                @endif
+                            @endforeach
+                        </td>
+                        <td>{{ $estoque->es_data_atualizacao }}</td>
                     </tr>
                 @empty
                 @endforelse

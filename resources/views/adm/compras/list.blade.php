@@ -1,3 +1,5 @@
+@section('titulo', 'Compras')
+
 @extends('layouts.frame')
 @section('content')
 @include('layouts.components.nova-compra-modal')

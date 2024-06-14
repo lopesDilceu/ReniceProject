@@ -31,28 +31,17 @@
                 </div>
             </div>
             <div class="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
-                <button type="button" class="btn btn-lg btn-dark" id="saveEditProduto">Salvar</button>
+            <form id="formEditarProduto" action="/adm/produtos/{{ $produtos->id }}" method="POST">
+                @csrf
+                @method('PUT')
+                <!-- Outros campos do formulário aqui -->
+                <button type="submit" class="btn btn-lg btn-dark">Salvar</button>
+            </form>
+
+
                 <button type="button" class="btn btn-lg btn-outline-secondary" data-bs-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        document.getElementById('saveEditProduto').addEventListener('click', function() {
-            const editedProduto = {
-                nome: document.getElementById('editNomeProduto').value,
-                descricao: document.getElementById('editDescricaoProduto').value,
-                preco: document.getElementById('editPrecoProduto').value
-            };
-
-            console.log('Produto Editado:', editedProduto);
-            // Aqui você pode adicionar o código para enviar os dados editados para o servidor
-
-            // Fechar o modal após salvar
-            const editProdutoModal = new bootstrap.Modal(document.getElementById('edit-produto-modal'));
-            editProdutoModal.hide();
-        });
-    });
-</script> -->
