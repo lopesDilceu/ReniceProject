@@ -8,10 +8,10 @@
     <h1 class="h1 mb-4">VENDAS</h1>
 </div>
 <div class="container mb-4">
-<div class="d-flex justify-content-between mb-3">
-        <button class="btn btn-outline-secondary" onclick="window.history.back();">Voltar</button>
+    <div class="d-flex justify-content-between mb-3">
+        <a href="{{route('adm.home')}}" class="btn btn-outline-secondary">Voltar</a>
         <button class="btn btn-outline-dark" onclick="window.location.href='nova-compra.html';">Nova Venda</button>
-</div>
+    </div>
     <div class="table-responsive" style="height: 620px; overflow-y: auto;">
         <table class="table table-striped">
             <thead class="thead-dark">

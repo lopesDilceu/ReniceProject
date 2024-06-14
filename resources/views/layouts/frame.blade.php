@@ -91,16 +91,26 @@
                   <img src="{{ asset('images/perfil.png')}}" alt="perfil" width="30" height="30">
                 </a>
                 <ul class="dropdown-menu text-small">
-                    @if(auth()->check())
-                        <!-- Se o usuário estiver autenticado, exibe o menu de opções da conta -->
-                        <li><a class="dropdown-item" href="{{ route('usuarios.show') }}">Minha Conta</a></li>
-                        <li><a class="dropdown-item" href="{{ route('usuarios.minhas-compras') }}">Minhas Compras</a></li>
-                        <li><a class="dropdown-item" href="{{ route('logout') }}">Sair</a></li>
-                    @else
-                        <!-- Se o usuário não estiver autenticado, exibe o menu de login -->
-                        <li><a class="dropdown-item" href="{{ route('usuarios.login') }}">ENTRAR</a></li>
-                    @endif
-                </ul>
+                  @auth 
+                  <!-- Verifica se o usuário está autenticado -->
+                      <!-- Exibe o menu de opções da conta -->
+                      
+
+                      <li><a class="dropdown-item" href="{{ route('usuarios.minhas-compras') }}">Minhas Compras</a></li>
+                      <li>
+                          <!-- Formulário para fazer logout -->
+                          <form action="{{ route('usuarios.logout.submit') }}" method="POST">
+                              @csrf <!-- Adiciona o token CSRF -->
+                              <button type="submit" class="dropdown-item">Sair</button>
+                          </form>
+                      </li>
+                  @else 
+                  <!-- Se o usuário não estiver autenticado -->
+                      <!-- Exibe o menu de login -->
+                      <li><a class="dropdown-item" href="{{ route('usuarios.login') }}">ENTRAR</a></li>
+                  @endauth
+              </ul>
+
               </div>
             </div>
           </div>
@@ -121,15 +131,16 @@
           <ul class="nav col-md-4 justify-content-end">
           <li class="nav-item"><a href="{{ route('home') }}" class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">HOME</a></li>
           <li class="nav-item"><a href="{{ route('sobre') }}" class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">SOBRE O PROJETO</a></li>
+
           @auth
-              @if(auth()->user()->isAdmin())<!-- Verificar como funciona a função isAdmin()-->
-                  <!-- Verifica se o usuário é um administrador -->
-                  <li class="nav-item"><a href="{{ route('adm.home')}}" class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">ADM</a></li>
+              @if(auth()->user()->us_adm == 1)
+                  <!-- Se o usuário é um administrador, exibe o menu ADM -->
+                  <li><a class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;" href="{{ route('adm.home') }}">ADM</a></li>
               @endif
           @endauth
+
       </ul>
       </div>
   </footer>
 
 @endsection
-

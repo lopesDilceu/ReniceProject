@@ -1,7 +1,13 @@
 <?php
 
+use App\Http\Controllers\CompraController;
+use App\Http\Controllers\EstoqueController;
+use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\UserController;
+use App\Models\Estoque;
 use Illuminate\Support\Facades\Route;
 
+// Rotas principais do site
 Route::get('/', function () {
     return view('main.home');
 })->name('home');
@@ -20,9 +26,13 @@ Route::prefix('usuarios')->group(function () {
         return view('main.usuarios.login');
     })->name('usuarios.login');
 
+    Route::post('/login', [UserController::class, 'login'])->name('usuarios.login.submit');
+
     Route::get('/cadastro', function () {
         return view('main.usuarios.create');
     })->name('usuarios.cadastro');
+
+    Route::post('/logout', [UserController::class, 'logout'])->name('usuarios.logout.submit');
 
     Route::get('/editar', function () {
         return view('main.usuarios.edit');
@@ -44,6 +54,8 @@ Route::prefix('usuarios')->group(function () {
         return view('main.usuarios.minhas-compras');
     })->name('usuarios.minhas-compras');
 });
+
+Route::resource('usuarios', UserController::class);
 
 // Rotas relacionadas à área administrativa
 Route::prefix('adm')->group(function () {
@@ -71,12 +83,18 @@ Route::prefix('adm')->group(function () {
         return view('adm.vendas.list');
     })->name('adm.vendas.list');
 
-    Route::get('/compras', function () {
-        return view('adm.compras.list');
-    })->name('adm.compras.list');
+    Route::get('/compras', [CompraController::class, 'index'])->name('adm.compras.list');
+    Route::post('/compras', [CompraController::class, 'store'])->name('adm.compras.store');
+    Route::delete('/compras/{co_id}', [CompraController::class, 'destroy'])->name('adm.compras.destroy');
+
+    Route::get('/estoque', [EstoqueController::class, 'index'])->name('adm.estoque.list');
+
+    Route::get('/produtos', [ProdutoController::class, 'index'])->name('adm.produtos.list');
+    Route::post('/produto', [ProdutoController::class, 'store'])->name('adm.produto.store');
+    Route::delete('/produtos/{pr_id}', [ProdutoController::class, 'destroy'])->name('adm.produtos.destroy');
 });
 
-// Rotas relacionadas aos produtos
+// Rota para listar produtos
 Route::get('/produtos', function () {
     return view('main.home-produtos');
 })->name('produtos');

@@ -1,17 +1,17 @@
-@section('titulo', 'Administração')
-
-
 @extends('layouts.frame')
 @section('content')
 @include('layouts.components.nova-compra-modal')
+
 <div class="text-center">
     <h1 class="h1 mb-4">COMPRAS</h1>
 </div>
+
 <div class="container mb-4">
     <div class="d-flex justify-content-between mb-3">
-        <button class="btn btn-outline-secondary" onclick="window.history.back();">Voltar</button>
+        <a href="{{route('adm.home')}}" class="btn btn-outline-secondary">Voltar</a>
         <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#nova-compra-modal">Nova Compra</button>
     </div>
+
     <div class="table-responsive" style="height: 620px; overflow-y: auto;">
         <table class="table table-striped">
             <thead class="thead-dark">
@@ -26,97 +26,29 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Exemplo de Produto 1 -->
+                @forelse($compras as $compra)
                 <tr>
-                    <td>001</td>
-                    <td>Produto 1</td>
-                    <td>10</td>
-                    <td>Tambasa</td>
-                    <td>R$ 10,00</td>
-                    <td>2024-06-12 10:30:00</td>
+                    <td>00{{ $compra->co_id }}</td>
+                    <td>00{{ $compra->co_id_produto }}</td>
+                    <td>00{{ $compra->co_quantidade }}</td>
+                    <td>{{ $compra->co_fornecedor }}</td>
+                    <td>R${{ $compra->co_preco_unitario }}</td>
+                    <td>{{ $compra->created_at }}</td>
                     <td>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                        </form>
+                    <form action="{{ route('adm.compras.destroy', $compra->co_id) }}" method="post" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger mb-1 mb-md-0" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                    </form>
+
+
                     </td>
                 </tr>
-                <tr>
-                    <td>001</td>
-                    <td>Produto 1</td>
-                    <td>10</td>
-                    <td>Tambasa</td>
-                    <td>R$ 10,00</td>
-                    <td>2024-06-12 10:30:00</td>
-                    <td>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>001</td>
-                    <td>Produto 1</td>
-                    <td>10</td>
-                    <td>Tambasa</td>
-                    <td>R$ 10,00</td>
-                    <td>2024-06-12 10:30:00</td>
-                    <td>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>001</td>
-                    <td>Produto 1</td>
-                    <td>10</td>
-                    <td>Tambasa</td>
-                    <td>R$ 10,00</td>
-                    <td>2024-06-12 10:30:00</td>
-                    <td>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>001</td>
-                    <td>Produto 1</td>
-                    <td>10</td>
-                    <td>Tambasa</td>
-                    <td>R$ 10,00</td>
-                    <td>2024-06-12 10:30:00</td>
-                    <td>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-                <!-- Exemplo de Produto 2 -->
-                
-                <!-- Pode adicionar mais linhas conforme necessário -->
+                @empty
+                @endforelse
             </tbody>
         </table>
     </div>
 </div>
-
-</div>
-
-
 
 @endsection

@@ -9,7 +9,7 @@
 </div>
 <div class="container mb-4">
     <div class="d-flex justify-content-between mb-3">
-        <button class="btn btn-outline-secondary" onclick="window.history.back();">Voltar</button>
+        <a href="{{route('adm.home')}}" class="btn btn-outline-secondary">Voltar</a>
     </div>
     <div class="table-responsive" style="height: 620px; overflow-y: auto;">
         <table class="table table-striped">
@@ -23,72 +23,18 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Exemplo de Produto 1 -->
-                <tr>
-                    <td>001</td>
-                    <td>Produto 1</td>
-                    <td>10</td>
-                    <td>R$ 10,00</td>
-                    <td>2024-06-12 10:30:00</td>
-                </tr>
-                <!-- Exemplo de Produto 2 -->
-                <tr>
-                    <td>002</td>
-                    <td>Produto 2</td>
-                    <td>15</td>
-                    <td>R$ 15,00</td>
-                    <td>2024-06-12 11:45:00</td>
-                </tr>
-                <!-- Exemplo de Produto 4 -->
-                <tr>
-                    <td>004</td>
-                    <td>Produto 4</td>
-                    <td>20</td>
-                    <td>R$ 20,00</td>
-                    <td>2024-06-12 13:20:00</td>
-                </tr>
-                <!-- Exemplo de Produto 5 -->
-                <tr>
-                    <td>005</td>
-                    <td>Produto 5</td>
-                    <td>20</td>
-                    <td>R$ 20,00</td>
-                    <td>2024-06-12 13:20:00</td>
-                </tr>
-                <!-- Exemplo de Produto 6 -->
-                <tr>
-                    <td>006</td>
-                    <td>Produto 6</td>
-                    <td>20</td>
-                    <td>R$ 20,00</td>
-                    <td>2024-06-12 13:20:00</td>
-                </tr>
-                <!-- Exemplo de Produto 7 -->
-                <tr>
-                    <td>007</td>
-                    <td>Produto 7</td>
-                    <td>20</td>
-                    <td>R$ 20,00</td>
-                    <td>2024-06-12 13:20:00</td>
-                </tr>
-                <!-- Exemplo de Produto 8 -->
-                <tr>
-                    <td>008</td>
-                    <td>Produto 8</td>
-                    <td>20</td>
-                    <td>R$ 20,00</td>
-                    <td>2024-06-12 13:20:00</td>
-                </tr>
-                <!-- Exemplo de Produto 1 -->
-                <tr>
-                    <td>001</td>
-                    <td>Produto 1</td>
-                    <td>10</td>
-                    <td>R$ 10,00</td>
-                    <td>2024-06-12 10:30:00</td>
-                </tr>
-
-                <!-- Pode adicionar mais linhas conforme necessário -->
+                @forelse($estoques as $estoque)
+                    <tr>
+                        <td>00{{ $estoque->es_id_produto }}</td>
+                        <td>{{ $estoque->es_nome_produto }}</td>
+                        <td>00{{ $estoque->es_quantidade}}</td>
+                        @foreach ($produtos as $produto)
+                            <td>{{$produto->pr_preco}}</td>
+                        @endforeach
+                        <td>{{ $estoque->es_data_atualizacao}}</td>
+                    </tr>
+                @empty
+                @endforelse
             </tbody>
         </table>
     </div>

@@ -9,6 +9,7 @@ class Produto extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'pr_id';
     protected $fillable = [
         'pr_nome',
         'pr_descricao',

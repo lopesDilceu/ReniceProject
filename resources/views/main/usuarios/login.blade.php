@@ -4,7 +4,7 @@
 @push('style')
 <style>
     
-    body{
+    body {
       font-family: Akkurat-Mono, monospace;
     }
     
@@ -14,18 +14,19 @@
 @section('main')
 
 <main class="form-signin text-center">
-  <form class="">
+  <form method="POST" action="{{ route('usuarios.login.submit') }}" class="needs-validation">
+    @csrf <!-- Adiciona o token CSRF para proteger o formulário contra ataques de CSRF -->
     <a href="{{ route('home') }}" class="link-body-emphasis text-decoration-none">
       <img class="mb-2" src="{{asset('images/logo/renice-logo.png')}}" alt="renice-logo" width="300" height="300">
     </a>
     <h3 class="h3 mb-3">LOGIN</h3>
 
     <div class="form-floating mb-2 container">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+      <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
       <label for="floatingInput" style="margin-left: 5px;">Email</label>
     </div>
     <div class="form-floating mb-2 container">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+      <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
       <label for="floatingPassword" style="margin-left: 5px;">Senha</label>
     </div>
 
@@ -45,8 +46,7 @@
   <script>
     document.getElementById('voltar').addEventListener('click', function(event) {
         event.preventDefault();
-        window.location.href = '{{ route('home') }}';
+        window.location.href = "{{ route('home') }}";
     });
 </script>
 </main>
-

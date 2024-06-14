@@ -10,7 +10,7 @@
 </div>
 <div class="container mb-4">
     <div class="d-flex justify-content-between mb-3">
-        <button class="btn btn-outline-secondary" onclick="window.history.back();">Voltar</button>
+        <a href="{{route('adm.home')}}" class="btn btn-outline-secondary">Voltar</a>
         <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#novo-produto-modal">Novo Produto</button>
     </div>
     <div class="table-responsive" style="height: 620px; overflow-y: auto;">
@@ -25,82 +25,27 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Exemplo de Produto 1 -->
+                @forelse($produtos as $produto)
                 <tr>
-                    <td>001</td>
-                    <td>Produto 1</td>
-                    <td>R$ 10,00</td>
-                    <td>2024-06-12 10:30:00</td>
+                    <td>00{{ $produto->pr_id }}</td>
+                    <td>{{ $produto->pr_nome }}</td>
+                    <td>R${{ $produto->pr_preco }}</td>
+                    <td>{{ $produto->pr_data_criacao }}</td>
                     <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#produto-modal">Ver</button>
-                        <button class="btn btn-dark" data-bs-toggle="modal"
-                            data-bs-target="#edit-produto-modal">Editar</button>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>001</td>
-                    <td>Produto 1</td>
-                    <td>R$ 10,00</td>
-                    <td>2024-06-12 10:30:00</td>
-                    <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#produto-modal">Ver</button>
-                        <button class="btn btn-dark" data-bs-toggle="modal"
-                            data-bs-target="#edit-produto-modal">Editar</button>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>001</td>
-                    <td>Produto 1</td>
-                    <td>R$ 10,00</td>
-                    <td>2024-06-12 10:30:00</td>
-                    <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#produto-modal">Ver</button>
-                        <button class="btn btn-dark" data-bs-toggle="modal"
-                            data-bs-target="#edit-produto-modal">Editar</button>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>001</td>
-                    <td>Produto 1</td>
-                    <td>R$ 10,00</td>
-                    <td>2024-06-12 10:30:00</td>
-                    <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#produto-modal">Ver</button>
-                        <button class="btn btn-dark" data-bs-toggle="modal"
-                            data-bs-target="#edit-produto-modal">Editar</button>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
+                    <button class="btn btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#dados-usuario-modal">Ver</button>
+                        <a href="#" class="btn btn-dark ">Editar</a>
+                    <form action="{{ route('adm.produtos.destroy', $produto->pr_id) }}" method="post" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger mb-1 mb-md-0" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                    </form>
 
 
-                <!-- Pode adicionar mais linhas conforme necessário -->
+                    </td>
+                </tr>
+                @empty
+                @endforelse
             </tbody>
         </table>
     </div>

@@ -9,6 +9,7 @@ class Estoque extends Model
 {
     use HasFactory;
 
+    protected $table = 'estoque';
     protected $fillable = [
         'es_id_produto',
         'es_nome_produto',

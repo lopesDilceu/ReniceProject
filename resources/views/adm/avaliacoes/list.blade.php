@@ -8,7 +8,7 @@
 </div>
 <div class="container mb-4">
     <div class="d-flex justify-content-between mb-3">
-        <button class="btn btn-outline-secondary" onclick="window.history.back();">Voltar</button>
+        <a href="{{route('adm.home')}}" class="btn btn-outline-secondary">Voltar</a>
     </div>
     <div class="table-responsive" style="height: 620px; overflow-y: auto;">
         <table class="table table-striped">
