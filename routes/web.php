@@ -91,10 +91,14 @@ Route::prefix('adm')->group(function () {
 
     Route::get('/produtos', [ProdutoController::class, 'index'])->name('adm.produtos.list');
     Route::post('/produto', [ProdutoController::class, 'store'])->name('adm.produto.store');
+    Route::put('/produtos/{pr_id?}', [ProdutoController::class, 'edit'])->name('adm.produto.edit');
     Route::delete('/produtos/{pr_id}', [ProdutoController::class, 'destroy'])->name('adm.produtos.destroy');
+
+    Route::get('/usuarios', [UserController::class, 'index'])->name('adm.usuarios.list');
+    // Route::post('/produto', [ProdutoController::class, 'store'])->name('adm.produto.store');
+    Route::delete('/usuarios/{pr_id}', [UserController::class, 'destroy'])->name('adm.usuarios.destroy');
 });
 
+
 // Rota para listar produtos
-Route::get('/produtos', function () {
-    return view('main.home-produtos');
-})->name('produtos');
+Route::get('/produtos', [ProdutoController::class, 'indexHome'])->name('produtos');

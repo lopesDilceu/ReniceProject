@@ -25,130 +25,27 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Exemplo de Produto 1 -->
+                @forelse($users as $user)
                 <tr>
-                    <td>001</td>
-                    <td>Fulano</td>
-                    <td>040.100.100-40</td>
-                    <td>fulano@dominio.com</td>
+                    <td>00{{ $user->us_id }}</td>
+                    <td>{{ $user->name}}</td>
+                    <td>{{ $user->us_cpf }}</td>
+                    <td>{{ $user->email }}</td>
                     <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
+                    <button class="btn btn-secondary" data-bs-toggle="modal"
                             data-bs-target="#dados-usuario-modal">Ver</button>
                         <a href="#" class="btn btn-dark ">Editar</a>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-                <!-- Exemplo de Produto 2 -->
-                <tr>
-                    <td>001</td>
-                    <td>Fulano</td>
-                    <td>040.100.100-40</td>
-                    <td>fulano@dominio.com</td>
-                    <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#dados-usuario-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>001</td>
-                    <td>Fulano</td>
-                    <td>040.100.100-40</td>
-                    <td>fulano@dominio.com</td>
-                    <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#dados-usuario-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>001</td>
-                    <td>Fulano</td>
-                    <td>040.100.100-40</td>
-                    <td>fulano@dominio.com</td>
-                    <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#dados-usuario-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>001</td>
-                    <td>Fulano</td>
-                    <td>040.100.100-40</td>
-                    <td>fulano@dominio.com</td>
-                    <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#dados-usuario-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>001</td>
-                    <td>Fulano</td>
-                    <td>040.100.100-40</td>
-                    <td>fulano@dominio.com</td>
-                    <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#dados-usuario-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>001</td>
-                    <td>Fulano</td>
-                    <td>040.100.100-40</td>
-                    <td>fulano@dominio.com</td>
-                    <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#dados-usuario-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
+                    <form action="{{ route('adm.usuarios.destroy', $user->us_id) }}" method="post" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger mb-1 mb-md-0" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                    </form>
 
 
-                <!-- Pode adicionar mais linhas conforme necessário -->
+                    </td>
+                </tr>
+                @empty
+                @endforelse
             </tbody>
         </table>
     </div>

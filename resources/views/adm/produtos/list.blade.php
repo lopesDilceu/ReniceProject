@@ -32,9 +32,10 @@
                     <td>R${{ $produto->pr_preco }}</td>
                     <td>{{ $produto->pr_data_criacao }}</td>
                     <td>
-                    <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#dados-usuario-modal">Ver</button>
-                        <a href="#" class="btn btn-dark ">Editar</a>
+                    <button class="btn btn-secondary ver-produto" data-bs-toggle="modal"
+                            data-bs-target="#produto-modal" data-id="{{$produto->pr_id}}">Ver</button>
+                    <button class="btn btn-dark edit-produto" data-bs-toggle="modal"
+                        data-bs-target="#edit-produto-modal" data-id="{{$produto->pr_id}}">Editar</button>
                     <form action="{{ route('adm.produtos.destroy', $produto->pr_id) }}" method="post" style="display: inline;">
                         @csrf
                         @method('DELETE')
@@ -52,6 +53,44 @@
 </div>
 </div>
 
+@push('script')
+    <script>
+        $('.edit-produto').on('click', function() {
+            const pr_id = $(this).data('id');
 
+            const produtos = @json($produtos);
+
+            let produto = produtos.filter(produto => produto.pr_id === pr_id)[0];
+
+            let modal = $('#edit-produto-modal');
+
+            let pr_nome = modal.find('#editNomeProduto').val(produto.pr_nome);
+
+            let pr_descricao = modal.find('#editDescricaoProduto').val(produto.pr_descricao);
+
+            let pr_preco = modal.find('#editPrecoProduto').val(produto.pr_preco);
+
+            let form = modal.find('form').attr('action', '{{ route('adm.produto.edit') }}/' + pr_id);
+        });
+
+        $('.ver-produto').on('click', function() {
+            const pr_id = $(this).data('id');
+
+            const produtos = @json($produtos);
+
+            let produto = produtos.filter(produto => produto.pr_id === pr_id)[0];
+
+            let modal = $('#produto-modal');
+
+            let pr_nome = modal.find('#NomeProduto').val(produto.pr_nome);
+
+            let pr_descricao = modal.find('#DescricaoProduto').val(produto.pr_descricao);
+
+            let pr_preco = modal.find('#PrecoProduto').val(produto.pr_preco);
+
+        });
+
+    </script>
+@endpush
 
 @endsection

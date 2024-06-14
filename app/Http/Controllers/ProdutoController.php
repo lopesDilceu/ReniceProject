@@ -17,6 +17,13 @@ class ProdutoController extends Controller
         return view('adm.produtos.list', compact('produtos'));
     }
 
+    public function indexHome()
+    {
+        //
+        $produtos = Produto::all(); 
+        return view('main.home-produtos', compact('produtos'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -37,7 +44,9 @@ class ProdutoController extends Controller
             'pr_preco'=>$request->pr_preco,
         ]);
 
-        return redirect()->route('adm.home')->with('success', 'Produto cadastrado com sucesso!');
+        toastr()->title('Sucesso')->success('Produto cadastrado com sucesso');
+
+        return redirect()->route('adm.produtos.list');
     }
 
     /**
@@ -51,9 +60,14 @@ class ProdutoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, string $id)
     {
         //
+        // $produto = Produto::find($id);
+        Produto::findOrFail($id)->update($request->all());
+        toastr()->success('Produto atualizado com sucesso!');
+        return back();
+
     }
 
     /**
@@ -75,8 +89,10 @@ class ProdutoController extends Controller
 
                 // Exclua a compra
                 $produto->delete();
+
+                toastr()->success('Produto excluído com sucesso');
         
                 // Redirecione de volta à página de compras ou faça qualquer outra coisa que você queira
-                return redirect()->back();
+                return back();
     }
 }

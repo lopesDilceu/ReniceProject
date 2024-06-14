@@ -7,24 +7,24 @@
       </div>
       <div class="modal-body py-0">
         <div class="row my-2">
-          <div class="col-12 col-lg-6 col-sm-12">
+          <div class="row">
             <h2 class="h2">Informações do Produto</h2>
-            <div class="form-group row my-2">
-              <label for="nomeProduto" class="col-sm-4 col-form-label"><b>Nome do Produto:</b></label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="nomeProduto">
+            <div class="form-group row my-2 col-sm-12 col-lg-6">
+              <label for="editNomeProduto" class="col-form-label"><b>Nome do Produto:</b></label>
+              <div>
+                <span id="NomeProduto" name="NomeProduto"></span>
               </div>
             </div>
-            <div class="form-group row my-2">
-              <label for="descricaoProduto" class="col-sm-4 col-form-label"><b>Descrição do Produto:</b></label>
-              <div class="col-sm-8">
-                <textarea class="form-control" id="descricaoProduto" rows="3"></textarea>
+            <div class="form-group row my-2 col-sm-12 col-lg-6">
+              <label for="editPrecoProduto" class="col-sm-12 col-form-label"><b>Preço do Produto:</b></label>
+              <div class="col-sm-12">
+                <span id="PrecoProduto" name="PrecoProduto"></span>
               </div>
             </div>
-            <div class="form-group row my-2">
-              <label for="precoProduto" class="col-sm-4 col-form-label"><b>Preço do Produto:</b></label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="precoProduto">
+            <div class="form-group row my-2 col-sm-12">
+              <label for="editDescricaoProduto" class=" col-form-label"><b>Descrição do Produto:</b></label>
+              <div>
+                <span id="DescricaoProduto" name="DescricaoProduto"></span>
               </div>
             </div>
           </div>

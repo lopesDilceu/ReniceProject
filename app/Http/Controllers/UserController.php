@@ -17,6 +17,8 @@ class UserController extends Controller
     public function index()
     {
         //
+        $users = User::all();
+        return view('adm.usuarios.list', compact('users'));
     }
 
     /**
@@ -44,7 +46,7 @@ class UserController extends Controller
     // Criar telefones para o usuário
     foreach ($request->telefones as $numero) {
         Telefone::create([
-            'te_us_id' => $user->id, // Usar a chave primária do usuário
+            'te_us_id' => $user->us_id, // Usar a chave primária do usuário
             'te_numero' => $numero,
         ]);
     }
@@ -52,7 +54,7 @@ class UserController extends Controller
     // Criar endereços para o usuário
     foreach ($request->enderecos as $endereco) {
         Endereco::create([
-            'en_usuario_id' => $user->id, // Usar a chave primária do usuário
+            'en_usuario_id' => $user->us_id, // Usar a chave primária do usuário
             'en_logradouro' => $endereco['en_logradouro'],
             'en_cidade' => $endereco['en_cidade'],
             'en_estado' => $endereco['en_estado'],
@@ -62,7 +64,7 @@ class UserController extends Controller
     }
 
     // Redirecionar para a página inicial com uma mensagem de sucesso
-    return redirect()->route('home')->with('success', 'Usuário criado com sucesso!');
+    return redirect()->route('usuarios.login')->with('success', 'Usuário criado com sucesso!');
 }
 
     /**
@@ -79,6 +81,7 @@ class UserController extends Controller
     public function edit(string $id)
     {
         //
+        
     }
 
     /**
@@ -95,19 +98,24 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->back();
     }
 
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        // dd($request->all());
+        //dd($request->all());
         if (Auth::attempt($credentials)) {
             // Autenticação bem-sucedida, redirecionar para a página inicial
             return redirect()->route('home');
         }
 
         // Autenticação falhou, redirecionar de volta para o formulário de login com uma mensagem de erro
-        return redirect()->route('usuarios.login')->with('error', 'Credenciais inválidas.');
+        else{
+            return redirect()->route('usuarios.login')->with('error', 'Credenciais inválidas.');
+        }
     }
 
     public function logout(Request $request)
