@@ -18,8 +18,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'us_cpf',
+        'us_data_nasc',
         'email',
         'password',
+        'us_adm',
     ];
 
     /**
@@ -43,5 +46,30 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function telefones()
+    {
+        return $this->hasMany(Telefone::class, 'te_us_id');
+    }
+
+    public function enderecos()
+    {
+        return $this->hasMany(Endereco::class, 'en_usuario_id');
+    }
+
+    public function vendas()
+    {
+        return $this->hasMany(Venda::class, 've_id_usuario');
+    }
+
+    public function avaliacoes()
+    {
+        return $this->hasMany(Avaliacao::class, 'av_id_usuario');
+    }
+
+    public function carrinho()
+    {
+        return $this->hasOne(Carrinho::class, 'ca_id_usuario');
     }
 }
