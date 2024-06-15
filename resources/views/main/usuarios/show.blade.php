@@ -14,8 +14,8 @@
           <span id="nome" class="form-control mb-2">{{$usuario->name ?? '-----' }}</span>
           <label for="telefones" class="form-label">Telefones:</label>
           @foreach($telefones as $telefone)
-        <span class="form-control mb-2">{{$telefone->te_numero ?? '-----' }}</span>
-      @endforeach
+            <span class="form-control mb-2">{{$telefone->te_numero ?? '-----' }}</span>
+          @endforeach
         </div>
         <div class="col-md col-sm-12">
           <label for="cpf" class="form-label">CPF:</label>

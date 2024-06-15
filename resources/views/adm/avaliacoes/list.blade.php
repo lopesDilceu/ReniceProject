@@ -10,7 +10,7 @@
     <div class="d-flex justify-content-between mb-3">
         <a href="{{route('adm.home')}}" class="btn btn-outline-secondary">Voltar</a>
     </div>
-    <div class="table-responsive" style="height: 620px; overflow-y: auto;">
+    <div class="table-responsive border  rounded" style="height: 620px; overflow-y: auto;">
         <table class="table table-striped">
             <thead class="thead-dark">
                 <tr>
@@ -29,13 +29,13 @@
                     <td>5</td>
                     <td>2024-06-12 10:30:00</td>
                     <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal">Ver</button>
+                        <button class="btn btn-outline-light" data-bs-toggle="modal"
+                            data-bs-target="#avaliacao-modal"><img src="{{asset('/images/icons/ver.png')}}" alt="Ver" width="24px" height="24px"></button>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                            <button type="submit" class="btn btn-outline-light mb-1 mb-md-0"
+                                onclick="return confirm('Tem certeza que deseja excluir?')"><img src="{{asset('/images/icons/deletar.png')}}" alt="Editar" width="24px" height="24px"></button>
                         </form>
                     </td>
                 </tr>
@@ -46,12 +46,12 @@
                     <td>2024-06-12 10:30:00</td>
                     <td>
                         <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal">Ver</button>
+                            data-bs-target="#avaliacao-modal"><img src="{{asset('/images/icons/ver.png')}}" alt="Ver" width="24px" height="24px"></button>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                            <button type="submit" class="btn btn-outline-light mb-1 mb-md-0"
+                                onclick="return confirm('Tem certeza que deseja excluir?')"><img src="{{asset('/images/icons/deletar.png')}}" alt="Editar" width="24px" height="24px"></button>
                         </form>
                     </td>
                 </tr>
@@ -62,12 +62,12 @@
                     <td>2024-06-12 10:30:00</td>
                     <td>
                         <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal">Ver</button>
+                            data-bs-target="#avaliacao-modal"><img src="{{asset('/images/icons/ver.png')}}" alt="Ver" width="24px" height="24px"></button>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                            <button type="submit" class="btn btn-outline-light mb-1 mb-md-0"
+                                onclick="return confirm('Tem certeza que deseja excluir?')"><img src="{{asset('/images/icons/deletar.png')}}" alt="Editar" width="24px" height="24px"></button>
                         </form>
                     </td>
                 </tr>
@@ -78,12 +78,12 @@
                     <td>2024-06-12 10:30:00</td>
                     <td>
                         <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal">Ver</button>
+                            data-bs-target="#avaliacao-modal"><img src="{{asset('/images/icons/ver.png')}}" alt="Ver" width="24px" height="24px"></button>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                            <button type="submit" class="btn btn-outline-light mb-1 mb-md-0"
+                                onclick="return confirm('Tem certeza que deseja excluir?')"><img src="{{asset('/images/icons/deletar.png')}}" alt="Editar" width="24px" height="24px"></button>
                         </form>
                     </td>
                 </tr>
@@ -94,12 +94,12 @@
                     <td>2024-06-12 10:30:00</td>
                     <td>
                         <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal">Ver</button>
+                            data-bs-target="#avaliacao-modal"><img src="{{asset('/images/icons/ver.png')}}" alt="Ver" width="24px" height="24px"></button>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                            <button type="submit" class="btn btn-outline-light mb-1 mb-md-0"
+                                onclick="return confirm('Tem certeza que deseja excluir?')"><img src="{{asset('/images/icons/deletar.png')}}" alt="Editar" width="24px" height="24px"></button>
                         </form>
                     </td>
                 </tr>
@@ -110,12 +110,12 @@
                     <td>2024-06-12 10:30:00</td>
                     <td>
                         <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal">Ver</button>
+                            data-bs-target="#avaliacao-modal"><img src="{{asset('/images/icons/ver.png')}}" alt="Ver" width="24px" height="24px"></button>
                         <form action="" method="post" style="display: inline;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                            <button type="submit" class="btn btn-outline-light mb-1 mb-md-0"
+                                onclick="return confirm('Tem certeza que deseja excluir?')"><img src="{{asset('/images/icons/deletar.png')}}" alt="Editar" width="24px" height="24px"></button>
                         </form>
                     </td>
                 </tr>

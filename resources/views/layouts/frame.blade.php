@@ -96,7 +96,7 @@
                       <!-- Exibe o menu de opções da conta -->
                       
                       <li><a class="dropdown-item" href="{{ route('minha-conta') }}">Minhas Conta</a></li>
-                      <li><a class="dropdown-item" href="{{ route('usuarios.minhas-compras') }}">Minhas Compras</a></li>
+                      <li><a class="dropdown-item" href="{{ route('minhas-compras') }}">Minhas Compras</a></li>
                       <li>
                           <!-- Formulário para fazer logout -->
                           <form action="{{ route('usuarios.logout.submit') }}" method="POST">

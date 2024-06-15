@@ -5,6 +5,7 @@ use App\Http\Controllers\EstoqueController;
 use App\Http\Controllers\ItensCarrinhoController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VendaController;
 use App\Models\Estoque;
 use Illuminate\Support\Facades\Route;
 
@@ -96,11 +97,17 @@ Route::prefix('adm')->group(function () {
     Route::put('/usuarios/{pr_id?}', [UserController::class, 'edit'])->name('adm.usuario.edit');
     // Route::post('/produto', [ProdutoController::class, 'store'])->name('adm.produto.store');
     Route::delete('/usuarios/{pr_id}', [UserController::class, 'destroy'])->name('adm.usuarios.destroy');
+
+    Route::get('/vendas', [VendaController::class, 'index'])->name('adm.vendas.list');
 });
 
 
 // Rota para listar produtos
 Route::get('/produtos', [ProdutoController::class, 'indexHome'])->name('produtos');
+Route::get('/avaliar-produto/{produto_id}', [ProdutoController::class, 'avaliarProduto'])->name('avaliar.produto');
+Route::post('/salvar-avaliacao', [ProdutoController::class, 'salvarAvaliacao'])->name('salvar.avaliacao');
+
+
 
 
 Route::post('/carrinho/store', [ItensCarrinhoController::class, 'store'])->name('carrinho.store');
@@ -111,3 +118,6 @@ Route::get('/usuarios/pagamento', [ItensCarrinhoController::class, 'indexPagamen
 Route::get('/usuarios/finalizar/{ic_id_carrinho}', [ItensCarrinhoController::class, 'finalizarCompra'])->name('usuario.finalizar');
 
 Route::middleware('auth')->get('/usuarios/minha-conta', [UserController::class, 'minhaConta'])->name('minha-conta');
+
+Route::get('/usuarios/minhas-compras', [VendaController::class, 'minhasCompras'])->name('minhas-compras');
+

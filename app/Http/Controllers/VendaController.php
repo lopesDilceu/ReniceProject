@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ItensVenda;
+use App\Models\Produto;
+use App\Models\User;
+use App\Models\Venda;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VendaController extends Controller
 {
@@ -12,6 +17,20 @@ class VendaController extends Controller
     public function index()
     {
         //
+        $vendas = Venda::all(); 
+        $users = User::all();
+        $itensvenda = ItensVenda::all();
+        $produtos = Produto::all();
+        return view('adm.vendas.list', compact('vendas', 'users', 'itensvenda', 'produtos'));
+    }
+
+    public function minhasCompras()
+    {
+        //
+        $vendas = Venda::where('ve_id_usuario', auth()->id())->get();
+        $itensvenda = ItensVenda::all();
+        $produtos = Produto::all();
+        return view('main.usuarios.minhas-compras', compact('vendas', 'itensvenda', 'produtos'));
     }
 
     /**

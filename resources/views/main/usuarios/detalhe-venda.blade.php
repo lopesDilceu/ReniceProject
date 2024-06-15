@@ -1,3 +1,8 @@
+@section('titulo', 'Vendas')
+
+
+@extends('layouts.frame')
+@section('content')
 <div class="modal fade" id="detalhes-venda-modal" tabindex="-1" aria-labelledby="detalhes-venda-modal-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content d-flex rounded-3 py-2 px-1 px-md-3 shadow">
@@ -12,17 +17,18 @@
                         <div class="form-group row my-2">
                             <label for="codigoVenda" class="col-sm-4 col-form-label"><b>Código da Compra:</b></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="codigoVenda" readonly name="ve_id">
+                                <input type="text" class="form-control" id="codigoVenda" readonly>
                             </div>
                         </div>
                         <div class="form-group row my-2">
                             <label for="dataVenda" class="col-sm-4 col-form-label"><b>Data da Compra:</b></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="dataVenda" readonly name="ve_data_venda">
+                                <input type="text" class="form-control" id="dataVenda" readonly>
                             </div>
                         </div>
+                        <!-- Detalhes dos produtos comprados -->
                         <h2 class="h2">Produtos Comprados</h2>
-                        <div class="table-responsive border  rounded" style="height: 400px; overflow-y: auto;">
+                        <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -34,6 +40,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="detalhes-produtos">
+                                    <!-- Aqui serão adicionadas as linhas de detalhes dos produtos -->
                                 </tbody>
                             </table>
                         </div>
@@ -46,3 +53,5 @@
         </div>
     </div>
 </div>
+
+@endsection

@@ -11,7 +11,7 @@
     <div class="d-flex justify-content-between mb-3">
         <a href="{{route('adm.home')}}" class="btn btn-outline-secondary">Voltar</a>
     </div>
-    <div class="table-responsive" style="height: 620px; overflow-y: auto;">
+    <div class="table-responsive border  rounded" style="height: 620px; overflow-y: auto;">
         <table class="table table-striped">
             <thead class="thead-dark">
                 <tr>

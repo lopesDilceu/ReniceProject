@@ -16,7 +16,7 @@
         <a href="{{ route('home')}}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
     </div>
     <div class="row" data-masonry='{"percentPosition": true }'>
-        <div class="col-sm-6 col-lg-4 mb-4 ">
+        <div class="col-sm-12 col-lg-4 mb-4 ">
             <div class="card shadow-sm ">
                 <div class="text-center">
                     <img src="{{ asset('images/icons/avaliacoes.png') }}" alt="" class="rounded-top p-2" width="35%">
@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        <div class="col-sm-6 col-lg-4 mb-4">
+        <div class="col-sm-12 col-lg-4 mb-4">
             <div class="card shadow-sm">
                 <div class="text-center">
                     <img src="{{ asset('images/icons/compras.png') }}" alt="" class="rounded-top p-2" width="35%">
@@ -46,7 +46,7 @@
             </div>
         </div>
 
-        <div class="col-sm-6 col-lg-4 mb-4">
+        <div class="col-sm-12 col-lg-4 mb-4">
             <div class="card shadow-sm">
                 <div class="text-center">
                     <img src="{{ asset('images/icons/estoque.png') }}" alt="" class="rounded-top p-2" width="35%">
@@ -63,7 +63,7 @@
 
     </div>
     <div class="row" data-masonry='{"percentPosition": true }'>
-        <div class="col-sm-6 col-lg-4 mb-4">
+        <div class="col-sm-12 col-lg-4 mb-4">
             <div class="card shadow-sm">
                 <div class="text-center">
                     <img src="{{ asset('images/icons/produtos.png') }}" alt="" class="rounded-top p-2" width="35%">
@@ -78,7 +78,7 @@
             </div>
         </div>
 
-        <div class="col-sm-6 col-lg-4 mb-4">
+        <div class="col-sm-12 col-lg-4 mb-4">
             <div class="card shadow-sm ">
                 <div class="text-center">
                     <img src="{{ asset('images/icons/usuarios.png') }}" alt="" class="rounded-top p-2" width="35%">
@@ -93,7 +93,7 @@
             </div>
         </div>
 
-        <div class="col-sm-6 col-lg-4 mb-4">
+        <div class="col-sm-12 col-lg-4 mb-4">
             <div class="card shadow-sm">
                 <div class="text-center">
                     <img src="{{ asset('images/icons/vendas.png') }}" alt="" class="rounded-top p-2" width="35%">
