@@ -9,6 +9,9 @@ class ItensCarrinho extends Model
 {
     use HasFactory;
 
+    protected $table = 'itenscarrinho';
+    protected $primaryKey = 'ic_id';
+    public $timestamps = false;
     protected $fillable = [
         'ic_id_carrinho',
         'ic_id_produto',

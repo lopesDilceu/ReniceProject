@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\EstoqueController;
+use App\Http\Controllers\ItensCarrinhoController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\UserController;
 use App\Models\Estoque;
@@ -38,15 +39,12 @@ Route::prefix('usuarios')->group(function () {
         return view('main.usuarios.edit');
     })->name('usuarios.edit');
 
-    Route::get('/show', function () {
-        return view('main.usuarios.show');
-    })->name('usuarios.show');
 
     Route::get('/carrinho', function () {
         return view('main.usuarios.carrinho');
     })->name('usuarios.carrinho');
 
-    Route::get('/pagamento', function () {
+Route::get('/pagamento', function () {
         return view('main.usuarios.pagamento');
     })->name('usuarios.pagamento');
 
@@ -95,6 +93,7 @@ Route::prefix('adm')->group(function () {
     Route::delete('/produtos/{pr_id}', [ProdutoController::class, 'destroy'])->name('adm.produtos.destroy');
 
     Route::get('/usuarios', [UserController::class, 'index'])->name('adm.usuarios.list');
+    Route::put('/usuarios/{pr_id?}', [UserController::class, 'edit'])->name('adm.usuario.edit');
     // Route::post('/produto', [ProdutoController::class, 'store'])->name('adm.produto.store');
     Route::delete('/usuarios/{pr_id}', [UserController::class, 'destroy'])->name('adm.usuarios.destroy');
 });
@@ -102,3 +101,13 @@ Route::prefix('adm')->group(function () {
 
 // Rota para listar produtos
 Route::get('/produtos', [ProdutoController::class, 'indexHome'])->name('produtos');
+
+
+Route::post('/carrinho/store', [ItensCarrinhoController::class, 'store'])->name('carrinho.store');
+
+Route::get('/usuarios/carrinho', [ItensCarrinhoController::class, 'index'])->name('usuario.carrinho');
+Route::delete('/usuarios/carrinho/{ic_id}', [ItensCarrinhoController::class, 'destroy'])->name('usuario.carrinho.destroy');
+Route::get('/usuarios/pagamento', [ItensCarrinhoController::class, 'indexPagamento'])->name('usuario.pagamento');
+Route::get('/usuarios/finalizar/{ic_id_carrinho}', [ItensCarrinhoController::class, 'finalizarCompra'])->name('usuario.finalizar');
+
+Route::middleware('auth')->get('/usuarios/minha-conta', [UserController::class, 'minhaConta'])->name('minha-conta');

@@ -57,7 +57,7 @@
     <input type="email" class="form-control mb-2" id="email" placeholder="Email" value="email@exemplo.com">
     <input type="password" class="form-control mb-4" id="senha" placeholder="Senha" value="senha">
     <div class="d-grid d-md-flex gap-2 justify-content-md-end">
-      <a href="{{ route('usuarios.show')}}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
+      <a href="{{ route('home')}}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
       <button class="w-80 btn btn-lg btn-dark" type="submit">Salvar Alterações</button>
     </div>
 

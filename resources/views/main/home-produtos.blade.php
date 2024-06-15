@@ -14,13 +14,16 @@
                 <div class="card-body">
                     <h5 class="card-title">{{$produto->pr_nome}}</h5>
                     <p class="card-text">R$ {{$produto->pr_preco}}</p>
-                    <div class="d-flex gap-2 justify-content-center">
-                        <div class="col-3 col-sm-2" style="min-width: 60px;">
-                          <input type="number" class="form-control" id="productQuantity" name="productQuantity" min="1" max="100" step="1" value="1" >
+                    <form action="{{ route('carrinho.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="pr_id" value="{{ $produto->pr_id }}">
+                        <div class="d-flex gap-2 justify-content-center">
+                            <div class="col-3 col-sm-2" style="min-width: 60px;">
+                                <input type="number" class="form-control" name="ic_quantidade" min="1" max="100" step="1" value="1">
+                            </div>
+                            <button type="submit" class="btn btn-outline-secondary">Add to cart</button>
                         </div>
-                        <button class="btn btn-outline-secondary">Add to cart</button>
-                    </div>
-
+                    </form>
                 </div>
             </div>
         </div>

@@ -84,7 +84,7 @@
                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 </div>
               </form> -->
-              <a class="nav-link " href="{{ route('usuarios.carrinho') }}" style="font-family: Akkurat-Mono, monospace; margin-right: 30px;">CARRINHO</a>
+              <a class="nav-link " href="{{ route('usuario.carrinho') }}" style="font-family: Akkurat-Mono, monospace; margin-right: 30px;">CARRINHO</a>
               <div class="dropdown text-end">
                 
                 <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -95,7 +95,7 @@
                   <!-- Verifica se o usuário está autenticado -->
                       <!-- Exibe o menu de opções da conta -->
                       
-
+                      <li><a class="dropdown-item" href="{{ route('minha-conta') }}">Minhas Conta</a></li>
                       <li><a class="dropdown-item" href="{{ route('usuarios.minhas-compras') }}">Minhas Compras</a></li>
                       <li>
                           <!-- Formulário para fazer logout -->

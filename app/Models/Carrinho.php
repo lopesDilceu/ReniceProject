@@ -9,6 +9,9 @@ class Carrinho extends Model
 {
     use HasFactory;
 
+    protected $table = 'carrinho';
+    protected $primaryKey = 'ca_id';
+    public $timestamps = false;
     protected $fillable = [
         'ca_id_usuario',
     ];

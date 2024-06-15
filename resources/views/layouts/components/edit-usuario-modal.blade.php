@@ -1,11 +1,14 @@
-<div class="modal fade" id="dados-usuario-modal" tabindex="-1" aria-labelledby="dados-usuario-modal-label" aria-hidden="true">
+<div class="modal fade" id="novo-usuario-modal" tabindex="-1" aria-labelledby="novo-usuario-modal-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content d-flex rounded-3 py-2 px-1 px-md-3 shadow">
             <div class="modal-header border-bottom-0">
-                <h1 class="modal-title h2" id="dados-usuario-modal-label">Usuário</h1>
+                <h1 class="modal-title h2" id="novo-usuario-modal-label">Novo Usuário</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body py-0">
+            <form action="" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-body py-0">
                     <div class="row my-2">
                         <div class="col-12 col-lg-6 col-sm-12 text-center mb-3 mb-md-3 mb-lg-0">
                             <img src="{{ asset('images/logo/renice-logo-down.png')}}" alt="Logo" class="img-fluid rounded" width="50%">
@@ -19,43 +22,43 @@
                                 </div>
                             </div>
                             <div class="form-group row my-2">
-                                <label for="NomeUsuario" class="col-sm-4 col-form-label"><b>Nome:</b></label>
+                                <label for="UserNome" class="col-sm-4 col-form-label"><b>Nome:</b></label>
                                 <div class="col-sm-8">
-                                    <span id="NomeUsuario" name="name"></span>
+                                    <input type="text" class="form-control" id="editNomeUsuario" name="name">
                                 </div>
                             </div>
                             <div class="form-group row my-2">
-                                <label for="CpfUsuario" class="col-sm-4 col-form-label"><b>CPF:</b></label>
+                                <label for="UserCpf" class="col-sm-4 col-form-label"><b>CPF:</b></label>
                                 <div class="col-sm-8">
-                                    <span id="CpfUsuario" name="us_cpf"></span>
+                                    <input type="text" class="form-control" id="editCpfUsuario" name="us_cpf">
                                 </div>
                             </div>
                             <div class="form-group row my-2">
-                                <label for="NascimentoUsuario" class="col-sm-4 col-form-label"><b>Data de Nascimento:</b></label>
+                                <label for="UserDataNascimento" class="col-sm-4 col-form-label"><b>Data de Nascimento:</b></label>
                                 <div class="col-sm-8">
-                                    <span id="NascimentoUsuario" name="us_data_nasc"></span>
+                                    <input type="date" class="form-control" id="editNascUsuario" name="us_data_nasc">
                                 </div>
                             </div>
                             <div class="form-group row my-2">
-                                <label for="EmailUsuario" class="col-sm-4 col-form-label"><b>Email:</b></label>
+                                <label for="UserEmail" class="col-sm-4 col-form-label"><b>Email:</b></label>
                                 <div class="col-sm-8">
-                                    <span id="EmailUsuario" name="email"></span>
+                                    <input type="email" class="form-control" id="editEmailUsuario" name="email">
                                 </div>
                             </div>
                             <div class="form-group row my-2">
-                                <label for="SenhaUsuario" class="col-sm-4 col-form-label"><b>Senha:</b></label>
+                                <label for="UserSenha" class="col-sm-4 col-form-label"><b>Senha:</b></label>
                                 <div class="col-sm-8">
-                                    <span id="SenhaUsuario" name="password"></span>
+                                    <input type="password" class="form-control" id="editSenhaUsuario" name="password">
                                 </div>
                             </div>
                             <div class="form-group row my-2">
-                                <label for="AdmUsuario" class="col-sm-4 col-form-label"><b>Administrador:</b></label>
+                                <label for="UserAdm class="col-sm-4 col-form-label"><b>Administrador:</b></label>
                                 <div class="col-sm-8">
-                                    <span id="AdmUsuario" name="us_adm"></span>
+                                    <input type="number" class="form-control" id="editAdmUsuario" name="us_adm">
                                 </div>
                             </div>
                             <div class="form-group row my-2">
-                                <label for="CriacaoUsuario" class="col-sm-4 col-form-label"><b>Data de Criação:</b></label>
+                                <label for="UserDataCriacao" class="col-sm-4 col-form-label"><b>Data de Criação:</b></label>
                                 <div class="col-sm-8">
                                     <span id="CriacaoUsuario" name="us_data_criacao"></span>
                                 </div>
@@ -63,8 +66,9 @@
                         </div>
                     </div>
                 </div>
+            </form>
             <div class="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
-                <button type="button" class="btn btn-lg btn-dark">Editar</button>
+                <button type="submit" class="btn btn-lg btn-dark" id="saveEditUser">Salvar</button>
                 <button type="button" class="btn btn-lg btn-outline-secondary" data-bs-dismiss="modal">Fechar</button>
             </div>
         </div>

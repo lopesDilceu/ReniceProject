@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carrinho;
 use App\Models\Endereco;
 use App\Models\Telefone;
 use App\Models\User;
@@ -18,7 +19,34 @@ class UserController extends Controller
     {
         //
         $users = User::all();
-        return view('adm.usuarios.list', compact('users'));
+        $telefones = Telefone::all();
+        $enderecos = Endereco::all();
+        return view('adm.usuarios.list', compact('users', 'telefones', 'enderecos'));
+    }
+
+
+    public function minhaConta()
+    {
+        if (Auth::check()) {
+            $usuario = User::find(Auth::id());
+
+            if (!$usuario) {
+                // Tratar o caso de usuário não encontrado, por exemplo, redirecionar para a página de login.
+                return redirect()->route('login')->with('error', 'Usuário não encontrado.');
+            }
+            dd($usuario);
+            // Recuperar telefones do usuário
+            $telefones = Telefone::where('te_us_id', $usuario->us_id)->get();
+
+            // Recuperar endereço do usuário
+            $endereco = Endereco::where('en_usuario_id', $usuario->us_id)->first();
+
+            dd($usuario);
+            return view('main.usuarios.show', compact('usuario', 'telefones', 'endereco'));
+        } else {
+            // Caso o usuário não esteja autenticado, redirecionar para a página de login
+            return redirect()->route('login')->with('error', 'Você precisa estar logado para acessar esta página.');
+        }
     }
 
     /**
@@ -71,16 +99,22 @@ class UserController extends Controller
      * Display the specified resource.
      */
     public function show($id){
-        $usuario = User::find($id);
-        return view('usuarios.show', compact('usuario'));
+        $usuario = User::find(Auth::id());
+        $telefones = Telefone::where('te_us_id', $usuario->us_id)->get();
+
+        // Recuperar endereço do usuário
+        $endereco = Endereco::where('en_usuario_id', $usuario->us_id)->first();
+        return view('main.usuarios.show', compact('usuario', 'telefones', 'endereco'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, string $id)
     {
-        //
+        User::findOrFail($id)->update($request->all());
+        toastr()->success('Usuario atualizado com sucesso!');
+        return back();
         
     }
 
@@ -125,4 +159,5 @@ class UserController extends Controller
         // Redirecionar para a página de login com uma mensagem de sucesso
         return redirect()->route('usuarios.login')->with('success', 'Logout realizado com sucesso.');
     }
+
 }

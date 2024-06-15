@@ -32,14 +32,14 @@
                     <td>R${{ $produto->pr_preco }}</td>
                     <td>{{ $produto->pr_data_criacao }}</td>
                     <td>
-                    <button class="btn btn-secondary ver-produto" data-bs-toggle="modal"
-                            data-bs-target="#produto-modal" data-id="{{$produto->pr_id}}">Ver</button>
-                    <button class="btn btn-dark edit-produto" data-bs-toggle="modal"
-                        data-bs-target="#edit-produto-modal" data-id="{{$produto->pr_id}}">Editar</button>
+                    <button class="btn btn-outline-light ver-produto" data-bs-toggle="modal"
+                            data-bs-target="#produto-modal" data-id="{{$produto->pr_id}}"><img src="{{asset('/images/icons/ver.png')}}" alt="Editar" width="24px" height="24px"></button>
+                    <button class="btn btn-outline-light edit-produto" data-bs-toggle="modal"
+                        data-bs-target="#edit-produto-modal" data-id="{{$produto->pr_id}}"><img src="{{asset('/images/icons/editar.png')}}" alt="Editar" width="24px" height="24px"></button>
                     <form action="{{ route('adm.produtos.destroy', $produto->pr_id) }}" method="post" style="display: inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger mb-1 mb-md-0" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                        <button type="submit" class="btn btn-outline-light mb-1 mb-md-0" onclick="return confirm('Tem certeza que deseja excluir?')"><img src="{{asset('/images/icons/deletar.png')}}" alt="Editar" width="24px" height="24px"></button>
                     </form>
 
 
@@ -76,18 +76,26 @@
         $('.ver-produto').on('click', function() {
             const pr_id = $(this).data('id');
 
+            // Obtém a lista de produtos do PHP convertida para JavaScript
             const produtos = @json($produtos);
 
-            let produto = produtos.filter(produto => produto.pr_id === pr_id)[0];
+            // Filtra o produto com base no pr_id
+            let produto = produtos.find(produto => produto.pr_id === pr_id);
 
+            // Seleciona o modal e atualiza os spans com os valores do produto
             let modal = $('#produto-modal');
 
-            let pr_nome = modal.find('#NomeProduto').val(produto.pr_nome);
+            // Atualiza o nome do produto
+            modal.find('#NomeProduto').text(produto.pr_nome);
 
-            let pr_descricao = modal.find('#DescricaoProduto').val(produto.pr_descricao);
+            // Atualiza a descrição do produto
+            modal.find('#DescricaoProduto').text(produto.pr_descricao);
 
-            let pr_preco = modal.find('#PrecoProduto').val(produto.pr_preco);
+            // Atualiza o preço do produto
+            modal.find('#PrecoProduto').text(produto.pr_preco);
 
+            // Abre o modal
+            modal.modal('show');
         });
 
     </script>
