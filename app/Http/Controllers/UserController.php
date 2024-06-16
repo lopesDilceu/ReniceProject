@@ -92,7 +92,8 @@ class UserController extends Controller
     }
 
     // Redirecionar para a página inicial com uma mensagem de sucesso
-    return redirect()->route('usuarios.login')->with('success', 'Usuário criado com sucesso!');
+    toastr()->success('Usuário criado com sucesso!');
+    return redirect()->route('usuarios.login');
 }
 
     /**
@@ -143,12 +144,14 @@ class UserController extends Controller
         //dd($request->all());
         if (Auth::attempt($credentials)) {
             // Autenticação bem-sucedida, redirecionar para a página inicial
+            toastr()->success('Login Realizado!');
             return redirect()->route('home');
         }
 
         // Autenticação falhou, redirecionar de volta para o formulário de login com uma mensagem de erro
         else{
-            return redirect()->route('usuarios.login')->with('error', 'Credenciais inválidas.');
+            toastr()->error('Credenciais inválidas!');
+            return redirect()->route('usuarios.login');
         }
     }
 
@@ -157,7 +160,8 @@ class UserController extends Controller
         Auth::logout();
 
         // Redirecionar para a página de login com uma mensagem de sucesso
-        return redirect()->route('usuarios.login')->with('success', 'Logout realizado com sucesso.');
+        
+        return redirect()->route('usuarios.login');
     }
 
 }

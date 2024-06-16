@@ -74,6 +74,14 @@
               <li class="nav-item">
                 <a class="nav-link  @yield('sobre')" href="{{ route('sobre') }}" style="font-family: Akkurat-Mono, monospace;">SOBRE O PROJETO</a>
               </li>
+              @auth
+              @if(auth()->user()->us_adm == 1)
+                  <!-- Se o usuário é um administrador, exibe o menu ADM -->
+                  <li>
+                    <a class="nav-link  @yield('adm')" style="font-family: Akkurat-Mono, monospace;" href="{{ route('adm.home') }}">ADMINISTRAÇÃO</a>
+                  </li>
+              @endif
+          @endauth
             </ul>
             <div class="d-flex justify-content-center">
               <!-- <form class="d-flex flex-fill me-2" role="search">
@@ -94,7 +102,7 @@
                   @auth 
                   <!-- Verifica se o usuário está autenticado -->
                       <!-- Exibe o menu de opções da conta -->
-                      
+                      <li><span class="dropdown-item bg-body">{{strtoupper(auth()->user()->name)}}</span></li>
                       <li><a class="dropdown-item" href="{{ route('minha-conta') }}">Minhas Conta</a></li>
                       <li><a class="dropdown-item" href="{{ route('minhas-compras') }}">Minhas Compras</a></li>
                       <li>
@@ -131,13 +139,6 @@
           <ul class="nav col-md-4 justify-content-end">
           <li class="nav-item"><a href="{{ route('home') }}" class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">HOME</a></li>
           <li class="nav-item"><a href="{{ route('sobre') }}" class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">SOBRE O PROJETO</a></li>
-
-          @auth
-              @if(auth()->user()->us_adm == 1)
-                  <!-- Se o usuário é um administrador, exibe o menu ADM -->
-                  <li><a class="nav-link px-2 text-body-secondary" style="font-family: Akkurat-Mono, monospace;" href="{{ route('adm.home') }}">ADM</a></li>
-              @endif
-          @endauth
 
       </ul>
       </div>

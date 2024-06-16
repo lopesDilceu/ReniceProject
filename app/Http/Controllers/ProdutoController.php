@@ -45,7 +45,7 @@ class ProdutoController extends Controller
             'pr_preco'=>$request->pr_preco,
         ]);
 
-        toastr()->title('Sucesso')->success('Produto cadastrado com sucesso');
+        toastr()->title('Sucesso')->success('Produto cadastrado com sucesso!');
 
         return redirect()->route('adm.produtos.list');
     }
@@ -76,7 +76,8 @@ class ProdutoController extends Controller
          $avaliacao->av_comentario = $request->av_comentario;
          $avaliacao->save();
      
-         return redirect()->route('minhas-compras')->with('success', 'Avaliação enviada com sucesso!');
+         toastr()->success('Avaliação enviada com sucesso!');
+         return redirect()->route('minhas-compras');
      }
     public function edit(Request $request, string $id)
     {
@@ -108,7 +109,7 @@ class ProdutoController extends Controller
                 // Exclua a compra
                 $produto->delete();
 
-                toastr()->success('Produto excluído com sucesso');
+                toastr()->success('Produto excluído com sucesso!');
         
                 // Redirecione de volta à página de compras ou faça qualquer outra coisa que você queira
                 return back();

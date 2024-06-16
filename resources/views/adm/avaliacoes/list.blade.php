@@ -22,106 +22,36 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Exemplo de Produto 1 -->
-                <tr>
-                    <td>Fulano</td>
-                    <td>Produto 1</td>
-                    <td>5</td>
-                    <td>2024-06-12 10:30:00</td>
-                    <td>
-                        <button class="btn btn-outline-light" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal"><img src="{{asset('/images/icons/ver.png')}}" alt="Ver" width="24px" height="24px"></button>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-outline-light mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')"><img src="{{asset('/images/icons/deletar.png')}}" alt="Editar" width="24px" height="24px"></button>
-                        </form>
+                @forelse($avaliacoes as $avaliacao)
+                    <tr>
+                        <td>
+                            @foreach ($users as $user)
+                                @if ($user->us_id === $avaliacao->av_id_usuario)
+                                    {{ $user->name }}
+                                    @break
+                                @endif
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($produtos as $produto)
+                                @if ($produto->pr_id === $avaliacao->av_id_produto)
+                                    {{ $produto->pr_nome }}
+                                    @break
+                                @endif
+                            @endforeach
+                        </td>
+                        <td>{{ $avaliacao->av_nota }}/5</td>
+                        <td>{{ $avaliacao->av_data_avaliacao }}</td>
+                        <td>
+                            <form action="{{ route('adm.produtos.destroy', $avaliacao->av_id) }}" method="post" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-outline-light mb-1 mb-md-0" onclick="return confirm('Tem certeza que deseja excluir?')"><img src="{{asset('/images/icons/deletar.png')}}" alt="Editar" width="24px" height="24px"></button>
+                            </form>
                     </td>
-                </tr>
-                <tr>
-                    <td>Fulano</td>
-                    <td>Produto 1</td>
-                    <td>5</td>
-                    <td>2024-06-12 10:30:00</td>
-                    <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal"><img src="{{asset('/images/icons/ver.png')}}" alt="Ver" width="24px" height="24px"></button>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-outline-light mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')"><img src="{{asset('/images/icons/deletar.png')}}" alt="Editar" width="24px" height="24px"></button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Fulano</td>
-                    <td>Produto 1</td>
-                    <td>5</td>
-                    <td>2024-06-12 10:30:00</td>
-                    <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal"><img src="{{asset('/images/icons/ver.png')}}" alt="Ver" width="24px" height="24px"></button>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-outline-light mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')"><img src="{{asset('/images/icons/deletar.png')}}" alt="Editar" width="24px" height="24px"></button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Fulano</td>
-                    <td>Produto 1</td>
-                    <td>5</td>
-                    <td>2024-06-12 10:30:00</td>
-                    <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal"><img src="{{asset('/images/icons/ver.png')}}" alt="Ver" width="24px" height="24px"></button>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-outline-light mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')"><img src="{{asset('/images/icons/deletar.png')}}" alt="Editar" width="24px" height="24px"></button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Fulano</td>
-                    <td>Produto 1</td>
-                    <td>5</td>
-                    <td>2024-06-12 10:30:00</td>
-                    <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal"><img src="{{asset('/images/icons/ver.png')}}" alt="Ver" width="24px" height="24px"></button>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-outline-light mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')"><img src="{{asset('/images/icons/deletar.png')}}" alt="Editar" width="24px" height="24px"></button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Fulano</td>
-                    <td>Produto 1</td>
-                    <td>5</td>
-                    <td>2024-06-12 10:30:00</td>
-                    <td>
-                        <button class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#avaliacao-modal"><img src="{{asset('/images/icons/ver.png')}}" alt="Ver" width="24px" height="24px"></button>
-                        <form action="" method="post" style="display: inline;">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-outline-light mb-1 mb-md-0"
-                                onclick="return confirm('Tem certeza que deseja excluir?')"><img src="{{asset('/images/icons/deletar.png')}}" alt="Editar" width="24px" height="24px"></button>
-                        </form>
-                    </td>
-                </tr>
-                <!-- Exemplo de Produto 2 -->
-
-                <!-- Pode adicionar mais linhas conforme necessário -->
+                    </tr>
+                @empty
+                @endforelse
             </tbody>
         </table>
     </div>

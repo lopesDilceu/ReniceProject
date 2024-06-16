@@ -71,10 +71,11 @@ class ItensCarrinhoController extends Controller
             $item->ic_id_produto = $produto_id;
             $item->ic_quantidade = $quantidade;
             $item->save();
-    
-            return redirect()->back()->with('success', 'Produto adicionado ao carrinho com sucesso.');
+            toastr()->success('Produto adicionado com sucesso!');
+            return redirect()->back();
         } else {
-            return redirect()->route('login')->with('error', 'Faça login para adicionar produtos ao carrinho.');
+            toastr()->error('Produto não adicionado!');
+            return redirect()->route('login');
         }
     }
 
@@ -113,7 +114,7 @@ class ItensCarrinhoController extends Controller
                 // Exclua a compra
         $itemcarrinho->delete();
 
-                toastr()->success('Produto excluído com sucesso');
+                toastr()->success('Produto excluído com sucesso!');
         
                 // Redirecione de volta à página de compras ou faça qualquer outra coisa que você queira
                 return back();
@@ -125,7 +126,7 @@ class ItensCarrinhoController extends Controller
         DB::statement("CALL finalizar_venda($id)");
 
         // Redireciona o usuário para uma página de confirmação ou outra rota
-        toastr()->success('Compra finalizada com sucesso');
+        toastr()->success('Compra finalizada com sucesso!');
         return redirect()->route('home');
     }
 

@@ -21,7 +21,7 @@
                             <div class="col-3 col-sm-2" style="min-width: 60px;">
                                 <input type="number" class="form-control" name="ic_quantidade" min="1" max="100" step="1" value="1">
                             </div>
-                            <button type="submit" class="btn btn-outline-secondary">Add to cart</button>
+                            <button type="submit" class="btn btn-outline-success">ADCIONAR <img src="{{asset('/images/icons/carrinho.png')}}" alt="addToCarrinho" width="24px" height="24px"></button>
                         </div>
                     </form>
                 </div>

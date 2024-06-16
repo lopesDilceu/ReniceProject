@@ -1,5 +1,5 @@
 @section('titulo', 'Administração')
-
+@section('adm', 'active')
 
 @extends('layouts.frame')
 

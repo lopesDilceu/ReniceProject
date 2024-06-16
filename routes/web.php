@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AvaliacaoController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\EstoqueController;
 use App\Http\Controllers\ItensCarrinhoController;
@@ -18,9 +19,9 @@ Route::get('/sobre', function () {
     return view('main.sobre');
 })->name('sobre');
 
-Route::get('/avaliacoes', function () {
-    return view('main.avaliacoes');
-})->name('avaliacoes');
+
+
+Route::get('/avaliacoes', [AvaliacaoController::class, 'index'])->name('avaliacoes');
 
 // Rotas relacionadas aos usuários
 Route::prefix('usuarios')->group(function () {
@@ -99,6 +100,9 @@ Route::prefix('adm')->group(function () {
     Route::delete('/usuarios/{pr_id}', [UserController::class, 'destroy'])->name('adm.usuarios.destroy');
 
     Route::get('/vendas', [VendaController::class, 'index'])->name('adm.vendas.list');
+
+    Route::get('/avaliacoes', [AvaliacaoController::class, 'listAvaliacoes'])->name('adm.avaliacoes.list');
+    Route::delete('/avaliacoes/{av_id}', [AvaliacaoController::class, 'destroy'])->name('adm.avaliacoes.destroy');
 });
 
 

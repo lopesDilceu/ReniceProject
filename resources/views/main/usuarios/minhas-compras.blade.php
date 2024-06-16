@@ -27,9 +27,9 @@
                     <td>{{ $venda->ve_status }}</td>
                     <td>R${{ $venda->ve_total }}</td>
                     <td>
-                        <button class="btn btn-secondary ver-venda" data-bs-toggle="modal"
+                        <button class="btn btn-outline-light ver-venda" data-bs-toggle="modal"
                                 data-bs-target="#venda-usuario-modal" data-id="{{ $venda->ve_id }}">
-                            Ver
+                                <img src="{{asset('/images/icons/ver.png')}}" alt="Ver" width="24px" height="24px">
                         </button>
                         
                     </td>
@@ -75,9 +75,7 @@
                         <td>R$${item.iv_preco_unitario}</td>
                         <td>R$${total}</td>
                         <td>
-                            <a href="{{ url('/avaliar-produto') }}/${item.iv_id_produto}" class="btn btn-primary">
-                                Avaliar
-                            </a>
+                            <a href="{{ url('/avaliar-produto') }}/${item.iv_id_produto}" class="btn btn-outline-success"><img src="{{asset('/images/icons/like.png')}}" alt="Avaliar" width="24px" height="24px"></a>
                         </td>
                     </tr>
                 `);
