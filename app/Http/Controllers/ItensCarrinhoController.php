@@ -18,7 +18,10 @@ class ItensCarrinhoController extends Controller
     public function index()
     {
         //
-        $carrinho = Carrinho::where('ca_id_usuario', Auth::id())->first();
+        $carrinho = Carrinho::firstOrCreate(
+            ['ca_id_usuario' => Auth::id()],
+            ['ca_id_usuario' => Auth::id()] // Os valores adicionais que devem ser definidos ao criar um novo carrinho
+        );
         $itenscarrinho = ItensCarrinho::where('ic_id_carrinho', $carrinho->ca_id)->get(); 
         // dd($itenscarrinho);
         $produtos = Produto::all();

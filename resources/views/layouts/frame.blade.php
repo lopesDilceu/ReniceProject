@@ -92,7 +92,9 @@
                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 </div>
               </form> -->
+              @auth
               <a class="nav-link " href="{{ route('usuario.carrinho') }}" style="font-family: Akkurat-Mono, monospace; margin-right: 30px;">CARRINHO</a>
+              @endauth
               <div class="dropdown text-end">
                 
                 <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
