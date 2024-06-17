@@ -38,11 +38,25 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'pr_nome' => 'required|string|max:255',
+            'pr_descricao' => 'required|string',
+            'pr_preco' => 'required|numeric',
+            'pr_foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($request->hasFile('pr_foto')) {
+            $path = $request->file('pr_foto')->store('produtos', 'public');
+            $path = 'storage/' . $path;
+        } else {
+            $path = null;
+        }
+
         $produto = Produto::create([
             'pr_nome' => $request->pr_nome,
-            'pr_descricao'=>$request->pr_descricao,
-            'pr_preco'=>$request->pr_preco,
+            'pr_descricao' => $request->pr_descricao,
+            'pr_preco' => $request->pr_preco,
+            'pr_foto' => $path,
         ]);
 
         toastr()->title('Sucesso')->success('Produto cadastrado com sucesso!');

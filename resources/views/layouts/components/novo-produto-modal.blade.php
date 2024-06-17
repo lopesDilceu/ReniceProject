@@ -5,28 +5,34 @@
                 <h1 class="modal-title h2" id="novo-produto-modal-label">Novo Produto</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" action="{{ route('adm.produto.store') }}">
+            <form method="POST" action="{{ route('adm.produto.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body py-0">
                     <div class="row my-2">
                         <div class="row">
                             <h2 class="h2">Informações do Produto</h2>
                             <div class="form-group row my-2 col-sm-12 col-lg-6">
-                                <label for="editNomeProduto" class="col-form-label"><b>Nome do Produto:</b></label>
+                                <label for="nomeProduto" class="col-form-label"><b>Nome do Produto:</b></label>
                                 <div>
                                     <input type="text" class="form-control" id="nomeProduto" name="pr_nome">
                                 </div>
                             </div>
                             <div class="form-group row my-2 col-sm-12 col-lg-6">
-                                <label for="editPrecoProduto" class="col-sm-12 col-form-label"><b>Preço do Produto:</b></label>
+                                <label for="precoProduto" class="col-sm-12 col-form-label"><b>Preço do Produto:</b></label>
                                 <div class="col-sm-12">
                                     <input type="number" class="form-control" id="precoProduto" name="pr_preco">
                                 </div>
                             </div>
                             <div class="form-group row my-2 col-sm-12">
-                                <label for="editDescricaoProduto" class=" col-form-label"><b>Descrição do Produto:</b></label>
+                                <label for="descricaoProduto" class="col-form-label"><b>Descrição do Produto:</b></label>
                                 <div>
                                     <textarea class="form-control" id="descricaoProduto" rows="3" name="pr_descricao"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row my-2 col-sm-12">
+                                <label for="fotoProduto" class="col-form-label"><b>Foto do Produto:</b></label>
+                                <div>
+                                    <input type="file" class="form-control" id="fotoProduto" name="pr_foto">
                                 </div>
                             </div>
                         </div>

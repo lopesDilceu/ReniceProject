@@ -10,7 +10,7 @@
         @foreach ($produtos as $produto)    
         <div class="col-sm-6 col-lg-3 mb-4">
             <div class="card shadow-sm">
-                <img src="{{ asset('images/logo/renice-logo-round.png') }}" alt="" class="rounded-top">
+                <img src="{{ asset($produto->pr_foto) }}" alt="" class="rounded-top" height="270px">
                 <div class="card-body">
                     <h5 class="card-title">{{$produto->pr_nome}}</h5>
                     <p class="card-text">R$ {{$produto->pr_preco}}</p>

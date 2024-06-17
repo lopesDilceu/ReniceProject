@@ -14,6 +14,7 @@ class Produto extends Model
         'pr_nome',
         'pr_descricao',
         'pr_preco',
+        'pr_foto',
     ];
 
     public function avaliacoes()
