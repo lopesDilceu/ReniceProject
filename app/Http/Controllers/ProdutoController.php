@@ -59,7 +59,7 @@ class ProdutoController extends Controller
             'pr_foto' => $path,
         ]);
 
-        toastr()->title('Sucesso')->success('Produto cadastrado com sucesso!');
+        flash('Produto cadastrado com sucesso!', 'success',[], 'Sucesso');
 
         return redirect()->route('adm.produtos.list');
     }
@@ -90,7 +90,7 @@ class ProdutoController extends Controller
          $avaliacao->av_comentario = $request->av_comentario;
          $avaliacao->save();
      
-         toastr()->success('Avaliação enviada com sucesso!');
+         flash('Avaliação enviada com sucesso!', 'success',[], 'Sucesso');
          return redirect()->route('minhas-compras');
      }
     public function edit(Request $request, string $id)
@@ -98,7 +98,7 @@ class ProdutoController extends Controller
         //
         // $produto = Produto::find($id);
         Produto::findOrFail($id)->update($request->all());
-        toastr()->success('Produto atualizado com sucesso!');
+        flash('Produto atualizado com sucesso!', 'success',[], 'Sucesso');
         return back();
 
     }
@@ -123,7 +123,7 @@ class ProdutoController extends Controller
                 // Exclua a compra
                 $produto->delete();
 
-                toastr()->success('Produto excluído com sucesso!');
+                flash('Produto excluído com sucesso!', 'success',[], 'Sucesso');
         
                 // Redirecione de volta à página de compras ou faça qualquer outra coisa que você queira
                 return back();

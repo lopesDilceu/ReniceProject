@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Compra;
+use App\Models\Produto;
 use Illuminate\Http\Request;
 
 class CompraController extends Controller
@@ -13,7 +14,8 @@ class CompraController extends Controller
     public function index()
     {
         $compras = Compra::all(); 
-        return view('adm.compras.list', compact('compras'));
+        $produtos = Produto::all();
+        return view('adm.compras.list', compact('compras', 'produtos'));
     }
 
     /**

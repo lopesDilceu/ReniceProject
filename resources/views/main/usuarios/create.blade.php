@@ -22,11 +22,13 @@
         </div>
     @endif
 
-    <form class="form-register" method="POST" action="{{ route('usuarios.store') }}">
+    <form id="formCreate" class="form-register" method="POST" action="{{ route('usuarios.store') }}">
         @csrf
-        <a href="{{ route('home') }}" class="link-body-emphasis text-decoration-none">
-            <img src="{{ asset('images/logo/renice-logo-side.png') }}" alt="renice-logo" width="30%">
-        </a>
+        <div class="mb-4">
+            <a href="{{ route('home') }}" class="link-body-emphasis text-decoration-none">
+                <img src="{{ asset('images/logo/renice-logo-side.png') }}" alt="renice-logo" width="20%">
+            </a>
+        </div>
         <h1 class="h3 mb-2">CADASTRO</h1>
         <h2 class="h5 text-start">Dados Pessoais</h2>
         <div class="row g-2">
@@ -66,8 +68,49 @@
         </div>
         <h2 class="h5 text-start mt-2">Dados de Login</h2>
         <input type="email" class="form-control mb-2" id="email" name="email" placeholder="Email" value="{{ old('email') }}">
-        <input type="password" class="form-control mb-4" id="senha" name="password" placeholder="Senha">
+        <input type="password" class="form-control mb-2" id="senha" name="password" placeholder="Senha">
         <input type="password" class="form-control mb-4" id="password_confirmation" name="password_confirmation" placeholder="Confirme a Senha">
+        <section>
+            @error('name')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @error('telefones[]')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @error('us_cpf')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @error('us_data_nasc')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @error('enderecos[0][en_cep]')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @error('enderecos[0][en_logradouro]')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @error('enderecos[0][en_numero]')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @error('enderecos[0][en_bairro]')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @error('enderecos[0][en_cidade]')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @error('enderecos[0][en_estado]')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @error('email')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @error('password')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @error('password_confirmation')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </section>
         <div class="d-grid d-md-flex gap-2 justify-content-md-end">
             <button type="button" class="btn btn-outline-secondary" id="voltar">Voltar</button>
             <button class="w-80 btn btn-lg btn-dark" type="submit">Cadastrar</button>
@@ -86,38 +129,26 @@
 
 @push('script')
 <script>
-document.querySelector('.form-register').addEventListener('submit', function(event) {
-    let isValid = true;
-    let messages = [];
+    $('#cpf').mask('000.000.000-00');
+    $('#telefone').mask('(00) 00000-0000');
+    $('#cep').mask('00000-000');
+    $('#formCreate').submit(function() {
+        console.log("#cpf")
+        $('#cpf').unmask();
+        $('#telefone').unmask();
+        $('#cep').unmask();
+    });
 
-    // Validações simples de exemplo
-    const name = document.getElementById('name').value;
-    if (!name) {
-        isValid = false;
-        messages.push('Nome é obrigatório.');
-    }
-
-    const email = document.getElementById('email').value;
-    if (!email) {
-        isValid = false;
-        messages.push('Email é obrigatório.');
-    } else if (!validateEmail(email)) {
-        isValid = false;
-        messages.push('Email inválido.');
-    }
-
-    const password = document.getElementById('senha').value;
-    if (!password || password.length < 6) {
-        isValid = false;
-        messages.push('Senha deve ter no mínimo 6 caracteres.');
-    }
-
-    // Se o formulário não for válido, exibe mensagens e previne o envio
-    if (!isValid) {
-        event.preventDefault();
-        alert(messages.join('\n'));
-    }
-});
+    $('#cep').blur(function() {
+        let cep = $('#cep').unmask().val();
+        $('#cep').mask('00000-000');
+        $.get('https://viacep.com.br/ws/'+ cep +'/json/', function(dados) {
+            $('#rua').val(dados.logradouro);
+            $('#bairro').val(dados.bairro);
+            $('#cidade').val(dados.localidade);
+            $('#estado').val(dados.uf);
+        });
+    });
 
 function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

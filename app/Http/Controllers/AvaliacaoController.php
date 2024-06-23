@@ -81,7 +81,7 @@ class AvaliacaoController extends Controller
                 // Exclua a compra
                 $avaliacao->delete();
 
-                toastr()->success('Avaliação excluído com sucesso!');
+                flash('Avaliação excluído com sucesso!', 'success',[], 'Successo');
         
                 // Redirecione de volta à página de compras ou faça qualquer outra coisa que você queira
                 return back();

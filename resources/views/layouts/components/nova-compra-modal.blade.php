@@ -11,8 +11,7 @@
                     <div class="row my-2">
                         <div class="col-12 col-lg-6 col-sm-12 text-center mb-3 mb-md-3 mb-lg-0">
                             <!-- Aqui pode adicionar uma imagem ou informações sobre o produto, se desejar -->
-                            <img src="{{ asset('images/logo/renice-logo-down.png')}}" alt="Logo" class="img-fluid rounded" width="50%">
-                            imagem do produto
+                            <img src="{{ asset('images/logo/renice-logo-down.png') }}" alt="Produto" class="img-fluid rounded" width="30%">
                         </div>
                         <div class="col-12 col-lg-6 col-sm-12">
                             <h2 class="h2">Informações da Compra</h2>

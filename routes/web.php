@@ -46,19 +46,29 @@ Route::prefix('usuarios')->group(function () {
         return view('main.usuarios.carrinho');
     })->name('usuarios.carrinho');
 
-Route::get('/pagamento', function () {
+    Route::get('/pagamento', function () {
         return view('main.usuarios.pagamento');
     })->name('usuarios.pagamento');
 
     Route::get('/minhas-compras', function () {
         return view('main.usuarios.minhas-compras');
     })->name('usuarios.minhas-compras');
+
+    Route::get('/carrinho', [ItensCarrinhoController::class, 'index'])->name('usuario.carrinho');
+    Route::delete('/carrinho/{ic_id}', [ItensCarrinhoController::class, 'destroy'])->name('usuario.carrinho.destroy');
+    Route::get('/pagamento', [ItensCarrinhoController::class, 'indexPagamento'])->name('usuario.pagamento');
+    Route::get('/finalizar/{ic_id_carrinho}', [ItensCarrinhoController::class, 'finalizarCompra'])->name('usuario.finalizar');
+
+    Route::middleware('auth')->get('/minha-conta', [UserController::class, 'minhaConta'])->name('minha-conta');
+
+    Route::get('/minhas-compras', [VendaController::class, 'minhasCompras'])->name('minhas-compras');
+
 });
 
 Route::resource('usuarios', UserController::class);
 
 // Rotas relacionadas à área administrativa
-Route::prefix('adm')->group(function () {
+Route::prefix('adm')->middleware('admin')->group(function () {
     Route::get('/', function () {
         return view('adm.home');
     })->name('adm.home');
@@ -111,17 +121,7 @@ Route::get('/produtos', [ProdutoController::class, 'indexHome'])->name('produtos
 Route::get('/avaliar-produto/{produto_id}', [ProdutoController::class, 'avaliarProduto'])->name('avaliar.produto');
 Route::post('/salvar-avaliacao', [ProdutoController::class, 'salvarAvaliacao'])->name('salvar.avaliacao');
 
-
-
-
+//Rota para armazenar no carrinho
 Route::post('/carrinho/store', [ItensCarrinhoController::class, 'store'])->name('carrinho.store');
 
-Route::get('/usuarios/carrinho', [ItensCarrinhoController::class, 'index'])->name('usuario.carrinho');
-Route::delete('/usuarios/carrinho/{ic_id}', [ItensCarrinhoController::class, 'destroy'])->name('usuario.carrinho.destroy');
-Route::get('/usuarios/pagamento', [ItensCarrinhoController::class, 'indexPagamento'])->name('usuario.pagamento');
-Route::get('/usuarios/finalizar/{ic_id_carrinho}', [ItensCarrinhoController::class, 'finalizarCompra'])->name('usuario.finalizar');
-
-Route::middleware('auth')->get('/usuarios/minha-conta', [UserController::class, 'minhaConta'])->name('minha-conta');
-
-Route::get('/usuarios/minhas-compras', [VendaController::class, 'minhasCompras'])->name('minhas-compras');
 

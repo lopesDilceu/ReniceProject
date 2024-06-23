@@ -20,6 +20,7 @@
                 <tr>
                     <th scope="col">Código</th>
                     <th scope="col">Cód. Produto</th>
+                    <th scope="col">Produto</th>
                     <th scope="col">Quantidade</th>
                     <th scope="col">Fornecedor</th>
                     <th scope="col">Preço uni.</th>
@@ -30,9 +31,17 @@
             <tbody>
                 @forelse($compras as $compra)
                 <tr>
-                    <td>00{{ $compra->co_id }}</td>
-                    <td>00{{ $compra->co_id_produto }}</td>
-                    <td>00{{ $compra->co_quantidade }}</td>
+                    <td>#0{{ $compra->co_id }}</td>
+                    <td>#0{{ $compra->co_id_produto }}</td>
+                    <td>
+                        @foreach ($produtos as $produto)
+                            @if ($produto->pr_id === $compra->co_id_produto)
+                                {{ $produto->pr_nome }}
+                                @break
+                            @endif
+                        @endforeach
+                    </td>
+                    <td>{{ $compra->co_quantidade }}</td>
                     <td>{{ $compra->co_fornecedor }}</td>
                     <td>R${{ $compra->co_preco_unitario }}</td>
                     <td>{{ $compra->created_at }}</td>
