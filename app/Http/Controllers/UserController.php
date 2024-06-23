@@ -67,7 +67,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'telefones.*' => 'required|string|max:15',
-            'us_cpf' => 'required|string|size:11',
+            'us_cpf' => 'required|string|size:11', // Regra para CPF com exatamente 11 caracteres
             'us_data_nasc' => 'required|date',
             'enderecos.0.en_cep' => 'required|string|size:8',
             'enderecos.0.en_logradouro' => 'required|string|max:255',
@@ -77,26 +77,11 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ], [
-            'name.required' => 'O nome é obrigatório.',
-            'telefones.*.required' => 'O telefone é obrigatório.',
-            'telefones.*.max' => 'O telefone deve ter no máximo 15 caracteres.',
             'us_cpf.required' => 'O CPF é obrigatório.',
             'us_cpf.size' => 'O CPF deve ter exatamente 11 caracteres.',
-            'us_data_nasc.required' => 'A data de nascimento é obrigatória.',
-            'enderecos.0.en_cep.required' => 'O CEP é obrigatório.',
-            'enderecos.0.en_cep.size' => 'O CEP deve ter exatamente 8 caracteres.',
-            'enderecos.0.en_logradouro.required' => 'O logradouro é obrigatório.',
-            'enderecos.0.en_numero.required' => 'O número é obrigatório.',
-            'enderecos.0.en_cidade.required' => 'A cidade é obrigatória.',
-            'enderecos.0.en_estado.required' => 'O estado é obrigatório.',
-            'email.required' => 'O email é obrigatório.',
-            'email.email' => 'O email deve ser um endereço válido.',
-            'email.unique' => 'O email já está cadastrado.',
-            'password.required' => 'A senha é obrigatória.',
-            'password.min' => 'A senha deve ter no mínimo 6 caracteres.',
-            'password.confirmed' => 'A confirmação da senha não corresponde.',
+            // Mensagens de validação para os outros campos
         ]);
-        
+    
         // Verificando se a validação falhou
         if ($validator->fails()) {
             return redirect()->back()

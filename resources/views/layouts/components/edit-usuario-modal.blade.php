@@ -5,7 +5,7 @@
                 <h1 class="modal-title h2" id="edit-usuario-modal-label">Editar Usuário</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" method="POST">
+            <form id="formEditUser" action="" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-body py-0">
@@ -17,8 +17,8 @@
                             <h2 class="h2">Informações do Usuário</h2>
                             <div class="form-group row my-2">
                                 <label for="CodigoUsuario" name="CodigoUsuario" class="col-sm-4 col-form-label"><b>Código:</b></label>
-                                <div class="col-sm-8">
-                                    <span id="CodigoUsuario" name="us_id"></span>
+                                <div class="col-sm-8 ">
+                                    <span id="CodigoUsuario" name="us_id" class="form-control"></span>
                                 </div>
                             </div>
                             <div class="form-group row my-2">
@@ -40,27 +40,27 @@
                                 </div>
                             </div>
                             <div class="form-group row my-2">
+                                <label for="editCriacaoUsuario" class="col-sm-4 col-form-label"><b>Data de Criação:</b></label>
+                                <div class="col-sm-8 ">
+                                    <span id="CriacaoUsuario" name="us_data_criacao" class="form-control"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row my-2">
                                 <label for="editEmailUsuario" class="col-sm-4 col-form-label"><b>Email:</b></label>
                                 <div class="col-sm-8">
                                     <input type="email" class="form-control" id="editEmailUsuario" name="email">
                                 </div>
                             </div>
                             <div class="form-group row my-2">
-                                <label for="editSenhaUsuario" class="col-sm-4 col-form-label"><b>Senha:</b></label>
-                                <div class="col-sm-8">
-                                    <input type="password" class="form-control" id="editSenhaUsuario" name="password">
-                                </div>
-                            </div>
-                            <div class="form-group row my-2">
                                 <label for="editAdmUsuario" class="col-sm-4 col-form-label"><b>Administrador:</b></label>
+                                {{-- <div class="col-sm-8">
+                                    <input type="select" class="form-control" id="editAdmUsuario" name="us_adm">
+                                </div> --}}
                                 <div class="col-sm-8">
-                                    <input type="number" class="form-control" id="editAdmUsuario" name="us_adm">
-                                </div>
-                            </div>
-                            <div class="form-group row my-2">
-                                <label for="editCriacaoUsuario" class="col-sm-4 col-form-label"><b>Data de Criação:</b></label>
-                                <div class="col-sm-8">
-                                    <span id="CriacaoUsuario" name="us_data_criacao"></span>
+                                    <select name="us_adm" id="editAdmUsuario" form="formEditUser" class="form-control">
+                                        <option value="1">Sim</option>
+                                        <option value="0">Não</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

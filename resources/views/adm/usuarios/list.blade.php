@@ -60,59 +60,49 @@
 
 @push('script')
 <script>
-    $('.edit-usuario').on('click', function() {
-        const us_id = $(this).data('id');
-        const users = @json($users);
-        let user = users.filter(user => user.us_id === us_id)[0];
+    $(document).ready(function() {
+        // Função para abrir o modal de edição e aplicar máscara de CPF
+        $('.edit-usuario').on('click', function() {
+            const us_id = $(this).data('id');
+            const users = @json($users);
+            let user = users.filter(user => user.us_id === us_id)[0];
 
-        let modal = $('#edit-usuario-modal');
+            let modal = $('#edit-usuario-modal');
 
-        modal.find('#CodigoUsuario').text(user.us_id);
-        modal.find('#editNomeUsuario').val(user.name);
-        modal.find('#editCpfUsuario').val(user.us_cpf);
-        modal.find('#editNascUsuario').val(user.us_data_nasc);
-        modal.find('#editEmailUsuario').val(user.email);
-        modal.find('#editAdmUsuario').val(user.us_adm);
-        modal.find('#CriacaoUsuario').text(user.us_data_criacao);
+            modal.find('#CodigoUsuario').text(user.us_id);
+            modal.find('#editNomeUsuario').val(user.name);
+            modal.find('#editCpfUsuario').val(user.us_cpf).mask('000.000.000-00');
+            modal.find('#editNascUsuario').val(user.us_data_nasc);
+            modal.find('#editEmailUsuario').val(user.email);
+            modal.find('#editAdmUsuario').val(user.us_adm);
+            modal.find('#CriacaoUsuario').text(user.us_data_criacao);
 
-        modal.find('form').attr('action', '{{ route('adm.usuario.edit') }}/' + us_id);
-    });
+            modal.find('form').attr('action', '{{ route('adm.usuario.edit') }}/' + us_id);
 
-    $('.ver-usuario').on('click', function() {
-        const us_id = $(this).data('id');
-        const users = @json($users);
-        let user = users.find(user => user.us_id === us_id);
+            modal.modal('show');
+        });
+        
+        $('#formEditUser').submit(function() {
+            $('#editCpfUsuario').unmask();
+        });
+        // Função para abrir o modal de visualização
+        $('.ver-usuario').on('click', function() {
+            const us_id = $(this).data('id');
+            const users = @json($users);
+            let user = users.find(user => user.us_id === us_id);
 
-        let modal = $('#dados-usuario-modal');
+            let modal = $('#dados-usuario-modal');
 
-        modal.find('#CodigoUsuario').text(user.us_id);
-        modal.find('#NomeUsuario').text(user.name);
-        modal.find('#CpfUsuario').text(user.us_cpf);
-        modal.find('#NascimentoUsuario').text(user.us_data_nasc);
-        modal.find('#EmailUsuario').text(user.email);
-        modal.find('#AdmUsuario').text(user.us_adm ? 'Sim' : 'Não');
-        modal.find('#CriacaoUsuario').text(user.us_data_criacao);
+            modal.find('#CodigoUsuario').text(user.us_id);
+            modal.find('#NomeUsuario').text(user.name);
+            modal.find('#CpfUsuario').text(user.us_cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')); // Aplica a máscara de CPF
+            modal.find('#NascimentoUsuario').text(user.us_data_nasc);
+            modal.find('#EmailUsuario').text(user.email);
+            modal.find('#AdmUsuario').text(user.us_adm ? 'Sim' : 'Não');
+            modal.find('#CriacaoUsuario').text(user.us_data_criacao);
 
-        modal.modal('show');
-    });
-
-    $('#editButton').on('click', function() {
-        const us_id = $('#dados-usuario-modal').find('#CodigoUsuario').text();
-        const users = @json($users);
-        let user = users.find(user => user.us_id == us_id);
-
-        let modal = $('#edit-usuario-modal');
-
-        modal.find('#CodigoUsuario').text(user.us_id);
-        modal.find('#editNomeUsuario').val(user.name);
-        modal.find('#editCpfUsuario').val(user.us_cpf);
-        modal.find('#editNascUsuario').val(user.us_data_nasc);
-        modal.find('#editEmailUsuario').val(user.email);
-        modal.find('#editAdmUsuario').val(user.us_adm);
-        modal.find('#CriacaoUsuario').text(user.us_data_criacao);
-
-        modal.find('form').attr('action', '{{ route('adm.usuario.edit') }}/' + us_id);
-        modal.modal('show');
+            modal.modal('show');
+        });
     });
 </script>
 @endpush

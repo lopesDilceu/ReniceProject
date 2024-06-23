@@ -8,50 +8,50 @@
             <div class="modal-body py-0">
                 <div class="row my-2">
                     <div class="col-12 col-lg-6 col-sm-12 text-center mb-3 mb-md-3 mb-lg-0">
-                        <img src="{{ asset('images/logo/renice-logo-down.png')}}" alt="Logo" class="img-fluid rounded" width="50%">
+                        <img src="{{ asset('images/logo/renice-logo-down.png')}}" alt="Logo" class="img-fluid rounded" width="40%">
                     </div>
                     <div class="col-12 col-lg-6 col-sm-12">
                         <h2 class="h2">Informações do Usuário</h2>
                         <div class="form-group row my-2">
-                            <label for="CodigoUsuario" class="col-sm-4 col-form-label"><b>Código:</b></label>
-                            <div class="col-sm-8">
+                            <label for="CodigoUsuario" class="col-sm-12 col-form-label"><b>Código:</b></label>
+                            <div class="col-sm-12 form-control">
                                 <span id="CodigoUsuario"></span>
                             </div>
                         </div>
                         <div class="form-group row my-2">
-                            <label for="NomeUsuario" class="col-sm-4 col-form-label"><b>Nome:</b></label>
-                            <div class="col-sm-8">
+                            <label for="NomeUsuario" class="col-sm-12 col-form-label"><b>Nome:</b></label>
+                            <div class="col-sm-12 form-control">
                                 <span id="NomeUsuario"></span>
                             </div>
                         </div>
                         <div class="form-group row my-2">
-                            <label for="CpfUsuario" class="col-sm-4 col-form-label"><b>CPF:</b></label>
-                            <div class="col-sm-8">
+                            <label for="CpfUsuario" class="col-sm-12 col-form-label"><b>CPF:</b></label>
+                            <div class="col-sm-12 form-control">
                                 <span id="CpfUsuario"></span>
                             </div>
                         </div>
-                        <div class="form-group row my-2">
-                            <label for="NascimentoUsuario" class="col-sm-4 col-form-label"><b>Data de Nascimento:</b></label>
-                            <div class="col-sm-8">
-                                <span id="NascimentoUsuario"></span>
+                    </div>
+                    <div class="col-12 col-lg-12 col-sm-12">
+                        <div class="row g-2">
+                            <div class="col-md-6 col-sm-12">
+                                <label for="NascimentoUsuario" class="col-sm-12 col-form-label"><b>Data de Nascimento:</b></label>
+                                <div class="col-sm-12 form-control">
+                                    <span id="NascimentoUsuario"></span>
+                                </div>
+                                <label for="CriacaoUsuario" class="col-sm-12 col-form-label"><b>Data de Criação:</b></label>
+                                <div class="col-sm-12 form-control">
+                                    <span id="CriacaoUsuario"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row my-2">
-                            <label for="EmailUsuario" class="col-sm-4 col-form-label"><b>Email:</b></label>
-                            <div class="col-sm-8">
-                                <span id="EmailUsuario"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row my-2">
-                            <label for="AdmUsuario" class="col-sm-4 col-form-label"><b>Administrador:</b></label>
-                            <div class="col-sm-8">
+                            <div class="col-md-6 col-sm-12">
+                                <label for="EmailUsuario" class="col-sm-12 col-form-label"><b>Email:</b></label>
+                                <div class="col-sm-12 form-control">
+                                    <span id="EmailUsuario"></span>
+                                </div>
+                                <label for="AdmUsuario" class="col-sm-12 col-form-label"><b>Administrador:</b></label>
+                            <div class="col-sm-12 form-control">
                                 <span id="AdmUsuario"></span>
                             </div>
-                        </div>
-                        <div class="form-group row my-2">
-                            <label for="CriacaoUsuario" class="col-sm-4 col-form-label"><b>Data de Criação:</b></label>
-                            <div class="col-sm-8">
-                                <span id="CriacaoUsuario"></span>
                             </div>
                         </div>
                     </div>

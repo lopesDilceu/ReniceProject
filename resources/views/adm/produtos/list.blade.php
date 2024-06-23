@@ -66,6 +66,8 @@
 
             let pr_nome = modal.find('#editNomeProduto').val(produto.pr_nome);
 
+            //modal.find('.modal-body img').attr('src', '{{asset('')}}' + produto.pr_foto);
+
             let pr_descricao = modal.find('#editDescricaoProduto').val(produto.pr_descricao);
 
             let pr_preco = modal.find('#editPrecoProduto').val(produto.pr_preco);
@@ -87,6 +89,10 @@
 
             // Atualiza o nome do produto
             modal.find('#NomeProduto').text(produto.pr_nome);
+
+            modal.find('.modal-body img').attr('src', '{{asset('')}}' + produto.pr_foto);
+    
+            modal.find('.modal-body img').attr('alt', produto.pr_nome);
 
             // Atualiza a descrição do produto
             modal.find('#DescricaoProduto').text(produto.pr_descricao);

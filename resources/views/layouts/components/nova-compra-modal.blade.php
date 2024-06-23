@@ -5,7 +5,7 @@
                 <h1 class="modal-title h2" id="nova-compra-modal-label">Nova Compra</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('adm.compras.store')}}" method="POST">
+            <form id="formCompra" action="{{ route('adm.compras.store')}}" method="POST">
                 @csrf
                 <div class="modal-body py-0">
                     <div class="row my-2">
@@ -24,7 +24,7 @@
                             <div class="form-group row my-2">
                                 <label for="quantidade" class="col-sm-4 col-form-label"><b>Quantidade:</b></label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="quantidade" name="co_quantidade">
+                                    <input type="number" class="form-control" id="quantidade" name="co_quantidade">
                                 </div>
                             </div>
                             <div class="form-group row my-2">
@@ -50,3 +50,26 @@
         </div>
     </div>
 </div>
+
+@push('script')
+<script>
+    $(document).ready(function() {
+        $('#precoUnitario').maskMoney({
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            affixesStay: false,
+            allowZero: true,
+            precision: 2,
+            reverse: true
+        });
+
+        $('#formCompra').submit(function() {
+            var unmaskedValue = $('#precoUnitario').maskMoney('unmasked')[0];
+            $('#precoUnitario').val(unmaskedValue);
+            return true; 
+        });
+    });
+</script>
+
+@endpush

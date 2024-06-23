@@ -5,7 +5,7 @@
                 <h1 class="modal-title h2" id="novo-produto-modal-label">Novo Produto</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" action="{{ route('adm.produto.store') }}" enctype="multipart/form-data">
+            <form id="formNovoProduto" method="POST" action="{{ route('adm.produto.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body py-0">
                     <div class="row my-2">
@@ -20,7 +20,7 @@
                             <div class="form-group row my-2 col-sm-12 col-lg-6">
                                 <label for="precoProduto" class="col-sm-12 col-form-label"><b>Preço do Produto:</b></label>
                                 <div class="col-sm-12">
-                                    <input type="number" class="form-control" id="precoProduto" name="pr_preco">
+                                    <input type="text" class="form-control" id="precoProduto" name="pr_preco">
                                 </div>
                             </div>
                             <div class="form-group row my-2 col-sm-12">
@@ -46,3 +46,26 @@
         </div>
     </div>
 </div>
+
+@push('script')
+<script>
+    $(document).ready(function() {
+        $('#precoProduto').maskMoney({
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            affixesStay: false,
+            allowZero: true,
+            precision: 2,
+            reverse: true
+        });
+
+        $('#formNovoProduto').submit(function() {
+            var unmaskedValue = $('#precoProduto').maskMoney('unmasked')[0];
+            $('#precoProduto').val(unmaskedValue);
+            return true; 
+        });
+    });
+</script>
+
+@endpush

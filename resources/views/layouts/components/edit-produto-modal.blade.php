@@ -5,7 +5,7 @@
                 <h1 class="modal-title h2">Editar Produto</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" method="POST">
+            <form id="formProduto" action="" method="POST">
                 @csrf
                 @method('PUT')
                 
@@ -31,6 +31,7 @@
                                     <textarea class="form-control" id="editDescricaoProduto" rows="3" name="pr_descricao"></textarea>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -42,3 +43,26 @@
         </div>
     </div>
 </div>
+
+@push('script')
+<script>
+    $(document).ready(function() {
+        $('#editPrecoProduto').maskMoney({
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            affixesStay: false,
+            allowZero: true,
+            precision: 2,
+            reverse: true
+        });
+
+        $('#formProduto').submit(function() {
+            var unmaskedValue = $('#editPrecoProduto').maskMoney('unmasked')[0];
+            $('#editPrecoProduto').val(unmaskedValue);
+            return true; 
+        });
+    });
+</script>
+
+@endpush
