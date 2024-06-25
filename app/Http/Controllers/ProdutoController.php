@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Avaliacao;
+use App\Models\Estoque;
 use App\Models\Produto;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,8 @@ class ProdutoController extends Controller
     {
         //
         $produtos = Produto::all(); 
-        return view('main.home-produtos', compact('produtos'));
+        $estoque = Estoque::all();
+        return view('main.home-produtos', compact('produtos', 'estoque'));
     }
 
     /**
@@ -41,7 +43,7 @@ class ProdutoController extends Controller
         $request->validate([
             'pr_nome' => 'required|string|max:255',
             'pr_descricao' => 'required|string',
-            'pr_preco' => 'required|numeric',
+            
             'pr_foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -55,7 +57,7 @@ class ProdutoController extends Controller
         $produto = Produto::create([
             'pr_nome' => $request->pr_nome,
             'pr_descricao' => $request->pr_descricao,
-            'pr_preco' => $request->pr_preco,
+            
             'pr_foto' => $path,
         ]);
 

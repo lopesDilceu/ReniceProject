@@ -39,6 +39,7 @@ class CompraController extends Controller
             'co_fornecedor' => $request->co_fornecedor,
         ]);
 
+        flash('Compra cadastrada com sucesso!', 'success',[], 'Sucesso');
         return redirect()->back();
     }
 

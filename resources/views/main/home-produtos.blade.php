@@ -16,12 +16,25 @@
                     <p class="card-text">R$ {{$produto->pr_preco}}</p>
                     <form action="{{ route('carrinho.store') }}" method="POST">
                         @csrf
+                        
                         <input type="hidden" name="pr_id" value="{{ $produto->pr_id }}">
                         <div class="d-flex gap-2 justify-content-center">
-                            <div class="col-3 col-sm-2" style="min-width: 60px;">
-                                <input type="number" class="form-control" name="ic_quantidade" min="1" max="100" step="1" value="1">
-                            </div>
-                            <button type="submit" class="btn btn-outline-success">ADCIONAR <img src="{{asset('/images/icons/carrinho.png')}}" alt="addToCarrinho" width="24px" height="24px"></button>
+                            @foreach ($estoque as $item)
+                                @if ($item->es_id_produto == $produto->pr_id)
+                                    @if ($item->es_quantidade > 0)
+                                        <div class="col-3 col-sm-2" style="min-width: 60px;">
+                                            <input type="number" class="form-control" name="ic_quantidade" min="1" max="100" step="1" value="1">
+                                        </div>
+                                        @auth
+                                            <button type="submit" class="btn btn-outline-success">ADCIONAR <img src="{{asset('/images/icons/carrinho.png')}}" alt="addToCarrinho" width="24px" height="24px"></button>
+                                        @else
+                                            <a href="{{ route('usuarios.login') }}" class="btn btn-outline-success">ADCIONAR <img src="{{asset('/images/icons/carrinho.png')}}" alt="addToCarrinho" width="24px" height="24px"></a>
+                                        @endauth
+                                    @else
+                                        <a href="#" class="btn btn-outline-danger" style="opacity: 40%;">INDISPONÍVEL <img src="{{asset('/images/icons/carrinho.png')}}" alt="addToCarrinho" width="24px" height="24px"></a>
+                                    @endif
+                                @endif
+                            @endforeach
                         </div>
                     </form>
                 </div>

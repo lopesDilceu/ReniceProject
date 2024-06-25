@@ -133,15 +133,6 @@
     $('#telefone').mask('(00) 00000-0000');
     $('#cep').mask('00000-000');
     $('#formCreate').submit(function(event) {
-        // Remover a máscara para obter o valor real do CPF
-        //let cpf = $('#cpf').val().replace(/\D/g, '');  //Remove todos os não dígitos
-
-        // Verificar se o CPF tem exatamente 11 caracteres
-        if (unmask(cpf.length) !== 11) {
-            alert('O CPF deve ter exatamente 11 dígitos.');
-            event.preventDefault(); // Impede o envio do formulário
-        }
-
         // Remover a máscara para enviar o valor correto
         $('#cpf').unmask();
         $('#telefone').unmask();

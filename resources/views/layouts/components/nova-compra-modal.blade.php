@@ -16,10 +16,19 @@
                         <div class="col-12 col-lg-6 col-sm-12">
                             <h2 class="h2">Informações da Compra</h2>
                             <div class="form-group row my-2">
-                                <label for="produtoCodigo" class="col-sm-4 col-form-label"><b>Código do Produto:</b></label>
+                                <label for="produtoCodigo" class="col-sm-4 col-form-label"><b>Produto:</b></label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="produtoCodigo" name="co_id_produto">
+                                    <select id="produtoCodigo" class="form-control" name="co_id_produto">
+                                        @forelse ($produtos as $produto)
+                                            <option value="{{ $produto->pr_id}}">{{$produto->pr_nome}}</option>
+                                        @empty
+                                            <option value="0">Nenhum produto encontrado</option>
+                                        @endforelse
+                                    </select>
                                 </div>
+                                <!-- <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="produtoCodigo" name="co_id_produto">
+                                </div> -->
                             </div>
                             <div class="form-group row my-2">
                                 <label for="quantidade" class="col-sm-4 col-form-label"><b>Quantidade:</b></label>
@@ -73,3 +82,50 @@
 </script>
 
 @endpush
+
+
+<!--Exemplo de rota dinamica para select-->
+
+
+                {{-- const radioSemVinculo = document.getElementById('opcaoSemVinculo');
+                const radioComVinculo = document.getElementById('opcaoComVinculo');
+                const selectProjeto = document.getElementById('selectProjeto');
+
+                // Hide the select element by default since the first radio button is pre-selected
+                selectProjeto.style.display = 'none';
+
+                // Add event listeners to the radio buttons
+                radioSemVinculo.addEventListener('click', () => {
+                    selectProjeto.style.display = 'none';
+                });
+
+                radioComVinculo.addEventListener('click', () => {
+                    selectProjeto.style.display = 'block';
+                });
+
+                $(document).ready(function() {
+                    $('#selectProjeto').on('change', function() {
+                        var projetoID = $(this).val();
+                        $('#form_acao').attr('action', '{{ route('acao.save', ':projetoID') }}'
+                            .replace(':projetoID', projetoID));
+                    });
+                });
+                <label class="radio-inline">
+                    <input required type="radio" name="vinculoProjeto" id="opcaoSemVinculo"> Ação sem
+                    vínculo a projetos
+                </label>
+                <label class="radio-inline">
+                    <input required type="radio" name="vinculoProjeto" id="opcaoComVinculo"> Vincular a
+                    um projeto
+                </label>
+
+                {{ Form::open(['id' => 'form_acao', 'method' => 'post']) }}
+                <select id="selectProjeto" class="form-control" style="margin-top: 5px">
+                    <option value="">Sem vínculo</option>
+                    @forelse ($projetos as $projeto)
+                        <option value="{{ $projeto->id }}">{{ str_limit($projeto->titulo, 80) }}
+                        </option>
+                    @empty
+                        <option value="0">Nenhum projeto encontrado</option>
+                    @endforelse
+                </select> --}}

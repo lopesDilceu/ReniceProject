@@ -13,6 +13,7 @@
                     <!-- <img src="{{asset('images/logo/renice-icon.png')}}" alt="renice-logo" width="30%"> -->
                     <br>
                     <h2 class="text-center" >SOBRE A LOJA</h2><br><br>
+                    <h1><strong>LEMBRAR DE ALTERAR PR_PRECO PARA NULL DEFAULT 0.00 </strong></h1>
                     Loja especializada na confecção e venda de copos com gelo.
                 </p>
                 <p>Nossos copos são comercializados prontos.</p>

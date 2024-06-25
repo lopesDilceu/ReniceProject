@@ -11,18 +11,18 @@
                     <div class="row my-2">
                         <div class="row">
                             <h2 class="h2">Informações do Produto</h2>
-                            <div class="form-group row my-2 col-sm-12 col-lg-6">
+                            <div class="form-group row my-2 col-sm-12 col-lg-12">
                                 <label for="nomeProduto" class="col-form-label"><b>Nome do Produto:</b></label>
                                 <div>
                                     <input type="text" class="form-control" id="nomeProduto" name="pr_nome">
                                 </div>
                             </div>
-                            <div class="form-group row my-2 col-sm-12 col-lg-6">
+                            {{-- <div class="form-group row my-2 col-sm-12 col-lg-6">
                                 <label for="precoProduto" class="col-sm-12 col-form-label"><b>Preço do Produto:</b></label>
                                 <div class="col-sm-12">
                                     <input type="text" class="form-control" id="precoProduto" name="pr_preco">
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-group row my-2 col-sm-12">
                                 <label for="descricaoProduto" class="col-form-label"><b>Descrição do Produto:</b></label>
                                 <div>
