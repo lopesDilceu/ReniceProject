@@ -26,6 +26,10 @@ class UserController extends Controller
         return view('adm.usuarios.list', compact('users', 'telefones', 'enderecos'));
     }
 
+    public function indexPerfil(){
+        $user = User::find(Auth::id());
+        return view('layouts.frame', compact('user'));
+    }
 
     public function minhaConta()
     {
@@ -82,6 +86,8 @@ class UserController extends Controller
             // Mensagens de validação para os outros campos
         ]);
     
+        $path = $request->file('us_foto')->store('perfil', 'public');
+        $path = 'storage/' . $path;
         // Verificando se a validação falhou
         if ($validator->fails()) {
             return redirect()->back()
@@ -135,15 +141,45 @@ class UserController extends Controller
         return view('main.usuarios.show', compact('usuario', 'telefones', 'endereco'));
     }
 
+    public function editar(){
+        $usuario = User::find(Auth::id());
+        $telefones = Telefone::where('te_us_id', $usuario->us_id)->get();
+
+        // Recuperar endereço do usuário
+        $endereco = Endereco::where('en_usuario_id', $usuario->us_id)->first();
+        return view('main.usuarios.edit', compact('usuario', 'telefones', 'endereco'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Request $request, string $id)
     {
-        User::findOrFail($id)->update($request->all());
-        flash('Usuario atualizado com sucesso!', 'success',[], 'Sucesso');
+        // Validar os dados do formulário, se necessário
+        $request->validate([
+            'us_foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Exemplo de validação para imagem
+            // Adicione outras regras de validação conforme necessário
+        ]);
+
+        // Encontrar o usuário pelo ID ou retornar um erro 404 se não encontrado
+        $user = User::findOrFail($id);
+
+        // Verificar se foi enviada uma nova foto e processá-la
+        if ($request->hasFile('us_foto')) {
+            // Armazenar a imagem na pasta 'perfil' dentro do disco 'public'
+            $path = $request->file('us_foto')->store('perfil', 'public');
+            // Atualizar o caminho da foto no objeto do usuário
+            $user->us_foto = 'storage/' . $path;
+        }
+
+        // Atualizar outros campos do usuário, se necessário
+        $user->fill($request->except('us_foto'))->save();
+
+        // Mensagem de flash para indicar sucesso na atualização do usuário
+        flash('Usuário atualizado com sucesso!', 'success');
+
+        // Redirecionar de volta para a página anterior
         return back();
-        
     }
 
     /**
@@ -171,7 +207,7 @@ class UserController extends Controller
         //dd($request->all());
         if (Auth::attempt($credentials)) {
             // Autenticação bem-sucedida, redirecionar para a página inicial
-            flash('Login Realizado', 'success',[], 'Sucesso');
+            // flash('Login Realizado', 'success',[], 'Sucesso');
             return redirect()->route('home');
         }
 

@@ -1,67 +1,90 @@
-@section('titulo', 'Editar Cadastro')
 @extends('layouts.frame')
+@section('titulo', 'Editar Cadastro')
 
-
-
-@push('style')
-<style>
-  body {
-    font-family: Akkurat-Mono, monospace;
-  }
-</style>
-@endpush
 @section('content')
 <div class="container-sm container-md container-lg p-5 text-center mt-3 mb-3">
-  <form class="form-register">
-    <a href="{{ route('home') }}" class="link-body-emphasis text-decoration-none">
-      <img src="{{asset('images/logo/renice-logo-side.png')}}" alt="renice-logo" width="18%" class="mb-4">
-    </a>
-    <h1 class="h3 mb-2">EDITAR DADOS</h1>
-    <h2 class="h5 text-start">Dados Pessoais</h2>
-    <div class="row g-2">
-      <div class="col-md-7 col-sm-12">
-        <input type="text" class="form-control mb-2" id="nome" placeholder="Nome" value="Nome do usuário">
-        <input type="text" class="form-control" id="telefone" placeholder="Telefone" value="Telefone do usuário">
-      </div>
-      <div class="col-md col-sm-12">
-        <input type="text" class="form-control mb-2" id="cpf" placeholder="CPF" value="CPF do usuário">
-        <input type="date" class="form-control mb-2" id="data-nasc" placeholder="Data de Nascimento" value="Data de Nascimento do usuário">
-      </div>
-    </div>
-    <h2 class="h5 text-start mt-2">Endereço</h2>
-    <div class="row g-2">
-      <div class="col-md col-sm-12">
-        <input type="text" class="form-control" id="cep" placeholder="CEP" value="CEP do usuário">
-      </div>
-      <div class="col-md-9 col-sm-12">
-        <input type="text" class="form-control" id="rua" placeholder="Rua" value="Rua do usuário">
-      </div>
-      <div class="col-md col-sm-12">
-        <input type="text" class="form-control mb-2" id="numero" placeholder="Número" value="Número do usuário">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <input type="text" class="form-control mb-2" id="bairro" placeholder="Bairro" value="Bairro do usuário">
-      </div>
-    </div>
-    <div class="row g-2">
-      <div class="col-md-7 col-sm-12">
-        <input type="text" class="form-control mb-2" id="cidade" placeholder="Cidade" value="Cidade do usuário">
-      </div>
-      <div class="col-md col-sm-12">
-        <input type="text" class="form-control mb-2" id="estado" placeholder="Estado" value="Estado do usuário">
-      </div>
-    </div>
-    <h2 class="h5 text-start mt-2">Dados de Login</h2>
-    <input type="email" class="form-control mb-2" id="email" placeholder="Email" value="email@exemplo.com">
-    <input type="password" class="form-control mb-4" id="senha" placeholder="Senha" value="senha">
-    <div class="d-grid d-md-flex gap-2 justify-content-md-end">
-      <a href="{{ route('home')}}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
-      <button class="w-80 btn btn-lg btn-dark" type="submit">Salvar Alterações</button>
-    </div>
+  <div>
+    
+    <h1 class="h3 mb-2">EDITAR DADOS DE {{strtoupper($usuario->name)}}</h1>
+    @if (isset($usuario->us_foto))
+      <img src="{{asset($usuario->us_foto)}}" alt="foto de {{$usuario->name}}" class="rounded-circle border" width="180px" height="180px">
+    @else
+      <img src="{{asset('images/perfil.png')}}" alt="foto de {{$usuario->name}}" class="rounded-circle border" width="180px" height="180px">
+    @endif
+    <form action="{{ route('usuarios.edit', [$usuario->us_id]) }}" method="POST" enctype="multipart/form-data">
+      @csrf
+      @method('PUT')
+      
+      <h2 class="h5 text-start">Dados Pessoais</h2>
+      <div class="text-start">
+        <div class="row g-2">
+          <div class="col-md-7 col-sm-12">
+            <label for="nome" class="form-label">Nome:</label>
+            <input type="text" id="nome" name="name" class="form-control mb-2" value="{{$usuario->name ?? '-----' }}">
+            
+            <label for="telefones" class="form-label">Telefones:</label>
+            @foreach($telefones as $telefone)
+              <input type="text" class="form-control mb-2" name="telefones[]" value="{{$telefone->te_numero ?? '-----' }}">
+            @endforeach
+          </div>
+          <div class="col-md col-sm-12">
+            <label for="cpf" class="form-label">CPF:</label>
+            <input type="text" id="cpf" name="us_cpf" class="form-control mb-2" value="{{$usuario->us_cpf ?? '-----' }}">
+            
+            <label for="data-nasc" class="form-label">Data de Nascimento:</label>
+            <input type="date" id="data-nasc" name="us_data_nasc" class="form-control mb-2" value="{{$usuario->us_data_nasc ?? '-----' }}">
+          </div>
+        </div>
+        
+        <h2 class="h5 text-start mt-2">Endereço</h2>
+        <div class="row g-2">
+          <div class="col-md col-sm-12">
+            <label for="cep" class="form-label">CEP:</label>
+            <input type="text" id="cep" name="en_cep" class="form-control mb-2" value="{{ $endereco->en_cep ?? '-----' }}">
+          </div>
+          <div class="col-md-9 col-sm-12">
+            <label for="logradouro" class="form-label">Logradouro:</label>
+            <input type="text" id="logradouro" name="en_logradouro" class="form-control mb-2" value="{{$endereco->en_logradouro ?? '-----' }}">
+          </div>
+          <div class="col-md col-sm-12">
+            <label for="numero" class="form-label">Número:</label>
+            <input type="text" id="numero" name="en_numero" class="form-control mb-2" value="{{$endereco->en_numero ?? '-----' }}">
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-12">
+            <label for="bairro" class="form-label">Bairro:</label>
+            <input type="text" id="bairro" name="en_bairro" class="form-control mb-2" value="{{$endereco->en_bairro ?? '-----' }}">
+          </div>
+        </div>
+        
+        <div class="row g-2">
+          <div class="col-md-7 col-sm-12">
+            <label for="cidade" class="form-label">Cidade:</label>
+            <input type="text" id="cidade" name="en_cidade" class="form-control mb-2" value="{{$endereco->en_cidade ?? '-----' }}">
+          </div>
+          <div class="col-md col-sm-12">
+            <label for="estado" class="form-label">Estado:</label>
+            <input type="text" id="estado" name="en_estado" class="form-control mb-2" value="{{$endereco->en_estado ?? '-----' }}">
+          </div>
+        </div>
+        
+        <h2 class="h5 text-start mt-2">Dados de Login</h2>
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" id="email" name="email" class="form-control mb-2" value="{{$usuario->email ?? '-----' }}">
+        
+        <!-- Campo para upload de foto -->
+        <label for="us_foto" class="form-label">Foto:</label>
+        <input type="file" id="us_foto" name="us_foto" class="form-control mb-2" value="{{$usuario->us_foto ?? '-----' }}">
 
-  </form>
+        <div class="d-grid d-md-flex gap-2 justify-content-md-end">
+          <button type="submit" class="btn btn-outline-primary"><i class="bi bi-save"></i> Salvar Alterações</button>
+          <a href="{{ route('minha-conta') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 
 @endsection

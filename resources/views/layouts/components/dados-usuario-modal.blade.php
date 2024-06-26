@@ -8,7 +8,7 @@
             <div class="modal-body py-0">
                 <div class="row my-2">
                     <div class="col-12 col-lg-6 col-sm-12 text-center mb-3 mb-md-3 mb-lg-0">
-                        <img src="{{ asset('images/logo/renice-logo-down.png')}}" alt="Logo" class="img-fluid rounded" width="40%">
+                        <img id="UserProfileImage" src="" alt="Logo" class="img-fluid rounded" width="40%">
                     </div>
                     <div class="col-12 col-lg-6 col-sm-12">
                         <h2 class="h2">Informações do Usuário</h2>

@@ -13,7 +13,7 @@
         <br>
         <p>O sistema em foi desenvolvido utilizando o Framework Laravel 11. Foi utilizado, também, Bootstrap e JQuery. O projeto em si nos permitiu trabalhar nossas habilidades de programação e entendimento de algoritmos e estrutura de dados, permitindo assim uma grande evolução como programadores.</p>
         <div class="text-center p-3">
-            <img src="{{asset('images/logo/renice-logo-side.png')}}" alt="ReniceLogo" width="20%">
+            <img src="{{asset('images/logo/renice-logo-side.png')}}" alt="ReniceLogo" width="10%">
         </div>
     </div>
 

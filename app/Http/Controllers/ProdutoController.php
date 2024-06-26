@@ -130,4 +130,15 @@ class ProdutoController extends Controller
                 // Redirecione de volta à página de compras ou faça qualquer outra coisa que você queira
                 return back();
     }
+
+    public function pesquisa (Request $request){
+        $query = $request->input('query');
+
+        // Assuming you have a model called "Product" and a table called "products"
+        $produtos = Produto::where('pr_nome', 'LIKE', "%{$query}%")
+                            ->orWhere('pr_descricao', 'LIKE', "%{$query}%")
+                            ->get();
+        $estoque = Estoque::all();
+        return view('main.home-produtos', compact('produtos', 'estoque'));
+    }
 }

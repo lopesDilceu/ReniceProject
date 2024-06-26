@@ -37,9 +37,8 @@ Route::prefix('usuarios')->group(function () {
 
     Route::post('/logout', [UserController::class, 'logout'])->name('usuarios.logout.submit');
 
-    Route::get('/editar', function () {
-        return view('main.usuarios.edit');
-    })->name('usuarios.edit');
+    
+
 
 
     Route::get('/carrinho', function () {
@@ -60,12 +59,14 @@ Route::prefix('usuarios')->group(function () {
     Route::get('/finalizar/{ic_id_carrinho}', [ItensCarrinhoController::class, 'finalizarCompra'])->name('usuario.finalizar');
 
     Route::middleware('auth')->get('/minha-conta', [UserController::class, 'minhaConta'])->name('minha-conta');
+    Route::middleware('auth')->get('/editar-dados', [UserController::class, 'editar'])->name('editar');
+    Route::put('/edit/{us_id}', [UserController::class, 'edit'])->name('usuarios.edit');
 
     Route::get('/minhas-compras', [VendaController::class, 'minhasCompras'])->name('minhas-compras');
 
 });
 
-Route::resource('usuarios', UserController::class);
+
 
 // Rotas relacionadas à área administrativa
 Route::prefix('adm')->middleware('admin')->group(function () {
@@ -103,6 +104,7 @@ Route::prefix('adm')->middleware('admin')->group(function () {
     Route::post('/produto', [ProdutoController::class, 'store'])->name('adm.produto.store');
     Route::put('/produtos/{pr_id?}', [ProdutoController::class, 'edit'])->name('adm.produto.edit');
     Route::delete('/produtos/{pr_id}', [ProdutoController::class, 'destroy'])->name('adm.produtos.destroy');
+    
 
     Route::get('/usuarios', [UserController::class, 'index'])->name('adm.usuarios.list');
     Route::put('/usuarios/{pr_id?}', [UserController::class, 'edit'])->name('adm.usuario.edit');
@@ -120,6 +122,7 @@ Route::prefix('adm')->middleware('admin')->group(function () {
 Route::get('/produtos', [ProdutoController::class, 'indexHome'])->name('produtos');
 Route::get('/avaliar-produto/{produto_id}', [ProdutoController::class, 'avaliarProduto'])->name('avaliar.produto');
 Route::post('/salvar-avaliacao', [ProdutoController::class, 'salvarAvaliacao'])->name('salvar.avaliacao');
+Route::get('/produtos/pesquisa', [ProdutoController::class, 'pesquisa'])->name('pesquisa');
 
 //Rota para armazenar no carrinho
 Route::post('/carrinho/store', [ItensCarrinhoController::class, 'store'])->name('carrinho.store');

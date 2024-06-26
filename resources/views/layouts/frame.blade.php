@@ -92,19 +92,30 @@
                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 </div>
               </form> -->
-              @auth
-              <a class="nav-link " href="{{ route('usuario.carrinho') }}" style="font-family: Akkurat-Mono, monospace; margin-right: 30px;">CARRINHO</a>
-              @endauth
+              <form class="d-flex" action="{{route('pesquisa')}}" method="GET" id="formSearch">
+                @csrf
+                <button class="btn" type="submit"><img src="{{asset('/images/icons/search.png')}}" alt="pesquisa" width="24px" height="24px"></button>
+                <input class="form-control me-3" type="search" placeholder="" aria-label="Search" name="query">
+                
+              </form>
+              
               <div class="dropdown text-end">
                 
+              @if (isset(auth()->user()->us_foto))
                 <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img src="{{ asset('images/perfil.png')}}" alt="perfil" width="30" height="30">
+                  <img src="{{ asset(auth()->user()->us_foto)}}" class="rounded-circle" alt="perfil" width="40px" height="40px">
                 </a>
+              @else
+                <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="{{ asset('images/perfil.png')}}" class="rounded-circle border" alt="perfil" width="40" height="40">
+                </a>
+                @endif
                 <ul class="dropdown-menu text-small">
                   @auth 
                   <!-- Verifica se o usuário está autenticado -->
                       <!-- Exibe o menu de opções da conta -->
                       <li><span class="dropdown-item bg-body">{{strtoupper(auth()->user()->name)}}</span></li>
+                      <li><a class="dropdown-item" href="{{ route('usuario.carrinho') }}">Carrinho
                       <li><a class="dropdown-item" href="{{ route('minha-conta') }}">Minhas Conta</a></li>
                       <li><a class="dropdown-item" href="{{ route('minhas-compras') }}">Minhas Compras</a></li>
                       <li>

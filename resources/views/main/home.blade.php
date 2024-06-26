@@ -7,13 +7,12 @@
     <h1 class="h1 mb-4 text-center" style="font-family: Akkurat-Mono, monospace;" >BEM-VINDO</h1>
     <div class=" home-container" >
         <img src="{{asset('images/gelo2.png')}}" alt="gelo" style="width: 100%;">
-        <div class="home " style="width:400px; height:600px">
+        <div class="home col-sm-12" style="width:400px; height:600px">
             <h6>
                 <p>
                     <!-- <img src="{{asset('images/logo/renice-icon.png')}}" alt="renice-logo" width="30%"> -->
                     <br>
                     <h2 class="text-center" >SOBRE A LOJA</h2><br><br>
-                    <h1><strong>LEMBRAR DE ALTERAR PR_PRECO PARA NULL DEFAULT 0.00 </strong></h1>
                     Loja especializada na confecção e venda de copos com gelo.
                 </p>
                 <p>Nossos copos são comercializados prontos.</p>

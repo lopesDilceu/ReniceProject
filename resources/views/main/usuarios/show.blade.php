@@ -6,6 +6,11 @@
   <div>
     
     <h1 class="h3 mb-2">DADOS DE {{strtoupper($usuario->name)}}</h1>
+    @if (isset($usuario->us_foto))
+      <img src="{{asset($usuario->us_foto)}}" alt="foto de {{$usuario->name}}" class="rounded-circle border" width="180px" height="180px">
+    @else
+      <img src="{{asset('images/perfil.png')}}" alt="foto de {{$usuario->name}}" class="rounded-circle border" width="180px" height="180px">
+    @endif
     <h2 class="h5 text-start">Dados Pessoais</h2>
     <div class="text-start">
       <div class="row g-2">
@@ -59,6 +64,7 @@
       <label for="email" class="form-label">Email:</label>
       <span id="email" class="form-control mb-2">{{$usuario->email ?? '-----' }}</span>
       <div class="d-grid d-md-flex gap-2 justify-content-md-end">
+        <a href="{{ route('editar') }}" class="btn btn-outline-primary"><i class="bi bi-pencil"></i> Editar</a>
         <a href="{{ route('home') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
       </div>
     </div>
@@ -66,22 +72,3 @@
 </div>
 
 @endsection
-
-@push('script')
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    const senhaInput = document.getElementById('senha');
-    const btnTogglePassword = document.getElementById('btnTogglePassword');
-
-    btnTogglePassword.addEventListener('click', function () {
-      if (senhaInput.type === 'password') {
-      senhaInput.type = 'text';
-      btnTogglePassword.textContent = 'Esconder Senha';
-      } else {
-      senhaInput.type = 'password';
-      btnTogglePassword.textContent = 'Mostrar Senha';
-      }
-    });
-    });
-  </script>
-@endpush
