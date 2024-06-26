@@ -22,7 +22,10 @@ class ProdutoController extends Controller
     public function indexHome()
     {
         //
-        $produtos = Produto::all(); 
+        $produtos = Produto::join('estoque', 'produtos.pr_id', '=', 'estoque.es_id_produto')
+        ->select('produtos.*')
+        ->orderBy('estoque.es_quantidade', 'desc')
+        ->get();
         $estoque = Estoque::all();
         return view('main.home-produtos', compact('produtos', 'estoque'));
     }
