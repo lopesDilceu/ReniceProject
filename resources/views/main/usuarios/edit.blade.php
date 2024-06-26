@@ -29,7 +29,7 @@
           </div>
           <div class="col-md col-sm-12">
             <label for="cpf" class="form-label">CPF:</label>
-            <input type="text" id="cpf" name="us_cpf" class="form-control mb-2" value="{{$usuario->us_cpf ?? '-----' }}">
+            <input type="text" id="cpf" name="us_cpf" class="form-control mb-2" value="{{formatar_cpf($usuario->us_cpf)  ?? '-----' }}">
             
             <label for="data-nasc" class="form-label">Data de Nascimento:</label>
             <input type="date" id="data-nasc" name="us_data_nasc" class="form-control mb-2" value="{{$usuario->us_data_nasc ?? '-----' }}">
@@ -44,7 +44,7 @@
           </div>
           <div class="col-md-9 col-sm-12">
             <label for="logradouro" class="form-label">Logradouro:</label>
-            <input type="text" id="logradouro" name="en_logradouro" class="form-control mb-2" value="{{$endereco->en_logradouro ?? '-----' }}">
+            <input type="text" id="rua" name="en_logradouro" class="form-control mb-2" value="{{$endereco->en_logradouro ?? '-----' }}">
           </div>
           <div class="col-md col-sm-12">
             <label for="numero" class="form-label">Número:</label>
@@ -86,5 +86,38 @@
     </form>
   </div>
 </div>
+
+@push('script')
+<script>
+    $('#cpf').mask('000.000.000-00');
+    $('#telefone').mask('(00) 00000-0000');
+    $('#cep').mask('00000-000');
+    $('#formCreate').submit(function(event) {
+        // Remover a máscara para enviar o valor correto
+        $('#cpf').unmask();
+        $('#telefone').unmask();
+        $('#cep').unmask();
+    });
+
+    $('#cep').blur(function() {
+        let cep = $('#cep').unmask().val();
+        $('#cep').mask('00000-000');
+        $.get('https://viacep.com.br/ws/'+ cep +'/json/', function(dados) {
+            $('#rua').val(dados.logradouro);
+            $('#bairro').val(dados.bairro);
+            $('#cidade').val(dados.localidade);
+            $('#estado').val(dados.uf);
+        });
+    });
+
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+</script>
+
+
+@endpush
 
 @endsection

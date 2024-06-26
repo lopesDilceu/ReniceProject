@@ -28,7 +28,7 @@
                 <tr>
                     <td>00{{ $user->us_id }}</td>
                     <td>{{ $user->name}}</td>
-                    <td>{{ $user->us_cpf }}</td>
+                    <td>{{formatar_cpf($user->us_cpf)}}</td>
                     <td>{{ $user->email }}</td>
                     <td class="text-center">
                         <button class="btn btn-outline-light ver-usuario" data-bs-toggle="modal"

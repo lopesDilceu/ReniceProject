@@ -43,8 +43,8 @@
                     </td>
                     <td>{{ $compra->co_quantidade }}</td>
                     <td>{{ $compra->co_fornecedor }}</td>
-                    <td>R${{ $compra->co_preco_unitario }}</td>
-                    <td>{{ $compra->created_at }}</td>
+                    <td>R${{number_format($compra->co_preco_unitario, 2, ',', '.')}}</td>
+                    <td>{{$compra->created_at}}</td>
                     <td>
                     <form action="{{ route('adm.compras.destroy', $compra->co_id) }}" method="post" style="display: inline;">
                         @csrf

@@ -29,7 +29,7 @@
                 <tr>
                     <td>00{{ $produto->pr_id }}</td>
                     <td>{{ $produto->pr_nome }}</td>
-                    <td>R${{ $produto->pr_preco }}</td>
+                    <td>R${{number_format($produto->pr_preco, 2, ',', '.')}}</td>
                     <td>{{ $produto->pr_data_criacao }}</td>
                     <td>
                     <button class="btn btn-outline-light ver-produto" data-bs-toggle="modal"

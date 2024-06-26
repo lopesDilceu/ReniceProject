@@ -25,13 +25,13 @@
             <tbody>
                 @forelse($estoques as $estoque)
                     <tr>
-                        <td>00{{ $estoque->es_id_produto }}</td>
+                        <td>#0{{ $estoque->es_id_produto }}</td>
                         <td>{{ $estoque->es_nome_produto }}</td>
-                        <td>00{{ $estoque->es_quantidade }}</td>
+                        <td>{{ $estoque->es_quantidade }}</td>
                         <td>
                             @foreach ($produtos as $produto)
                                 @if ($produto->pr_id === $estoque->es_id_produto)
-                                    {{ $produto->pr_preco }}
+                                    R${{number_format($produto->pr_preco, 2, ',', '.')}}
                                     @break
                                 @endif
                             @endforeach

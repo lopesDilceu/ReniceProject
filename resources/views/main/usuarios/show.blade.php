@@ -19,12 +19,12 @@
           <span id="nome" class="form-control mb-2">{{$usuario->name ?? '-----' }}</span>
           <label for="telefones" class="form-label">Telefones:</label>
           @foreach($telefones as $telefone)
-            <span class="form-control mb-2">{{$telefone->te_numero ?? '-----' }}</span>
+            <span class="form-control mb-2">{{formatar_tel($telefone->te_numero) ?? '-----' }}</span>
           @endforeach
         </div>
         <div class="col-md col-sm-12">
           <label for="cpf" class="form-label">CPF:</label>
-          <span id="cpf" class="form-control mb-2">{{$usuario->us_cpf ?? '-----' }}</span>
+          <span id="cpf" class="form-control mb-2">{{formatar_cpf($usuario->us_cpf) ?? '-----' }}</span>
           <label for="data-nasc" class="form-label">Data de Nascimento:</label>
           <span id="data-nasc" class="form-control mb-2">{{$usuario->us_data_nasc ?? '-----' }}</span>
         </div>
@@ -33,7 +33,7 @@
       <div class="row g-2">
         <div class="col-md col-sm-12">
           <label for="cep" class="form-label">CEP:</label>
-          <span id="cep" class="form-control mb-2">{{ $endereco->en_cep ?? '-----' }}</span>
+          <span id="cep" class="form-control mb-2">{{ formatar_cep($endereco->en_cep) ?? '-----' }}</span>
         </div>
         <div class="col-md-9 col-sm-12">
           <label for="logradouro" class="form-label">Logradouro:</label>

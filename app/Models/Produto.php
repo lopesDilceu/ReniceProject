@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Produto extends Model
 {
@@ -17,6 +18,7 @@ class Produto extends Model
         'pr_foto',
     ];
 
+    use SoftDeletes;
     public function avaliacoes()
     {
         return $this->hasMany(Avaliacao::class, 'av_id_produto');
