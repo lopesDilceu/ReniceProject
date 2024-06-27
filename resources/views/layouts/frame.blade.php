@@ -71,9 +71,9 @@
               <li class="nav-item">
                 <a class="nav-link  @yield('avaliacoes')" href="{{ route('avaliacoes') }}" style="font-family: Akkurat-Mono, monospace;">AVALIAÇÕES</a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a class="nav-link  @yield('sobre')" href="{{ route('sobre') }}" style="font-family: Akkurat-Mono, monospace;">SOBRE O PROJETO</a>
-              </li>
+              </li> --}}
               @auth
               @if(auth()->user()->us_adm == 1)
                   <!-- Se o usuário é um administrador, exibe o menu ADM -->
@@ -145,7 +145,7 @@
   
   <footer class="border-top">
       <div class="container d-flex flex-wrap justify-content-between align-items-center py-1 my-4">
-          <p class="col-md-4 mb-0 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">&copy; 2024 - <a href="https://github.com/lopesDilceu" target="_blank" class="text-decoration-none text-body-secondary">Dilceu Lopes</a></p>
+          <p class="col-md-4 mb-0 text-body-secondary" style="font-family: Akkurat-Mono, monospace;">&copy; 2024 - <a href="https://github.com/lopesDilceu" target="_blank" class="text-decoration-none text-body-secondary">Dilceu Lopes</a> e Renan Ciríaco</p>
           <!-- <a href="{{ route('home') }}" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
               <img src="{{ asset('images/logo/renice-icon.png')}}" alt="renice-icon" width="60" height="60">
           </a> -->

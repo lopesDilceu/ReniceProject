@@ -11,7 +11,7 @@
     @else
       <img src="{{asset('images/perfil.png')}}" alt="foto de {{$usuario->name}}" class="rounded-circle border" width="180px" height="180px">
     @endif
-    <form action="{{ route('usuarios.edit', [$usuario->us_id]) }}" method="POST" enctype="multipart/form-data">
+    <form id="formEdit" action="{{ route('usuarios.edit', [$usuario->us_id]) }}" method="POST" enctype="multipart/form-data">
       @csrf
       @method('PUT')
       
@@ -29,7 +29,7 @@
           </div>
           <div class="col-md col-sm-12">
             <label for="cpf" class="form-label">CPF:</label>
-            <input type="text" id="cpf" name="us_cpf" class="form-control mb-2" value="{{formatar_cpf($usuario->us_cpf)  ?? '-----' }}">
+            <input type="text" id="cpf" name="us_cpf" class="form-control mb-2" value="{{$usuario->us_cpf  ?? '-----' }}">
             
             <label for="data-nasc" class="form-label">Data de Nascimento:</label>
             <input type="date" id="data-nasc" name="us_data_nasc" class="form-control mb-2" value="{{$usuario->us_data_nasc ?? '-----' }}">
@@ -92,7 +92,7 @@
     $('#cpf').mask('000.000.000-00');
     $('#telefone').mask('(00) 00000-0000');
     $('#cep').mask('00000-000');
-    $('#formCreate').submit(function(event) {
+    $('#formEdit').submit(function(event) {
         // Remover a máscara para enviar o valor correto
         $('#cpf').unmask();
         $('#telefone').unmask();

@@ -101,14 +101,16 @@
             modal.find('#AdmUsuario').text(user.us_adm ? 'Sim' : 'Não');
             modal.find('#CriacaoUsuario').text(user.us_data_criacao);
 
+            console.log(user.us_foto);
             if (user.us_foto) {
-                $('#UserProfileImage').attr('src', user.us_foto);
+                modal.find('#UserProfileImage').attr('src', user.us_foto);
             } else {
-                $('#UserProfileImage').attr('src', '{{ asset('images/logo/renice-logo-down.png') }}');
+                modal.find('#UserProfileImage').attr('src', '{{ asset('images/logo/renice-logo-down.png') }}');
             }
 
             modal.modal('show');
         });
+
     });
 </script>
 @endpush

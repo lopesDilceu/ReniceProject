@@ -12,8 +12,13 @@
             <div class="card shadow-sm">
                 <img src="{{ asset($produto->pr_foto) }}" alt="" class="rounded-top" height="270px">
                 <div class="card-body">
-                    <h5 class="card-title">{{$produto->pr_nome}}</h5>
-                    <p class="card-text">R$ {{$produto->pr_preco}}</p>
+                    <div style="height: 60px;">
+                        <h5 class="card-title">{{$produto->pr_nome}}</h5>
+                    </div>
+                    <div style="height: 100px;">
+                        <span class="card-title" style="font-size: 13px;">{{$produto->pr_descricao}}</>
+                    </div>
+                    <p class="card-text text-center">R${{number_format($produto->pr_preco, 2, ',', '.')}}</p>
                     <form action="{{ route('carrinho.store') }}" method="POST">
                         @csrf
                         
