@@ -15,10 +15,16 @@
                     <th scope="col">Total</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody >
                 @forelse($itenscarrinho as $itemcarrinho)
                 <tr>
                     <td>
+                        @foreach ($produtos as $produto)
+                            @if ($produto->pr_id === $itemcarrinho->ic_id_produto)
+                                <img src="{{ asset($produto->pr_foto) }}" alt="" class="rounded-circle" width="60" height="60"> 
+                                @break
+                            @endif
+                        @endforeach
                         @foreach ($produtos as $produto)
                             @if ($produto->pr_id === $itemcarrinho->ic_id_produto)
                                 {{ $produto->pr_nome }}

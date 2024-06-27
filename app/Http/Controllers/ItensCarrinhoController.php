@@ -66,18 +66,29 @@ class ItensCarrinhoController extends Controller
                 $carrinho->ca_id_usuario = Auth::id();
                 $carrinho->save();
             }
-
     
-            // Criar um novo item de carrinho
-            $item = new ItensCarrinho();
-            $item->ic_id_carrinho = $carrinho->ca_id;
-            $item->ic_id_produto = $produto_id;
-            $item->ic_quantidade = $quantidade;
-            $item->save();
-            flash('Produto adicionado com sucesso!', 'success',[], 'Sucesso');
+            // Verificar se o item já está no carrinho
+            $itemCarrinho = ItensCarrinho::where('ic_id_carrinho', $carrinho->ca_id)
+                                        ->where('ic_id_produto', $produto_id)
+                                        ->first();
+    
+            if ($itemCarrinho) {
+                // Se o item já está no carrinho, atualizar a quantidade
+                $itemCarrinho->ic_quantidade += $quantidade;
+                $itemCarrinho->save();
+            } else {
+                // Se o item não está no carrinho, criar um novo item de carrinho
+                $item = new ItensCarrinho();
+                $item->ic_id_carrinho = $carrinho->ca_id;
+                $item->ic_id_produto = $produto_id;
+                $item->ic_quantidade = $quantidade;
+                $item->save();
+            }
+    
+            flash('Produto adicionado com sucesso!', 'success', [], 'Sucesso');
             return redirect()->back();
         } else {
-            flash('Produto não adicionado!', 'error',[], 'Erro');
+            flash('Produto não adicionado!', 'error', [], 'Erro');
             return redirect()->route('login');
         }
     }
@@ -104,6 +115,28 @@ class ItensCarrinhoController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $itemCarrinho = ItensCarrinho::find($id);
+        $totalQuantidade = 0;
+        $totalValor = 0;
+    
+        if ($itemCarrinho) {
+            $itemCarrinho->ic_quantidade = $request->input('quantidade');
+            $itemCarrinho->save();
+    
+            // Calcular total
+            $itensCarrinho = ItensCarrinho::all();
+            foreach ($itensCarrinho as $item) {
+                $produto = Produto::find($item->ic_id_produto);
+                $totalQuantidade += $item->ic_quantidade;
+                $totalValor += $item->ic_quantidade * $produto->pr_preco;
+            }
+        }
+    
+        return response()->json([
+            'preco_unitario' => $itemCarrinho->produto->pr_preco,
+            'total_quantidade' => $totalQuantidade,
+            'total_valor' => number_format($totalValor, 2, ',', '.')
+        ]);
     }
 
     /**

@@ -32,7 +32,7 @@
                             <div >
                                 <div class="card shadow-sm"  >
                                     <div class="card-header text-center">
-                                        <img src="{{asset($produto->pr_foto)}}" alt="" class="rounded-circle" width="150" height="150">
+                                        <img src="{{asset($produto->pr_foto)}}" alt="" class="rounded-circle mb-2" width="150" height="150">
                                         <h5 class="card-title text-center">{{ $produto->pr_nome }}</h5>
                                     </div>
                                     <div class="card-body produto-avaliacoes">

@@ -126,5 +126,7 @@ Route::get('/produtos/pesquisa', [ProdutoController::class, 'pesquisa'])->name('
 
 //Rota para armazenar no carrinho
 Route::post('/carrinho/store', [ItensCarrinhoController::class, 'store'])->name('carrinho.store');
+Route::patch('/carrinho/{id}', [ItensCarrinhoController::class, 'update'])->name('usuario.carrinho.update');
+
 
 
