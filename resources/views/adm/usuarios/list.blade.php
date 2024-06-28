@@ -26,11 +26,19 @@
             <tbody>
                 @forelse($users as $user)
                 <tr>
-                    <td>00{{ $user->us_id }}</td>
-                    <td>{{ $user->name}}</td>
-                    <td>{{formatar_cpf($user->us_cpf)}}</td>
-                    <td>{{ $user->email }}</td>
-                    <td class="text-center">
+                    <td class="align-middle">00{{ $user->us_id }}</td>
+                    <td class="align-middle">
+                        @if (isset($user->us_foto))
+                            <img src="{{ asset($user->us_foto) }}" alt="" class="rounded-circle" width="50" height="50">
+                        @else
+                            <img src="{{ asset('/images/perfil.png') }}" alt="" class="" width="50" height="50">
+                        @endif
+                        
+                        {{ $user->name}}
+                    </td>
+                    <td class="align-middle">{{formatar_cpf($user->us_cpf)}}</td>
+                    <td class="align-middle">{{ $user->email }}</td>
+                    <td class="text-center align-middle">
                         <button class="btn btn-outline-light ver-usuario" data-bs-toggle="modal"
                                 data-bs-target="#dados-usuario-modal" data-id="{{$user->us_id}}">
                             <img src="{{asset('/images/icons/ver.png')}}" alt="Ver" width="24px" height="24px">
@@ -85,6 +93,7 @@
         $('#formEditUser').submit(function() {
             $('#editCpfUsuario').unmask();
         });
+
         // Função para abrir o modal de visualização
         $('.ver-usuario').on('click', function() {
             const us_id = $(this).data('id');
@@ -103,7 +112,7 @@
 
             console.log(user.us_foto);
             if (user.us_foto) {
-                modal.find('#UserProfileImage').attr('src', user.us_foto);
+                modal.find('#UserProfileImage').attr('src', '{{ asset('') }}' + user.us_foto);
             } else {
                 modal.find('#UserProfileImage').attr('src', '{{ asset('images/logo/renice-logo-down.png') }}');
             }
@@ -114,5 +123,6 @@
     });
 </script>
 @endpush
+
 
 @endsection

@@ -2,19 +2,64 @@
 @section('titulo', 'Editar Cadastro')
 
 @section('content')
+
+@push('style')
+<style>
+  input[type="file"] {
+    visibility: hidden;
+    position: relative;
+    width: 300px;
+    height: 32px;
+    margin-bottom: 8px;
+  }
+
+  input[type="file"]:before {
+    content: attr(placeholder);
+    visibility: visible;
+    box-sizing: border-box;
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    
+    /* Add here your design... */
+    line-height: 16px;
+    padding: 8px 32px 8px 8px;
+    color: rgba(0,0,0,.3);
+    background-color: #fff;
+    border: 1px solid #c4c4c4;
+    border-radius: 4px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  input[type="file"]:after {
+    visibility: visible;
+    content: "\1F5BF";
+    position: absolute;
+    margin-top: 8px;
+    right: 8px;
+  }
+</style>
+@endpush
+
 <div class="container-sm container-md container-lg p-5 text-center mt-3 mb-3">
   <div>
     
     <h1 class="h3 mb-2">EDITAR DADOS DE {{strtoupper($usuario->name)}}</h1>
     @if (isset($usuario->us_foto))
-      <img src="{{asset($usuario->us_foto)}}" alt="foto de {{$usuario->name}}" class="rounded-circle border" width="180px" height="180px">
+      <img src="{{asset($usuario->us_foto)}}" alt="foto de {{$usuario->name}}" class="rounded-circle border mb-2" width="180px" height="180px">
     @else
-      <img src="{{asset('images/perfil.png')}}" alt="foto de {{$usuario->name}}" class="rounded-circle border" width="180px" height="180px">
+      <img src="{{asset('images/perfil.png')}}" alt="foto de {{$usuario->name}}" class="border mb-2" width="180px" height="180px">
     @endif
     <form id="formEdit" action="{{ route('usuarios.edit', [$usuario->us_id]) }}" method="POST" enctype="multipart/form-data">
       @csrf
       @method('PUT')
       
+      
+      <input placeholder="Escolha uma foto..." type="file" multiple id="us_foto" name="us_foto" value="{{$usuario->us_foto ?? '-----' }}"/>
       <h2 class="h5 text-start">Dados Pessoais</h2>
       <div class="text-start">
         <div class="row g-2">
@@ -73,10 +118,7 @@
         <h2 class="h5 text-start mt-2">Dados de Login</h2>
         <label for="email" class="form-label">Email:</label>
         <input type="email" id="email" name="email" class="form-control mb-2" value="{{$usuario->email ?? '-----' }}">
-        
-        <!-- Campo para upload de foto -->
-        <label for="us_foto" class="form-label">Foto:</label>
-        <input type="file" id="us_foto" name="us_foto" class="form-control mb-2" value="{{$usuario->us_foto ?? '-----' }}">
+               
 
         <div class="d-grid d-md-flex gap-2 justify-content-md-end">
           <button type="submit" class="btn btn-outline-primary"><i class="bi bi-save"></i> Salvar Alterações</button>
@@ -110,10 +152,34 @@
         });
     });
 
-function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-}
+  function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+  }
+
+  function onFileSelected (evt) {
+    const fileInput = evt.target;
+    const files = Array.from(evt.target.files).map(file => file.name);
+    const placeholder = fileInput.getAttribute('data-placeholder') ||  fileInput.placeholder;
+    
+    // Store original placeholder
+    fileInput.setAttribute('data-placeholder', placeholder);
+  
+    // Update current placeholder
+    if (files.length === 1) {
+      fileInput.placeholder = files[0].replace(/.*[\/\\]/, '');
+    }
+    else if (files.length > 1) {
+      fileInput.placeholder = `${files.length} files`;
+    }
+    else {
+      fileInput.placeholder = placeholder;
+    }
+  }
+
+  document.querySelectorAll('input[type="file"]').forEach(el =>
+    el.addEventListener('change', onFileSelected)
+  );
 
 </script>
 

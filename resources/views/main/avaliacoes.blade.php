@@ -22,7 +22,7 @@
 @endpush
 
 @section('content')
-    <h1 class="h1 mb-4">Avaliações</h1>
+    <h1 class="h1 mb-4">AVALIAÇÕES</h1>
     <div class="container" style="min-height: 680px;">
         @if($produtos->isNotEmpty())
             @foreach($produtos as $produto)

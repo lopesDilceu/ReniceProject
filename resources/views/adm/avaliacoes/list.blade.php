@@ -24,7 +24,7 @@
             <tbody>
                 @forelse($avaliacoes as $avaliacao)
                     <tr>
-                        <td>
+                        <td class="align-middle">
                             @foreach ($users as $user)
                                 @if ($user->us_id === $avaliacao->av_id_usuario)
                                     {{ $user->name }}
@@ -32,7 +32,13 @@
                                 @endif
                             @endforeach
                         </td>
-                        <td>
+                        <td class="align-middle">
+                            @foreach ($produtos as $produto)
+                                @if ($produto->pr_id === $avaliacao->av_id_produto)
+                                    <img src="{{ asset($produto->pr_foto) }}" alt="" class="rounded-circle" width="60" height="60"> 
+                                    @break
+                                @endif
+                            @endforeach
                             @foreach ($produtos as $produto)
                                 @if ($produto->pr_id === $avaliacao->av_id_produto)
                                     {{ $produto->pr_nome }}
@@ -40,8 +46,8 @@
                                 @endif
                             @endforeach
                         </td>
-                        <td>{{ $avaliacao->av_nota }}/5</td>
-                        <td>{{ $avaliacao->av_data_avaliacao }}</td>
+                        <td class="align-middle">{{ $avaliacao->av_nota }}/5</td>
+                        <td class="align-middle">{{date_format(date_create($avaliacao->av_data_avaliacao), 'd/m/Y H:i')}}</td>
                         <td>
                             <form action="{{ route('adm.produtos.destroy', $avaliacao->av_id) }}" method="post" style="display: inline;">
                                 @csrf

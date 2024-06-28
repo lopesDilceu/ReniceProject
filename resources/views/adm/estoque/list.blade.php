@@ -15,8 +15,8 @@
         <table class="table table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">Código do Produto</th>
-                    <th scope="col">Nome do Produto</th>
+                    <th scope="col">Código</th>
+                    <th scope="col">Produto</th>
                     <th scope="col">Quantidade</th>
                     <th scope="col">Preço</th>
                     <th scope="col">Última Atualização</th>
@@ -25,10 +25,18 @@
             <tbody>
                 @forelse($estoques as $estoque)
                     <tr>
-                        <td>#0{{ $estoque->es_id_produto }}</td>
-                        <td>{{ $estoque->es_nome_produto }}</td>
-                        <td>{{ $estoque->es_quantidade }}</td>
-                        <td>
+                        <td class="align-middle">#0{{ $estoque->es_id_produto }}</td>
+                        <td class="align-middle">
+                        @foreach ($produtos as $produto)
+                            @if ($produto->pr_id === $estoque->es_id_produto)
+                                <img src="{{ asset($produto->pr_foto) }}" alt="" class="rounded-circle" width="60" height="60"> 
+                                @break
+                            @endif
+                        @endforeach
+                            {{ $estoque->es_nome_produto }}
+                        </td>
+                        <td class="align-middle">{{ $estoque->es_quantidade }}</td>
+                        <td class="align-middle">
                             @foreach ($produtos as $produto)
                                 @if ($produto->pr_id === $estoque->es_id_produto)
                                     R${{number_format($produto->pr_preco, 2, ',', '.')}}
@@ -36,7 +44,7 @@
                                 @endif
                             @endforeach
                         </td>
-                        <td>{{ $estoque->es_data_atualizacao }}</td>
+                        <td class="align-middle">{{ date_format(date_create($estoque->es_data_atualizacao), 'd/m/Y H:i') }}</td>
                     </tr>
                 @empty
                 @endforelse

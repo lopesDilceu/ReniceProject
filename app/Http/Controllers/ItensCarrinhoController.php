@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carrinho;
+use App\Models\Endereco;
 use App\Models\ItensCarrinho;
 use App\Models\Produto;
 use App\Models\User;
@@ -33,9 +34,10 @@ class ItensCarrinhoController extends Controller
     {
         //
         $carrinho = Carrinho::where('ca_id_usuario', Auth::id())->first();
+        $endereco = Endereco::where('en_usuario_id', Auth::id())->first();
         $itenscarrinho = ItensCarrinho::where('ic_id_carrinho', $carrinho->ca_id)->get(); 
         $produtos = Produto::all();
-        return view('main.usuarios.pagamento', compact('itenscarrinho', 'produtos', 'carrinho'));
+        return view('main.usuarios.pagamento', compact('itenscarrinho', 'produtos', 'carrinho', 'endereco'));
 
     }
 
@@ -163,9 +165,14 @@ class ItensCarrinhoController extends Controller
 
         // Redireciona o usuário para uma página de confirmação ou outra rota
         flash('Compra finalizada com sucesso!', 'success',[], 'Sucesso');
-        return redirect()->route('home');
+        return redirect()->route('compra-finalizada');
     }
 
+    public function compraFinalizada(){
+
+        $user = Auth::user();
+        return view('main.usuarios.finalizado', compact('user'));
+    }
     public function confirmacaoPagamento()
     {
         // Aqui você pode retornar uma view de confirmação de pagamento

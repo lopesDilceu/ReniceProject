@@ -27,7 +27,7 @@ class VendaController extends Controller
     public function minhasCompras()
     {
         //
-        $vendas = Venda::where('ve_id_usuario', auth()->id())->get();
+        $vendas = Venda::where('ve_id_usuario', auth()->id())->orderBy('created_at', 'desc')->get();
         $itensvenda = ItensVenda::all();
         $produtos = Produto::all();
         return view('main.usuarios.minhas-compras', compact('vendas', 'itensvenda', 'produtos'));

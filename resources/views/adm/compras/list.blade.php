@@ -31,9 +31,15 @@
             <tbody>
                 @forelse($compras as $compra)
                 <tr>
-                    <td>#0{{ $compra->co_id }}</td>
-                    <td>#0{{ $compra->co_id_produto }}</td>
-                    <td>
+                    <td class="align-middle">#0{{ $compra->co_id }}</td>
+                    <td class="align-middle">#0{{ $compra->co_id_produto }}</td>
+                    <td class="align-middle">
+                    @foreach ($produtos as $produto)
+                            @if ($produto->pr_id === $compra->co_id_produto)
+                                <img src="{{ asset($produto->pr_foto) }}" alt="" class="rounded-circle" width="60" height="60"> 
+                                @break
+                            @endif
+                        @endforeach
                         @foreach ($produtos as $produto)
                             @if ($produto->pr_id === $compra->co_id_produto)
                                 {{ $produto->pr_nome }}
@@ -41,11 +47,11 @@
                             @endif
                         @endforeach
                     </td>
-                    <td>{{ $compra->co_quantidade }}</td>
+                    <td class="align-middle">{{ $compra->co_quantidade }}</td>
                     <td>{{ $compra->co_fornecedor }}</td>
-                    <td>R${{number_format($compra->co_preco_unitario, 2, ',', '.')}}</td>
-                    <td>{{$compra->created_at}}</td>
-                    <td>
+                    <td class="align-middle">R${{number_format($compra->co_preco_unitario, 2, ',', '.')}}</td>
+                    <td class="align-middle">{{date_format(date_create($compra->created_at), 'd/m/Y H:i')}}</td>
+                    <td class="align-middle">
                     <form action="{{ route('adm.compras.destroy', $compra->co_id) }}" method="post" style="display: inline;">
                         @csrf
                         @method('DELETE')

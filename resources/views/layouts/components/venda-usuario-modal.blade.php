@@ -26,8 +26,8 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Código do Produto</th>
-                                        <th scope="col">Nome do Produto</th>
+                                        <th scope="col">Código</th>
+                                        <th scope="col">Produto</th>
                                         <th scope="col">Quantidade</th>
                                         <th scope="col">Preço Unitário</th>
                                         <th scope="col">Total</th>

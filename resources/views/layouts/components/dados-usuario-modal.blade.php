@@ -8,7 +8,7 @@
             <div class="modal-body py-0">
                 <div class="row my-2">
                     <div class="col-12 col-lg-6 col-sm-12 text-center mb-3 mb-md-3 mb-lg-0">
-                        <img id="UserProfileImage" src="" alt="Perfil" class="img-fluid rounded" width="40%">
+                        <img id="UserProfileImage" src="" alt="Perfil" class="img-fluid rounded-circle" width="280px" height="280px">
                     </div>
                     <div class="col-12 col-lg-6 col-sm-12">
                         <h2 class="h2">Informações do Usuário</h2>

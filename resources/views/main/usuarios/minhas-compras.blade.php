@@ -22,11 +22,11 @@
             <tbody>
                 @forelse($vendas as $venda)
                 <tr>
-                    <td>#00{{ $venda->ve_id }}</td>
-                    <td>{{ $venda->ve_data_venda }}</td>
-                    <td>{{ $venda->ve_status }}</td>
-                    <td>R${{ $venda->ve_total }}</td>
-                    <td>
+                    <td class="align-middle">#0{{ $venda->ve_id }}</td>
+                    <td class="align-middle">{{date_format(date_create($venda->ve_data_venda), 'd/m/Y H:i')}}</td>
+                    <td class="align-middle">{{ $venda->ve_status }}</td>
+                    <td class="align-middle">R${{ $venda->ve_total }}</td>
+                    <td class="align-middle">
                         <button class="btn btn-outline-light ver-venda" data-bs-toggle="modal"
                                 data-bs-target="#venda-usuario-modal" data-id="{{ $venda->ve_id }}">
                                 <img src="{{asset('/images/icons/ver.png')}}" alt="Ver" width="24px" height="24px">
@@ -52,6 +52,7 @@
         const vendas = @json($vendas);
         const itensvenda = @json($itensvenda);
         const produtos = @json($produtos);
+        const baseUrl = "{{ asset('') }}";
 
         let venda = vendas.find(v => v.ve_id === ve_id);
         let modal = $('#venda-usuario-modal');
@@ -69,12 +70,12 @@
 
                 detalhesProdutos.append(`
                     <tr>
-                        <td>#00${item.iv_id_produto}</td>
-                        <td>${produto.pr_nome}</td>
-                        <td>${item.iv_quantidade}</td>
-                        <td>R$${item.iv_preco_unitario}</td>
-                        <td>R$${total}</td>
-                        <td>
+                        <td class="align-middle">#0${item.iv_id_produto}</td>
+                        <td class="align-middle"><img src="${baseUrl}${produto.pr_foto}" alt="${produto.pr_nome}" class="rounded-circle" width="50px" height="50px"> ${produto.pr_nome}</td>
+                        <td class="align-middle">${item.iv_quantidade}</td>
+                        <td class="align-middle">R$${item.iv_preco_unitario}</td>
+                        <td class="align-middle">R$${total}</td>
+                        <td class="align-middle">
                             <a href="{{ url('/avaliar-produto') }}/${item.iv_id_produto}" class="btn btn-outline-success"><img src="{{asset('/images/icons/like.png')}}" alt="Avaliar" width="24px" height="24px"></a>
                         </td>
                     </tr>

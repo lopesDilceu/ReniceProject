@@ -28,20 +28,25 @@
             <tbody>
                 @forelse($vendas as $venda)
                     <tr>
-                        <td>#00{{ $venda->ve_id }}</td>
-                        <td>#0{{ $venda->ve_id_usuario }}</td>
+                        <td class="align-middle">#00{{ $venda->ve_id }}</td>
+                        <td class="align-middle">#0{{ $venda->ve_id_usuario }}</td>
                         <td>
                             @foreach ($users as $user)
                                 @if ($user->us_id === $venda->ve_id_usuario)
+                                    @if (isset($user->us_foto))
+                                        <img src="{{ asset($user->us_foto) }}" alt="Ver" width="50px" height="50px" class="rounded-circle">
+                                    @else
+                                        <img src="{{ asset('images/perfil.png') }}" alt="Ver" width="50px" height="50px" >
+                                    @endif
                                     {{ $user->name }}
                                     @break
                                 @endif
                             @endforeach
                         </td>
-                        <td>{{ $venda->ve_status }}</td>
-                        <td>{{ $venda->ve_data_venda }}</td>
-                        <td>R${{ $venda->ve_total }}</td>
-                        <td>
+                        <td class="align-middle">{{ $venda->ve_status }}</td>
+                        <td class="align-middle">{{ date_format(date_create($venda->ve_data_venda), 'd/m/Y H:i')}}</td>
+                        <td class="align-middle">R${{ $venda->ve_total }}</td>
+                        <td class="align-middle">
                             <button class="btn btn-outline-light ver-venda" data-bs-toggle="modal"
                             data-bs-target="#detalhes-venda-modal" data-id="{{ $venda->ve_id }}">
                                 <img src="{{ asset('/images/icons/ver.png') }}" alt="Ver" width="24px" height="24px">

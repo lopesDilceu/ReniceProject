@@ -3,7 +3,7 @@
 @section('titulo', 'Carrinho')
 
 @section('content')
-    <h1 class="h1 mb-4">Carrinho</h1>
+    <h1 class="h1 mb-4">CARRINHO</h1>
     <!-- Tabela de Carrinho -->
     <div class="table-responsive border  rounded" style="height: 620px; overflow-y: auto;">
         <table class="table table-striped ">
@@ -19,7 +19,7 @@
             <tbody>
                 @forelse($itenscarrinho as $itemcarrinho)
                 <tr>
-                    <td>
+                    <td class="align-middle">
                         @foreach ($produtos as $produto)
                             @if ($produto->pr_id === $itemcarrinho->ic_id_produto)
                                 <img src="{{ asset($produto->pr_foto) }}" alt="" class="rounded-circle" width="60" height="60"> 
@@ -33,7 +33,7 @@
                             @endif
                         @endforeach
                     </td>
-                    <td>
+                    <td class="align-middle">
                         <div class="quantity-controls">
                             <button class="btn btn-outline-secondary btn-sm decrement" data-id="{{ $itemcarrinho->ic_id }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
@@ -46,7 +46,7 @@
                             </button>
                         </div>
                     </td>
-                    <td>R$
+                    <td class="align-middle">R$
                         @foreach ($produtos as $produto)
                             @if ($produto->pr_id === $itemcarrinho->ic_id_produto)
                                 {{ $produto->pr_preco }}
@@ -54,10 +54,10 @@
                             @endif
                         @endforeach
                     </td>
-                    <td>
+                    <td class="align-middle">
                         R$ <span class="total-item">{{ number_format($itemcarrinho->ic_quantidade * $produto->pr_preco, 2, ',', '.') }}</span>
                     </td>
-                    <td>
+                    <td class="align-middle">
                         <form action="{{ route('usuario.carrinho.destroy', $itemcarrinho->ic_id) }}" method="post" style="display: inline;">
                             @csrf
                             @method('DELETE')

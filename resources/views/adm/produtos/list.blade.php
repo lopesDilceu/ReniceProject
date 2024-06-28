@@ -17,8 +17,8 @@
         <table class="table table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">Código do Produto</th>
-                    <th scope="col">Nome do Produto</th>
+                    <th scope="col">Código</th>
+                    <th scope="col">Produto</th>
                     <th scope="col">Preço</th>
                     <th scope="col">Data de Cadastro</th>
                     <th scope="col">Ações</th>
@@ -27,11 +27,14 @@
             <tbody>
                 @forelse($produtos as $produto)
                 <tr>
-                    <td>00{{ $produto->pr_id }}</td>
-                    <td>{{ $produto->pr_nome }}</td>
-                    <td>R${{number_format($produto->pr_preco, 2, ',', '.')}}</td>
-                    <td>{{ $produto->pr_data_criacao }}</td>
-                    <td>
+                    <td class="align-middle">00{{ $produto->pr_id }}</td>
+                    <td class="align-middle">
+                        <img src="{{ asset($produto->pr_foto) }}" alt="" class="rounded-circle" width="60" height="60">
+                        {{ $produto->pr_nome }}
+                    </td>
+                    <td class="align-middle">R${{number_format($produto->pr_preco, 2, ',', '.')}}</td>
+                    <td class="align-middle">{{date_format(date_create($produto->pr_data_criacao), 'd/m/Y H:i')}}</td>
+                    <td class="align-middle">
                     <button class="btn btn-outline-light ver-produto" data-bs-toggle="modal"
                             data-bs-target="#produto-modal" data-id="{{$produto->pr_id}}"><img src="{{asset('/images/icons/ver.png')}}" alt="Editar" width="24px" height="24px"></button>
                     <button class="btn btn-outline-light edit-produto" data-bs-toggle="modal"

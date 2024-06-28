@@ -37,7 +37,7 @@ Route::prefix('usuarios')->group(function () {
 
     Route::post('/logout', [UserController::class, 'logout'])->name('usuarios.logout.submit');
 
-    
+    Route::post('/store', [UserController::class, 'store'])->name('usuarios.store');
 
 
 
@@ -57,12 +57,15 @@ Route::prefix('usuarios')->group(function () {
     Route::delete('/carrinho/{ic_id}', [ItensCarrinhoController::class, 'destroy'])->name('usuario.carrinho.destroy');
     Route::get('/pagamento', [ItensCarrinhoController::class, 'indexPagamento'])->name('usuario.pagamento');
     Route::get('/finalizar/{ic_id_carrinho}', [ItensCarrinhoController::class, 'finalizarCompra'])->name('usuario.finalizar');
+    Route::get('/compra-finalizada', [ItensCarrinhoController::class, 'compraFinalizada'])->name('compra-finalizada');
+
 
     Route::middleware('auth')->get('/minha-conta', [UserController::class, 'minhaConta'])->name('minha-conta');
     Route::middleware('auth')->get('/editar-dados', [UserController::class, 'editar'])->name('editar');
     Route::put('/edit/{us_id}', [UserController::class, 'edit'])->name('usuarios.edit');
 
     Route::get('/minhas-compras', [VendaController::class, 'minhasCompras'])->name('minhas-compras');
+    
 
 });
 
