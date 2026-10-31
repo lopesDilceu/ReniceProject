@@ -13,7 +13,9 @@ use Inertia\Testing\AssertableInertia as Assert;
 
 uses(RefreshDatabase::class);
 
-beforeEach(fn () => $this->admin = User::factory()->admin()->create());
+// Names and e-mails are fixed wherever a test searches: Faker pt_BR can
+// generate a "Joana" and turn a search assertion flaky.
+beforeEach(fn () => $this->admin = User::factory()->admin()->create(['name' => 'Admin Renice', 'email' => 'admin@renice.test']));
 
 function placedOrder(int $stock = 10, int $quantity = 3): array
 {
@@ -66,7 +68,9 @@ describe('orders', function () {
 
     it('filters by status and searches by number or customer', function () {
         $paid = Order::factory()->status(OrderStatus::Paid)->for(User::factory()->state(['name' => 'Joana Lima']))->create();
-        Order::factory()->status(OrderStatus::PendingPayment)->create();
+        Order::factory()->status(OrderStatus::PendingPayment)
+            ->for(User::factory()->state(['name' => 'Pedro Alves', 'email' => 'pedro@example.com']))
+            ->create();
 
         $this->actingAs($this->admin)->get(route('admin.orders.index', ['status' => 'paid']))
             ->assertInertia(fn (Assert $page) => $page->has('orders.data', 1)->where('orders.data.0.id', $paid->id));
