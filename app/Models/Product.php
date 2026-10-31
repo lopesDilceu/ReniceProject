@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Jobs\EmbedProduct;
+use App\Search\SemanticSearch;
 use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +23,24 @@ class Product extends Model
 {
     /** @use HasFactory<ProductFactory> */
     use HasFactory, SoftDeletes;
+
+    protected static function booted(): void
+    {
+        // Embed for semantic search on creation, and again only when what is
+        // embedded changes (wasRecentlyCreated stays true on the instance, so
+        // a single "saved" hook would re-embed on every later update).
+        static::created(function (Product $product) {
+            if (SemanticSearch::enabled()) {
+                EmbedProduct::dispatch($product);
+            }
+        });
+
+        static::updated(function (Product $product) {
+            if (SemanticSearch::enabled() && $product->wasChanged(['name', 'description'])) {
+                EmbedProduct::dispatch($product);
+            }
+        });
+    }
 
     /**
      * `stock` is absent: it only changes through inventory movements (#12).

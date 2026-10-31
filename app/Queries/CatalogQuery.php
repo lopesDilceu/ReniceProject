@@ -5,6 +5,7 @@ namespace App\Queries;
 use App\Enums\CatalogSort;
 use App\Models\Product;
 use App\Models\Review;
+use App\Search\HybridSearch;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -17,25 +18,51 @@ class CatalogQuery
 {
     public const PER_PAGE = 12;
 
+    public function __construct(
+        private readonly HybridSearch $hybrid,
+    ) {}
+
     /**
+     * With semantic search on, a search matches by meaning as well as by
+     * keyword (HybridSearch) and the default sort becomes relevance; without
+     * it, or when the provider fails, it is the keyword search alone.
+     *
      * @param  int|null  $page  Defaults to the request's ?page=; the MCP tools pass it explicitly.
      * @return LengthAwarePaginator<int, Product>
      */
     public function paginate(?string $search, CatalogSort $sort, bool $onlyAvailable, ?int $page = null): LengthAwarePaginator
     {
+        $ranked = $search !== null ? $this->hybrid->rankedIds($search, $onlyAvailable) : null;
+
         return Product::query()
             ->withAvg('reviews', 'rating')
             ->withCount('reviews')
-            ->when($search, fn (Builder $query, string $search) => $query->where(
-                fn (Builder $query) => $query
-                    ->whereLike('name', "%{$search}%")
-                    ->orWhereLike('description', "%{$search}%")
-            ))
+            ->when(
+                $ranked !== null,
+                fn (Builder $query) => $query->whereKey($ranked),
+                fn (Builder $query) => $query->when($search, fn (Builder $query, string $search) => $query->where(
+                    fn (Builder $query) => $query
+                        ->whereLike('name', "%{$search}%")
+                        ->orWhereLike('description', "%{$search}%")
+                )),
+            )
             ->when($onlyAvailable, fn (Builder $query) => $query->where('stock', '>', 0))
-            ->tap(fn (Builder $query) => $this->sort($query, $sort))
+            ->tap(fn (Builder $query) => $ranked !== [] && $ranked !== null && $sort === CatalogSort::Featured
+                ? $this->byRelevance($query, $ranked)
+                : $this->sort($query, $sort))
             ->orderBy('id')
             ->paginate(self::PER_PAGE, page: $page)
             ->withQueryString();
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     * @param  non-empty-list<int>  $ids
+     */
+    private function byRelevance(Builder $query, array $ids): void
+    {
+        // Integer ids from the database, so they are safe to inline.
+        $query->orderByRaw('array_position(ARRAY['.implode(',', array_map('intval', $ids)).']::bigint[], products.id)');
     }
 
     /**
