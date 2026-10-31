@@ -529,6 +529,12 @@ parameters:
 			path: app/Http/Controllers/UserController.php
 
 		-
+			message: '#^Access to an undefined property App\\Models\\User\:\:\$us_id\.$#'
+			identifier: property.notFound
+			count: 8
+			path: app/Http/Controllers/UserController.php
+
+		-
 			message: '#^Method App\\Http\\Controllers\\UserController\:\:create\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -653,12 +659,6 @@ parameters:
 			identifier: missingType.return
 			count: 1
 			path: app/Http/Controllers/VendaController.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\User\:\:\$us_adm\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Http/Middleware/CheckAdmin.php
 
 		-
 			message: '#^Class App\\Models\\Avaliacao uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
@@ -821,54 +821,6 @@ parameters:
 			identifier: property.defaultValue
 			count: 1
 			path: app/Models/Telefone.php
-
-		-
-			message: '#^Class App\\Models\\User uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:avaliacoes\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:carrinho\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:enderecos\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:telefones\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:vendas\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^PHPDoc type array\<int, string\> of property App\\Models\\User\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
-			identifier: property.phpDocType
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^PHPDoc type array\<int, string\> of property App\\Models\\User\:\:\$hidden is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$hidden\.$#'
-			identifier: property.phpDocType
-			count: 1
-			path: app/Models/User.php
 
 		-
 			message: '#^Class App\\Models\\Venda uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'

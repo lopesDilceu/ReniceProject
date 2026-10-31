@@ -2,38 +2,40 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
-
-    protected $primaryKey = 'us_id';
+    /** @use HasFactory<UserFactory> */
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * `is_admin` is deliberately absent: the role only changes through an
+     * explicit admin action, never through a request payload (#17).
+     *
+     * @var list<string>
      */
     protected $fillable = [
         'name',
-        'us_cpf',
-        'us_data_nasc',
         'email',
         'password',
-        'us_adm',
+        'cpf',
+        'birth_date',
+        'avatar_path',
     ];
-
-    use SoftDeletes;
 
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $hidden = [
         'password',
@@ -50,31 +52,48 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'birth_date' => 'date',
+            'is_admin' => 'boolean',
         ];
     }
 
-    public function telefones()
+    /**
+     * @return HasMany<Phone, $this>
+     */
+    public function phones(): HasMany
     {
-        return $this->hasMany(Telefone::class, 'te_us_id');
+        return $this->hasMany(Phone::class);
     }
 
-    public function enderecos()
+    /**
+     * @return HasMany<Address, $this>
+     */
+    public function addresses(): HasMany
     {
-        return $this->hasMany(Endereco::class, 'en_usuario_id');
+        return $this->hasMany(Address::class);
     }
 
-    public function vendas()
+    /**
+     * @return HasOne<Cart, $this>
+     */
+    public function cart(): HasOne
     {
-        return $this->hasMany(Venda::class, 've_id_usuario');
+        return $this->hasOne(Cart::class);
     }
 
-    public function avaliacoes()
+    /**
+     * @return HasMany<Order, $this>
+     */
+    public function orders(): HasMany
     {
-        return $this->hasMany(Avaliacao::class, 'av_id_usuario');
+        return $this->hasMany(Order::class);
     }
 
-    public function carrinho()
+    /**
+     * @return HasMany<Review, $this>
+     */
+    public function reviews(): HasMany
     {
-        return $this->hasOne(Carrinho::class, 'ca_id_usuario');
+        return $this->hasMany(Review::class);
     }
 }

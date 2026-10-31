@@ -16,7 +16,7 @@ class CheckAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->us_adm == 1) {
+        if (Auth::check() && Auth::user()->is_admin) {
             return $next($request);
         }
         flash('Acesso negado!', 'error', [], 'Erro');

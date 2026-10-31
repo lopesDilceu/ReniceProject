@@ -75,7 +75,7 @@
                 <a class="nav-link  @yield('sobre')" href="{{ route('sobre') }}" style="font-family: Akkurat-Mono, monospace;">SOBRE O PROJETO</a>
               </li> --}}
               @auth
-              @if(auth()->user()->us_adm == 1)
+              @if(auth()->user()->is_admin)
                   <!-- Se o usuário é um administrador, exibe o menu ADM -->
                   <li>
                     <a class="nav-link  @yield('adm')" style="font-family: Akkurat-Mono, monospace;" href="{{ route('adm.home') }}">ADMINISTRAÇÃO</a>
@@ -101,9 +101,9 @@
               
               <div class="dropdown text-end">
                 
-              @if (isset(auth()->user()->us_foto))
+              @if (isset(auth()->user()->avatar_path))
                 <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img src="{{ asset(auth()->user()->us_foto)}}" class="rounded-circle" alt="perfil" width="40px" height="40px">
+                  <img src="{{ asset(auth()->user()->avatar_path)}}" class="rounded-circle" alt="perfil" width="40px" height="40px">
                 </a>
               @else
                 <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

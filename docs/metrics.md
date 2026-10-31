@@ -19,12 +19,12 @@ How each number is collected is in [How to measure](#how-to-measure).
 
 | Metric | v1.0-academic | Current | Target |
 |---|---|---|---|
-| Automated tests | 0 (2 framework examples) | 19 passing + 12 pending security tests | — |
+| Automated tests | 0 (2 framework examples) | 41 passing on SQLite, 48 on PostgreSQL; 12 pending security tests | — |
 | Test suite status | 1 of 2 example tests failing | green | green |
-| Line coverage on `app/` | 0% | 3.3% | ≥ 80% |
-| Static analysis | not configured | Larastan level 6, 159 legacy errors baselined | level 6+, empty baseline |
+| Line coverage on `app/` | 0% | 13.9% (new models: covered; legacy controllers: 0%) | ≥ 80% |
+| Static analysis | not configured | Larastan level 6, 158 legacy errors baselined (new code: 0) | level 6+, empty baseline |
 | Enforced code style | no | Pint (Laravel preset) in CI | Pint in CI |
-| CI pipeline | none | lint + analyse + test on PHP 8.4/8.5, dependency audit | lint + analyse + test + audit |
+| CI pipeline | none | lint + analyse + test on PHP 8.4/8.5, migrations + tests on PostgreSQL, dependency audit | lint + analyse + test + audit |
 
 ## Security and data
 
@@ -33,9 +33,9 @@ How each number is collected is in [How to measure](#how-to-measure).
 | Open audit findings (critical / high) | 3 / 6 | 3 / 6 | 0 / 0 |
 | State-changing routes without `auth` (excluding login, sign-up, logout) | 6 | 6 | 0 |
 | Raw SQL with interpolated input | 1 | 1 | 0 |
-| Domain tables with migrations | 0 of 11 | 0 of 11 | all |
+| Domain tables with migrations | 0 of 11 | 10 of 11 (inventory ledger: #12) | all |
 | Business rules in procedures / triggers | 2 / 8 | 2 / 8 | 0 / 0 |
-| Fresh clone → running app | not possible | not possible | one command |
+| Fresh clone → running app | not possible | Sail + `migrate`, no demo data yet (#16) | one command |
 
 ## Size
 
