@@ -115,7 +115,7 @@
                   <!-- Verifica se o usuário está autenticado -->
                       <!-- Exibe o menu de opções da conta -->
                       <li><span class="dropdown-item bg-body">{{strtoupper(auth()->user()->name)}}</span></li>
-                      <li><a class="dropdown-item" href="{{ route('usuario.carrinho') }}">Carrinho
+                      <li><a class="dropdown-item" href="{{ route('cart.show') }}">Carrinho
                       <li><a class="dropdown-item" href="{{ route('minha-conta') }}">Minhas Conta</a></li>
                       <li><a class="dropdown-item" href="{{ route('minhas-compras') }}">Minhas Compras</a></li>
                       <li>

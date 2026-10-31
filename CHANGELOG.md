@@ -14,21 +14,29 @@ All notable changes to this project are documented here. The format follows [Kee
 - Catalog in React (`/produtos`): search across name and description, sorting (featured, price, rating, newest), "available only" filter, 12 per page, branded image placeholder, sold-out and low-stock badges. Exact stock is never sent to the browser.
 - Product page (`/produtos/{slug}`): price, availability, description, rating summary with distribution and the latest reviews (author shown as first name and last initial).
 - `Model::preventLazyLoading()` outside production, so N+1 queries fail in tests.
+- Cart in React (`/carrinho`): add from the product page, quantity steppers capped at stock, remove, totals; header badge with the number of units.
+- Checkout (`/checkout`, requires a confirmed e-mail): saved addresses or a new one with CEP lookup (ViaCEP), order through `PlaceOrder`, order page (`/pedidos/{id}`) visible to its owner and admins.
 
 ### Changed
 - Hero image re-encoded from a 5.9 MB PNG to a 342 KB WebP.
 - Shared Inertia props expose only non-sensitive user fields (no CPF, birth date or addresses).
 - v1 URLs `/usuarios/login` and `/usuarios/cadastro` redirect permanently to `/login` and `/register`.
 - v1 `/produtos/pesquisa?query=…` redirects to `/produtos?q=…`; `/avaliacoes` redirects to the catalog (reviews now live on each product page).
+- v1 `/usuarios/carrinho` and `/usuarios/pagamento` redirect to `/carrinho` and `/checkout`.
 - Production password policy: 12+ characters, mixed case, numbers, symbols and a breach check; destructive database commands are blocked in production.
 
 ### Removed
 - v1 Blade home and about views, the unused Laravel welcome view and the unused axios bootstrap.
 - v1 login, logout and sign-up (controller methods and Blade views), which had no rate limiting, no session regeneration and no password reset (SEC-06), and crashed on sign-up without a photo (BUG-05).
 - v1 catalog, search and reviews pages (`indexHome`, `pesquisa`, `AvaliacaoController@index` and their Blade views), which loaded every product and stock row and matched them in nested loops.
+- v1 cart, payment and checkout (`ItensCarrinhoController`, `CarrinhoController` and their Blade views), including `GET /usuarios/finalizar/{cart}`, which interpolated the cart id into `CALL finalizar_venda(...)`.
 
 ### Security
 - Login throttling, session regeneration on login, session invalidation and CSRF token rotation on logout (SEC-06, with regression tests).
+- SQL injection in checkout fixed: no route takes a cart id; the cart comes from the signed-in user (SEC-02, critical).
+- Cart items are authorized by a policy, and quantities are validated against stock (SEC-03).
+- Orders are placed only by a CSRF-protected POST; a double submit creates one order (SEC-04).
+- Cart total counts only the customer's own items (BUG-03).
 
 ## [2.0.0-alpha.3] — 2026-10-31
 

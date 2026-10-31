@@ -46,7 +46,7 @@ import {
 } from '@/routes';
 import adm from '@/routes/adm';
 import products from '@/routes/products';
-import usuario from '@/routes/usuario';
+import cart from '@/routes/cart';
 import type { User } from '@/types';
 
 /*
@@ -164,7 +164,7 @@ function UserMenu({ user }: { user: User }) {
 }
 
 export default function StoreLayout({ children }: { children: ReactNode }) {
-    const { auth } = usePage().props;
+    const { auth, cartCount } = usePage().props;
     const { isCurrentUrl } = useCurrentUrl();
     useFlashToast();
 
@@ -228,13 +228,25 @@ export default function StoreLayout({ children }: { children: ReactNode }) {
                         <AppearanceMenu />
                         {auth.user ? (
                             <>
-                                <Button variant="ghost" size="icon" asChild>
-                                    <a
-                                        href={usuario.carrinho.url()}
-                                        aria-label="Carrinho"
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="relative"
+                                    asChild
+                                >
+                                    <Link
+                                        href={cart.show()}
+                                        aria-label={`Carrinho, ${cartCount} ${cartCount === 1 ? 'item' : 'itens'}`}
                                     >
                                         <ShoppingCart className="size-5" />
-                                    </a>
+                                        {cartCount > 0 && (
+                                            <span className="absolute -top-0.5 -right-0.5 flex size-5 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">
+                                                {cartCount > 99
+                                                    ? '99+'
+                                                    : cartCount}
+                                            </span>
+                                        )}
+                                    </Link>
                                 </Button>
                                 <UserMenu user={auth.user} />
                             </>

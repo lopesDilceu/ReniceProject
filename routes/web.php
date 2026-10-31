@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\Account\AddressController;
 use App\Http\Controllers\AvaliacaoController;
+use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Catalog\ProductController;
+use App\Http\Controllers\Checkout\CheckoutController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\EstoqueController;
-use App\Http\Controllers\ItensCarrinhoController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendaController;
@@ -30,27 +33,36 @@ Route::get('/produtos/{product:slug}', [ProductController::class, 'show'])->name
 Route::permanentRedirect('/usuarios/login', '/login');
 Route::permanentRedirect('/usuarios/cadastro', '/register');
 
+// Cart, checkout and orders. The cart is always the signed-in customer's own:
+// no route takes a cart id (SEC-02, SEC-03). Checkout is a CSRF-protected POST
+// (SEC-04) and requires a verified e-mail.
+Route::middleware('auth')->group(function () {
+    Route::get('/carrinho', [CartController::class, 'show'])->name('cart.show');
+    Route::post('/carrinho/itens', [CartController::class, 'store'])->name('cart.items.store');
+    Route::patch('/carrinho/itens/{item}', [CartController::class, 'update'])->name('cart.items.update');
+    Route::delete('/carrinho/itens/{item}', [CartController::class, 'destroy'])->name('cart.items.destroy');
+
+    Route::post('/enderecos', [AddressController::class, 'store'])->name('addresses.store');
+
+    Route::middleware('verified')->group(function () {
+        Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
+        Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    });
+
+    Route::get('/pedidos/{order}', [OrderController::class, 'show'])->name('orders.show');
+});
+
+// v1 cart and payment URLs.
+Route::permanentRedirect('/usuarios/carrinho', '/carrinho');
+Route::permanentRedirect('/usuarios/pagamento', '/checkout');
+
 // --- Legacy (v1) routes ---
 
 // Rotas relacionadas aos usuários
 Route::prefix('usuarios')->group(function () {
-    Route::get('/carrinho', function () {
-        return view('main.usuarios.carrinho');
-    })->name('usuarios.carrinho');
-
-    Route::get('/pagamento', function () {
-        return view('main.usuarios.pagamento');
-    })->name('usuarios.pagamento');
-
     Route::get('/minhas-compras', function () {
         return view('main.usuarios.minhas-compras');
     })->name('usuarios.minhas-compras');
-
-    Route::get('/carrinho', [ItensCarrinhoController::class, 'index'])->name('usuario.carrinho');
-    Route::delete('/carrinho/{ic_id}', [ItensCarrinhoController::class, 'destroy'])->name('usuario.carrinho.destroy');
-    Route::get('/pagamento', [ItensCarrinhoController::class, 'indexPagamento'])->name('usuario.pagamento');
-    Route::get('/finalizar/{ic_id_carrinho}', [ItensCarrinhoController::class, 'finalizarCompra'])->name('usuario.finalizar');
-    Route::get('/compra-finalizada', [ItensCarrinhoController::class, 'compraFinalizada'])->name('compra-finalizada');
 
     Route::middleware('auth')->get('/minha-conta', [UserController::class, 'minhaConta'])->name('minha-conta');
     Route::middleware('auth')->get('/editar-dados', [UserController::class, 'editar'])->name('editar');
@@ -110,7 +122,3 @@ Route::prefix('adm')->middleware('admin')->group(function () {
 
 Route::get('/avaliar-produto/{produto_id}', [ProdutoController::class, 'avaliarProduto'])->name('avaliar.produto');
 Route::post('/salvar-avaliacao', [ProdutoController::class, 'salvarAvaliacao'])->name('salvar.avaliacao');
-
-// Rota para armazenar no carrinho
-Route::post('/carrinho/store', [ItensCarrinhoController::class, 'store'])->name('carrinho.store');
-Route::patch('/carrinho/{id}', [ItensCarrinhoController::class, 'update'])->name('usuario.carrinho.update');

@@ -14,20 +14,6 @@ describe('SEC-01 privilege escalation', function () {
     it('ignores the admin flag in profile update payloads')->todo(issue: 17);
 });
 
-describe('SEC-02 SQL injection in checkout', function () {
-    it('resolves the cart from the session, never from the URL')->todo(issue: 18);
-});
-
-describe('SEC-03 IDOR on cart items', function () {
-    it('forbids changing or deleting another user\'s cart item')->todo(issue: 19);
-    it('rejects zero, negative and above-stock quantities')->todo(issue: 19);
-});
-
-describe('SEC-04 CSRF on checkout', function () {
-    it('places orders only through a CSRF-protected POST')->todo(issue: 20);
-    it('does not create two orders on double submit')->todo(issue: 20);
-});
-
 describe('SEC-05 reviews', function () {
     it('accepts reviews only from customers who bought the product')->todo(issue: 21);
     it('validates the rating between 1 and 5')->todo(issue: 21);
