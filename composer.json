@@ -10,8 +10,7 @@
         "laravel/fortify": "^1.37",
         "laravel/framework": "^13.0",
         "laravel/tinker": "^3.0",
-        "laravel/wayfinder": "^0.1.14",
-        "php-flasher/flasher-toastr-laravel": "^2.4"
+        "laravel/wayfinder": "^0.1.14"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^4.0",
@@ -29,10 +28,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        },
-        "files": [
-            "app/helpers.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {

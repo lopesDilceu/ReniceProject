@@ -3,7 +3,8 @@
 namespace App\Enums;
 
 /**
- * Order lifecycle. Allowed transitions are enforced in Phase 4 (#32).
+ * Order lifecycle. Phase 4 (#32) adds the transition history and payment
+ * webhooks on top of these rules.
  */
 enum OrderStatus: string
 {
@@ -24,5 +25,32 @@ enum OrderStatus: string
             self::Cancelled => 'Cancelado',
             self::Refunded => 'Reembolsado',
         };
+    }
+
+    /**
+     * @return list<self>
+     */
+    public function nextStatuses(): array
+    {
+        return match ($this) {
+            self::PendingPayment => [self::Paid, self::Cancelled],
+            self::Paid => [self::Shipped, self::Refunded],
+            self::Shipped => [self::Delivered, self::Refunded],
+            self::Delivered => [self::Refunded],
+            self::Cancelled, self::Refunded => [],
+        };
+    }
+
+    public function canTransitionTo(self $next): bool
+    {
+        return in_array($next, $this->nextStatuses(), true);
+    }
+
+    /**
+     * Statuses that undo the sale: the items go back to stock.
+     */
+    public function returnsStock(): bool
+    {
+        return $this === self::Cancelled || $this === self::Refunded;
     }
 }

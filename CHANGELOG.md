@@ -16,6 +16,7 @@ All notable changes to this project are documented here. The format follows [Kee
 - `Model::preventLazyLoading()` outside production, so N+1 queries fail in tests.
 - Cart in React (`/carrinho`): add from the product page, quantity steppers capped at stock, remove, totals; header badge with the number of units.
 - Admin area in React (`/admin`, `admin` gate): products with price in reais, image upload, stable unique slugs, soft delete and restore; per-product stock history with manual adjustments that require a reason; supplier purchases that restock without touching the sale price.
+- Admin dashboard (revenue and orders for the last 30 days against the previous 30, orders to ship, low stock, best sellers, recent orders), orders with status transitions (cancel or refund restocks through the ledger), customers with an explicit grant/remove admin action (never on yourself) and review moderation.
 - Account area (`/conta`): personal data (CPF shown masked and not editable), photo upload, phones, addresses and password change; changing the e-mail asks for confirmation again.
 - Order history (`/conta/pedidos`) and reviews from the order page, for delivered products only, one per product.
 - Checkout (`/checkout`, requires a confirmed e-mail): saved addresses or a new one with CEP lookup (ViaCEP), order through `PlaceOrder`, order page (`/pedidos/{id}`) visible to its owner and admins.
@@ -36,6 +37,7 @@ All notable changes to this project are documented here. The format follows [Kee
 - v1 catalog, search and reviews pages (`indexHome`, `pesquisa`, `AvaliacaoController@index` and their Blade views), which loaded every product and stock row and matched them in nested loops.
 - v1 cart, payment and checkout (`ItensCarrinhoController`, `CarrinhoController` and their Blade views), including `GET /usuarios/finalizar/{cart}`, which interpolated the cart id into `CALL finalizar_venda(...)`.
 - v1 profile, purchase history and review pages, including the unauthenticated `PUT /usuarios/edit/{id}` and `POST /salvar-avaliacao`.
+- All remaining v1 code: admin controllers and Blade views, the ten v1 models, the `CheckAdmin` middleware, `app/helpers.php`, jQuery, Bootstrap and every CDN script, the `php-flasher` package, unused images, and the Larastan baseline (static analysis now ignores nothing). `/adm/*` redirects to `/admin`.
 
 ### Security
 - Login throttling, session regeneration on login, session invalidation and CSRF token rotation on logout (SEC-06, with regression tests).

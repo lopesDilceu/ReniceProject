@@ -4,7 +4,7 @@
 
 Um e-commerce que nasceu como projeto de faculdade em 2024 e está sendo reconstruído, em público, no padrão de produção de 2026.
 
-> **Status: modernização em andamento.** O código na `main` ainda está próximo da versão original, que tem problemas de segurança conhecidos e não deve ser publicada. Acompanhe pelo [roadmap](docs/roadmap.md).
+> **Status:** a loja e o admin foram totalmente reescritos (Fases 0 a 3), e todos os achados da [auditoria inicial](docs/audit/initial-audit.md) estão resolvidos. Próximo passo: pagamento via Pix e ciclo de vida do pedido (Fase 4). Acompanhe pelo [roadmap](docs/roadmap.md).
 
 ![Catálogo de produtos da Renice v1](docs/legacy/images/03-product-catalog.jpg)
 

@@ -1,6 +1,5 @@
 includes:
     - vendor/larastan/larastan/extension.neon
-    - phpstan-baseline.neon
 
 parameters:
     level: 6
@@ -12,6 +11,4 @@ parameters:
         - database/
         - routes/
 
-    # Legacy errors are recorded in phpstan-baseline.neon. New code must not add
-    # to it; the baseline shrinks as modules are rewritten.
-    reportUnmatchedIgnoredErrors: true
+    # No baseline: every v1 file is gone, and nothing is ignored.

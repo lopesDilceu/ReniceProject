@@ -42,6 +42,10 @@ it('exposes a health check', function () {
     $this->get('/up')->assertOk();
 });
 
-it('sends guests away from the admin area', function () {
-    $this->get('/adm')->assertRedirect('/');
+it('sends guests from the admin area to the login page', function () {
+    $this->get('/admin')->assertRedirect(route('login'));
 });
+
+it('redirects the v1 admin URLs', function (string $old) {
+    $this->get($old)->assertStatus(301)->assertRedirect('/admin');
+})->with(['/adm', '/adm/produtos', '/adm/vendas']);

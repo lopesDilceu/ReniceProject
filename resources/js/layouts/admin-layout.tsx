@@ -1,5 +1,14 @@
 import { Link } from '@inertiajs/react';
-import { ArrowLeft, Menu, Package, Truck } from 'lucide-react';
+import {
+    ArrowLeft,
+    LayoutDashboard,
+    Menu,
+    MessageSquare,
+    Package,
+    Receipt,
+    Truck,
+    Users,
+} from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
 import AppLogo from '@/components/app-logo';
@@ -15,18 +24,26 @@ import { useCurrentUrl } from '@/hooks/use-current-url';
 import { useFlashToast } from '@/hooks/use-flash-toast';
 import { cn } from '@/lib/utils';
 import { home } from '@/routes';
+import admin from '@/routes/admin';
+import customers from '@/routes/admin/customers';
+import orders from '@/routes/admin/orders';
 import products from '@/routes/admin/products';
 import purchases from '@/routes/admin/purchases';
+import reviews from '@/routes/admin/reviews';
 
 type Item = { title: string; href: string; icon: LucideIcon };
 
 const items: Item[] = [
+    { title: 'Visão geral', href: admin.home.url(), icon: LayoutDashboard },
+    { title: 'Pedidos', href: orders.index.url(), icon: Receipt },
     { title: 'Produtos', href: products.index.url(), icon: Package },
     { title: 'Compras', href: purchases.index.url(), icon: Truck },
+    { title: 'Clientes', href: customers.index.url(), icon: Users },
+    { title: 'Avaliações', href: reviews.index.url(), icon: MessageSquare },
 ];
 
 function Navigation() {
-    const { isCurrentOrParentUrl } = useCurrentUrl();
+    const { isCurrentUrl, isCurrentOrParentUrl } = useCurrentUrl();
 
     return (
         <nav aria-label="Administração" className="flex flex-col gap-1">
@@ -36,7 +53,9 @@ function Navigation() {
                     href={href}
                     className={cn(
                         'flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground',
-                        isCurrentOrParentUrl(href) &&
+                        (href === admin.home.url()
+                            ? isCurrentUrl(href)
+                            : isCurrentOrParentUrl(href)) &&
                             'bg-accent font-medium text-foreground',
                     )}
                 >
