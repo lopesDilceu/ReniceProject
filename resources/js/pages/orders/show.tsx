@@ -1,12 +1,18 @@
 import { Head, Link } from '@inertiajs/react';
 import { CircleCheck } from 'lucide-react';
+import ReviewForm from '@/components/orders/review-form';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { formatDate, formatMoney } from '@/lib/format';
 import { index as products } from '@/routes/products';
 import type { Order } from '@/types';
 
-export default function OrderShow({ order }: { order: Order }) {
+type Props = {
+    order: Order;
+    reviewableProductIds: number[];
+};
+
+export default function OrderShow({ order, reviewableProductIds }: Props) {
     const address = order.shipping_address;
 
     return (
@@ -31,20 +37,27 @@ export default function OrderShow({ order }: { order: Order }) {
                 <section className="rounded-xl border">
                     <ul className="divide-y">
                         {order.items.map((item) => (
-                            <li
-                                key={item.id}
-                                className="flex justify-between gap-4 p-4 text-sm"
-                            >
-                                <span>
-                                    {item.quantity} × {item.product_name}
-                                    <span className="block text-muted-foreground">
-                                        {formatMoney(item.unit_price_cents)}{' '}
-                                        cada
+                            <li key={item.id} className="space-y-3 p-4 text-sm">
+                                <div className="flex justify-between gap-4">
+                                    <span>
+                                        {item.quantity} × {item.product_name}
+                                        <span className="block text-muted-foreground">
+                                            {formatMoney(item.unit_price_cents)}{' '}
+                                            cada
+                                        </span>
                                     </span>
-                                </span>
-                                <span className="font-medium">
-                                    {formatMoney(item.subtotal_cents)}
-                                </span>
+                                    <span className="font-medium">
+                                        {formatMoney(item.subtotal_cents)}
+                                    </span>
+                                </div>
+                                {item.product_slug &&
+                                    reviewableProductIds.includes(
+                                        item.product_id,
+                                    ) && (
+                                        <ReviewForm
+                                            productSlug={item.product_slug}
+                                        />
+                                    )}
                             </li>
                         ))}
                     </ul>

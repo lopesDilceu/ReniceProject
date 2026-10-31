@@ -1,9 +1,14 @@
 <?php
 
 use App\Http\Controllers\Account\AddressController;
+use App\Http\Controllers\Account\AvatarController;
+use App\Http\Controllers\Account\PasswordController;
+use App\Http\Controllers\Account\PhoneController;
+use App\Http\Controllers\Account\ProfileController;
 use App\Http\Controllers\AvaliacaoController;
 use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Catalog\ProductController;
+use App\Http\Controllers\Catalog\ReviewController;
 use App\Http\Controllers\Checkout\CheckoutController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\EstoqueController;
@@ -49,28 +54,33 @@ Route::middleware('auth')->group(function () {
         Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
     });
 
+    Route::get('/conta/pedidos', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/pedidos/{order}', [OrderController::class, 'show'])->name('orders.show');
+
+    // The account always acts on the signed-in user: no route takes a user id
+    // (v1's PUT /usuarios/edit/{id} let anyone edit anyone: SEC-01).
+    Route::get('/conta', [ProfileController::class, 'edit'])->name('account.edit');
+    Route::patch('/conta', [ProfileController::class, 'update'])->name('account.update');
+    Route::post('/conta/foto', [AvatarController::class, 'store'])->name('account.avatar.store');
+    Route::delete('/conta/foto', [AvatarController::class, 'destroy'])->name('account.avatar.destroy');
+    Route::put('/conta/senha', [PasswordController::class, 'update'])
+        ->middleware('throttle:6,1')
+        ->name('account.password.update');
+    Route::post('/conta/telefones', [PhoneController::class, 'store'])->name('phones.store');
+    Route::delete('/conta/telefones/{phone}', [PhoneController::class, 'destroy'])->name('phones.destroy');
+    Route::delete('/enderecos/{address}', [AddressController::class, 'destroy'])->name('addresses.destroy');
+
+    Route::post('/produtos/{product:slug}/avaliacoes', [ReviewController::class, 'store'])->name('reviews.store');
 });
 
-// v1 cart and payment URLs.
+// v1 cart, payment and account URLs.
 Route::permanentRedirect('/usuarios/carrinho', '/carrinho');
 Route::permanentRedirect('/usuarios/pagamento', '/checkout');
+Route::permanentRedirect('/usuarios/minha-conta', '/conta');
+Route::permanentRedirect('/usuarios/editar-dados', '/conta');
+Route::permanentRedirect('/usuarios/minhas-compras', '/conta/pedidos');
 
 // --- Legacy (v1) routes ---
-
-// Rotas relacionadas aos usuários
-Route::prefix('usuarios')->group(function () {
-    Route::get('/minhas-compras', function () {
-        return view('main.usuarios.minhas-compras');
-    })->name('usuarios.minhas-compras');
-
-    Route::middleware('auth')->get('/minha-conta', [UserController::class, 'minhaConta'])->name('minha-conta');
-    Route::middleware('auth')->get('/editar-dados', [UserController::class, 'editar'])->name('editar');
-    Route::put('/edit/{us_id}', [UserController::class, 'edit'])->name('usuarios.edit');
-
-    Route::get('/minhas-compras', [VendaController::class, 'minhasCompras'])->name('minhas-compras');
-
-});
 
 // Rotas relacionadas à área administrativa
 Route::prefix('adm')->middleware('admin')->group(function () {
@@ -119,6 +129,3 @@ Route::prefix('adm')->middleware('admin')->group(function () {
     Route::get('/avaliacoes', [AvaliacaoController::class, 'listAvaliacoes'])->name('adm.avaliacoes.list');
     Route::delete('/avaliacoes/{av_id}', [AvaliacaoController::class, 'destroy'])->name('adm.avaliacoes.destroy');
 });
-
-Route::get('/avaliar-produto/{produto_id}', [ProdutoController::class, 'avaliarProduto'])->name('avaliar.produto');
-Route::post('/salvar-avaliacao', [ProdutoController::class, 'salvarAvaliacao'])->name('salvar.avaliacao');

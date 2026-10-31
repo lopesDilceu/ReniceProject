@@ -73,6 +73,7 @@ cp .env.example .env
 vendor/bin/sail up -d
 vendor/bin/sail artisan key:generate
 vendor/bin/sail artisan migrate --seed
+vendor/bin/sail artisan storage:link
 ```
 
 **Windows without WSL:** the `sail` script only runs on Linux, macOS and WSL2. Use Docker Compose directly from PowerShell. It is the same stack, and `.env.example` already has the `WWWUSER`/`WWWGROUP` values it needs:
@@ -81,6 +82,7 @@ vendor/bin/sail artisan migrate --seed
 docker compose up -d
 docker compose exec laravel.test php artisan key:generate
 docker compose exec laravel.test php artisan migrate --seed
+docker compose exec laravel.test php artisan storage:link
 ```
 
 For better file-system performance, Laravel recommends keeping the project inside the WSL2 file system and using `sail` from there.

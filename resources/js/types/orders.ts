@@ -25,6 +25,8 @@ export type Address = {
 
 export type OrderItem = {
     id: number;
+    product_id: number;
+    product_slug: string | null;
     product_name: string;
     unit_price_cents: number;
     quantity: number;

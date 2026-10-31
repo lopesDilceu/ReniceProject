@@ -15,6 +15,8 @@ All notable changes to this project are documented here. The format follows [Kee
 - Product page (`/produtos/{slug}`): price, availability, description, rating summary with distribution and the latest reviews (author shown as first name and last initial).
 - `Model::preventLazyLoading()` outside production, so N+1 queries fail in tests.
 - Cart in React (`/carrinho`): add from the product page, quantity steppers capped at stock, remove, totals; header badge with the number of units.
+- Account area (`/conta`): personal data (CPF shown masked and not editable), photo upload, phones, addresses and password change; changing the e-mail asks for confirmation again.
+- Order history (`/conta/pedidos`) and reviews from the order page, for delivered products only, one per product.
 - Checkout (`/checkout`, requires a confirmed e-mail): saved addresses or a new one with CEP lookup (ViaCEP), order through `PlaceOrder`, order page (`/pedidos/{id}`) visible to its owner and admins.
 
 ### Changed
@@ -23,6 +25,8 @@ All notable changes to this project are documented here. The format follows [Kee
 - v1 URLs `/usuarios/login` and `/usuarios/cadastro` redirect permanently to `/login` and `/register`.
 - v1 `/produtos/pesquisa?query=…` redirects to `/produtos?q=…`; `/avaliacoes` redirects to the catalog (reviews now live on each product page).
 - v1 `/usuarios/carrinho` and `/usuarios/pagamento` redirect to `/carrinho` and `/checkout`.
+- v1 `/usuarios/minha-conta`, `/usuarios/editar-dados` and `/usuarios/minhas-compras` redirect to the account area.
+- A test fails if the Larastan baseline ever includes a non-legacy file, so regenerating it cannot hide errors in new code.
 - Production password policy: 12+ characters, mixed case, numbers, symbols and a breach check; destructive database commands are blocked in production.
 
 ### Removed
@@ -30,6 +34,7 @@ All notable changes to this project are documented here. The format follows [Kee
 - v1 login, logout and sign-up (controller methods and Blade views), which had no rate limiting, no session regeneration and no password reset (SEC-06), and crashed on sign-up without a photo (BUG-05).
 - v1 catalog, search and reviews pages (`indexHome`, `pesquisa`, `AvaliacaoController@index` and their Blade views), which loaded every product and stock row and matched them in nested loops.
 - v1 cart, payment and checkout (`ItensCarrinhoController`, `CarrinhoController` and their Blade views), including `GET /usuarios/finalizar/{cart}`, which interpolated the cart id into `CALL finalizar_venda(...)`.
+- v1 profile, purchase history and review pages, including the unauthenticated `PUT /usuarios/edit/{id}` and `POST /salvar-avaliacao`.
 
 ### Security
 - Login throttling, session regeneration on login, session invalidation and CSRF token rotation on logout (SEC-06, with regression tests).
@@ -37,6 +42,8 @@ All notable changes to this project are documented here. The format follows [Kee
 - Cart items are authorized by a policy, and quantities are validated against stock (SEC-03).
 - Orders are placed only by a CSRF-protected POST; a double submit creates one order (SEC-04).
 - Cart total counts only the customer's own items (BUG-03).
+- Privilege escalation fixed: no route takes a user id, and the profile form can change only name, e-mail and birth date (SEC-01, critical).
+- Reviews only from customers who received the product, once per product, rating 1–5 (SEC-05).
 
 ## [2.0.0-alpha.3] — 2026-10-31
 

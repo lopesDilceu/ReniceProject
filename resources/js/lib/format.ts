@@ -26,3 +26,17 @@ export function formatDate(iso: string): string {
         new Date(iso),
     );
 }
+
+/** (38) 99999-0000 as the user types; the server keeps digits only. */
+export function maskPhone(value: string): string {
+    const digits = value.replace(/\D/g, '').slice(0, 11);
+
+    if (digits.length <= 2) {
+        return digits.replace(/^(\d{1,2})/, '($1');
+    }
+
+    const rest = digits.slice(2);
+    const split = digits.length === 11 ? 5 : 4;
+
+    return `(${digits.slice(0, 2)}) ${rest.slice(0, split)}${rest.length > split ? `-${rest.slice(split)}` : ''}`;
+}

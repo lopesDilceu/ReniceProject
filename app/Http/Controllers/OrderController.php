@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\OrderStatus;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -11,12 +12,34 @@ use Inertia\Response;
 
 class OrderController extends Controller
 {
+    public function index(Request $request): Response
+    {
+        $orders = $request->user()->orders()
+            ->withCount('items')
+            ->latest('id')
+            ->paginate(10);
+
+        return Inertia::render('orders/index', [
+            'orders' => OrderResource::collection($orders),
+        ]);
+    }
+
     public function show(Request $request, Order $order): Response
     {
         Gate::authorize('view', $order);
 
+        $order->load('items.product');
+        $user = $request->user();
+
+        // Products from this order the customer can still review: delivered,
+        // their own order, not reviewed yet (see ProductPolicy::review).
+        $reviewable = $order->status === OrderStatus::Delivered && $order->user_id === $user->getKey()
+            ? $order->items->pluck('product_id')->diff($user->reviews()->pluck('product_id'))->values()
+            : collect();
+
         return Inertia::render('orders/show', [
-            'order' => (new OrderResource($order->load('items')))->resolve($request),
+            'order' => (new OrderResource($order))->resolve($request),
+            'reviewableProductIds' => $reviewable,
         ]);
     }
 }

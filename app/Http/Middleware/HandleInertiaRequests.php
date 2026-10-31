@@ -40,7 +40,7 @@ class HandleInertiaRequests extends Middleware
                     'name' => $user->name,
                     'email' => $user->email,
                     'is_admin' => $user->is_admin,
-                    'avatar_url' => $user->avatar_path ? asset($user->avatar_path) : null,
+                    'avatar_url' => $user->avatarUrl(),
                 ] : null,
             ],
             // Units in the cart, for the header badge. One SUM query.
