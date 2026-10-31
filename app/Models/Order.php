@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * Cast attribute types, which Larastan otherwise reads from the migration:
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property OrderStatus $status
  * @property int $total_cents
  * @property array<string, string|null> $shipping_address
+ * @property Carbon|null $payment_due_at
  */
 class Order extends Model
 {
@@ -38,6 +40,7 @@ class Order extends Model
             'status' => OrderStatus::class,
             'total_cents' => 'integer',
             'shipping_address' => 'array',
+            'payment_due_at' => 'datetime',
         ];
     }
 

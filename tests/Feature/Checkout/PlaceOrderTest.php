@@ -56,7 +56,7 @@ it('takes the sold quantities out of stock through the ledger', function () {
     $movement = $product->inventoryMovements()->sole();
 
     expect($product->fresh()->stock)->toBe(7)
-        ->and($movement->type)->toBe(InventoryMovementType::Sale)
+        ->and($movement->type)->toBe(InventoryMovementType::Reservation)
         ->and($movement->quantity)->toBe(-3)
         ->and($movement->source->is($order))->toBeTrue();
 });

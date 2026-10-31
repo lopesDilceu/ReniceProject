@@ -4,7 +4,7 @@ import OrderTimeline from '@/components/orders/order-timeline';
 import ReviewForm from '@/components/orders/review-form';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { formatDate, formatMoney } from '@/lib/format';
+import { formatDate, formatDateTime, formatMoney } from '@/lib/format';
 import { index as products } from '@/routes/products';
 import type { Order } from '@/types';
 
@@ -33,6 +33,18 @@ export default function OrderShow({ order, reviewableProductIds }: Props) {
                         Feito em {formatDate(order.created_at)} ·{' '}
                         <Badge variant="secondary">{order.status_label}</Badge>
                     </p>
+                    {order.payment_due_at && (
+                        <p className="text-sm text-muted-foreground">
+                            Seus itens estão reservados até{' '}
+                            <time
+                                dateTime={order.payment_due_at}
+                                className="font-medium text-foreground"
+                            >
+                                {formatDateTime(order.payment_due_at)}
+                            </time>
+                            . Sem pagamento até lá, o pedido é cancelado.
+                        </p>
+                    )}
                 </header>
 
                 <section className="rounded-xl border">

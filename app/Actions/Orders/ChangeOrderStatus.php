@@ -52,7 +52,7 @@ class ChangeOrderStatus
                 foreach ($order->items()->with('product')->get() as $item) {
                     $this->recordMovement->handle(
                         $item->product,
-                        InventoryMovementType::Adjustment,
+                        $next === OrderStatus::Refunded ? InventoryMovementType::Return : InventoryMovementType::Release,
                         $item->quantity,
                         source: $order,
                         actor: $actor,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Enums\OrderStatus;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderStatusChange;
@@ -25,6 +26,7 @@ class OrderResource extends JsonResource
             'total_cents' => $this->total_cents,
             'shipping_address' => AddressResource::format($this->shipping_address),
             'created_at' => $this->created_at?->toIso8601String(),
+            'payment_due_at' => $this->status === OrderStatus::PendingPayment ? $this->payment_due_at?->toIso8601String() : null,
             'items_count' => $this->whenCounted('items'),
             'items' => $this->whenLoaded('items', fn () => $this->items->map(fn (OrderItem $item) => [
                 'id' => $item->id,

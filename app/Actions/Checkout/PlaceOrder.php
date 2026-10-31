@@ -17,6 +17,7 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -70,6 +71,7 @@ class PlaceOrder
                 'status' => OrderStatus::PendingPayment,
                 'total_cents' => $items->sum(fn (CartItem $item) => $products[$item->product_id]->price_cents * $item->quantity),
                 'shipping_address' => $shippingAddress->toSnapshot(),
+                'payment_due_at' => now()->addMinutes(Config::integer('shop.payment_window_minutes')),
             ])->save();
 
             OrderStatusChange::record($order, from: null, actor: $customer);
@@ -87,7 +89,7 @@ class PlaceOrder
 
                 $this->recordMovement->handle(
                     $product,
-                    InventoryMovementType::Sale,
+                    InventoryMovementType::Reservation,
                     -$item->quantity,
                     source: $order,
                     actor: $customer,
