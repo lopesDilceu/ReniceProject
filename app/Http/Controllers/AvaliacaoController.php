@@ -21,12 +21,12 @@ class AvaliacaoController extends Controller
         return view('main.avaliacoes', compact('produtos'));
     }
 
-
     public function listAvaliacoes()
     {
         $avaliacoes = Avaliacao::all();
         $users = User::all();
         $produtos = Produto::all();
+
         return view('adm.avaliacoes.list', compact('avaliacoes', 'users', 'produtos'));
     }
 
@@ -78,12 +78,12 @@ class AvaliacaoController extends Controller
         //
         $avaliacao = Avaliacao::findOrFail($id);
 
-                // Exclua a compra
-                $avaliacao->delete();
+        // Exclua a compra
+        $avaliacao->delete();
 
-                flash('Avaliação excluído com sucesso!', 'success',[], 'Successo');
-        
-                // Redirecione de volta à página de compras ou faça qualquer outra coisa que você queira
-                return back();
+        flash('Avaliação excluído com sucesso!', 'success', [], 'Successo');
+
+        // Redirecione de volta à página de compras ou faça qualquer outra coisa que você queira
+        return back();
     }
 }

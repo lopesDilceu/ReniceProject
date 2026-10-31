@@ -24,4 +24,3 @@ class Endereco extends Model
         return $this->belongsTo(User::class, 'en_usuario_id');
     }
 }
-

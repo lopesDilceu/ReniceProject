@@ -61,6 +61,4 @@ class CarrinhoController extends Controller
     {
         //
     }
-
-    
 }

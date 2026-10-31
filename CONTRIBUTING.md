@@ -2,6 +2,20 @@
 
 This is a personal portfolio project, but it follows the workflow of a team project so the history is easy to follow.
 
+## Quality checks
+
+```bash
+composer check          # everything CI runs: lint, analyse, test
+composer format         # fix code style
+composer test:coverage  # tests with coverage (needs pcov or Xdebug)
+```
+
+Larastan runs at level 6. Legacy errors live in `phpstan-baseline.neon`. New code must not add entries. When a rewrite removes legacy code, regenerate the baseline so it only shrinks:
+
+```bash
+vendor/bin/phpstan analyse --memory-limit=1G --generate-baseline
+```
+
 ## Workflow
 
 1. Every change starts from an **issue** in a [milestone](https://github.com/lopesDilceu/ReniceProject/milestones).

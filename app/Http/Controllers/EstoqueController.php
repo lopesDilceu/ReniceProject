@@ -15,6 +15,7 @@ class EstoqueController extends Controller
     {
         $estoques = Estoque::all();
         $produtos = Produto::all(); // Recupera todos os produtos
+
         return view('adm.estoque.list', compact('estoques', 'produtos'));
     }
 
