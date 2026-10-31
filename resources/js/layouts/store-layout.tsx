@@ -38,15 +38,16 @@ import { cn } from '@/lib/utils';
 import {
     avaliacoes,
     home,
+    login,
+    logout,
     minhaConta,
     minhasCompras,
     produtos,
+    register,
     sobre,
 } from '@/routes';
 import adm from '@/routes/adm';
 import usuario from '@/routes/usuario';
-import usuarios from '@/routes/usuarios';
-import logout from '@/routes/usuarios/logout';
 import type { User } from '@/types';
 
 /*
@@ -106,13 +107,6 @@ function AppearanceMenu() {
     );
 }
 
-function csrfToken(): string {
-    return (
-        document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')
-            ?.content ?? ''
-    );
-}
-
 function UserMenu({ user }: { user: User }) {
     const getInitials = useInitials();
 
@@ -161,14 +155,11 @@ function UserMenu({ user }: { user: User }) {
                     </DropdownMenuItem>
                 )}
                 <DropdownMenuSeparator />
-                <form method="post" action={logout.submit.url()}>
-                    <input type="hidden" name="_token" value={csrfToken()} />
-                    <DropdownMenuItem asChild>
-                        <button type="submit" className="w-full">
-                            <LogOut className="size-4" /> Sair
-                        </button>
-                    </DropdownMenuItem>
-                </form>
+                <DropdownMenuItem asChild>
+                    <Link href={logout()} as="button" className="w-full">
+                        <LogOut className="size-4" /> Sair
+                    </Link>
+                </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     );
@@ -252,15 +243,13 @@ export default function StoreLayout({ children }: { children: ReactNode }) {
                         ) : (
                             <>
                                 <Button variant="ghost" asChild>
-                                    <a href={usuarios.login.url()}>Entrar</a>
+                                    <Link href={login()}>Entrar</Link>
                                 </Button>
                                 <Button
                                     asChild
                                     className="hidden sm:inline-flex"
                                 >
-                                    <a href={usuarios.cadastro.url()}>
-                                        Criar conta
-                                    </a>
+                                    <Link href={register()}>Criar conta</Link>
                                 </Button>
                             </>
                         )}
