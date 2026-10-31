@@ -13,10 +13,15 @@ All notable changes to this project are documented here. The format follows [Kee
   - `orders:expire-unpaid` runs every minute on the scheduler. It cancels overdue orders as the system and releases their stock.
   - The customer's order page says until when the items are reserved.
 - Ledger movement types `reservation`, `release` (cancellation or expiry) and `return` (refund). They replace `sale`, and the `adjustment` that cancellations used to write.
+- Transactional e-mails in Portuguese, through queued notifications (5 tries, backoff of 10 s, 1 min and 5 min). They go out only after the transaction commits, so a rolled-back change never e-mails anyone:
+  - The customer gets an e-mail when the order is placed (with the reservation deadline in the store's timezone), paid, shipped (with the delivery address) and cancelled (with the reason).
+  - Admins get a low-stock alert when a product drops to `SHOP_LOW_STOCK_THRESHOLD` units (5 by default). It is sent once per crossing; a restock arms it again. The admin dashboard uses the same threshold.
+- `OrderStatusChanged` event, fired for every timeline entry. The `EmailCustomerAboutOrder` listener picks which e-mail to send.
 - Concurrency test on PostgreSQL: eight PHP processes check out the last unit at the same instant, and exactly one succeeds. With the row locks removed, the test sold that unit three times.
 
 ### Changed
-- `ChangeOrderStatus` is now the only way an order's status changes. The demo seeder takes each order through it with realistic dates, so seeded cancellations now put stock back too. Seeded orders that still await payment are recent, so they sit inside the payment window.
+- `ChangeOrderStatus` is now the only way an order's status changes. The demo seeder takes each order through it with realistic dates, so seeded cancellations now put stock back too. Seeded orders that still await payment are recent, so they sit inside the payment window. The seed renders its e-mails but sends none, and queues none for Mailpit.
+- The e-mail sender in `.env.example` is `loja@renice.test`.
 
 ## [2.0.0-beta.1] — 2026-10-31
 

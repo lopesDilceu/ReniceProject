@@ -7,8 +7,11 @@ use App\Exceptions\InsufficientStock;
 use App\Models\InventoryMovement;
 use App\Models\Product;
 use App\Models\User;
+use App\Notifications\LowStockAlert;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use InvalidArgumentException;
 
 /**
@@ -63,7 +66,23 @@ class RecordInventoryMovement
 
             $movement->save();
 
+            $this->alertOnLowStock($locked, stockBefore: $stockAfter - $quantity, stockAfter: $stockAfter);
+
             return $movement;
         });
+    }
+
+    /**
+     * E-mails admins when stock crosses the threshold on the way down. Only
+     * the crossing alerts: further sales below it do not, and a restock
+     * above it arms the alert again.
+     */
+    private function alertOnLowStock(Product $product, int $stockBefore, int $stockAfter): void
+    {
+        $threshold = Config::integer('shop.low_stock_threshold');
+
+        if ($stockBefore > $threshold && $stockAfter <= $threshold) {
+            Notification::send(User::query()->where('is_admin', true)->get(), new LowStockAlert($product, $stockAfter));
+        }
     }
 }

@@ -12,6 +12,7 @@ use App\Queries\BestSeller;
 use App\Queries\BestSellingProducts;
 use Carbon\CarbonInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -41,8 +42,9 @@ class DashboardController extends Controller
             'pendingPayment' => Order::query()->where('status', OrderStatus::PendingPayment)->count(),
             'toShip' => Order::query()->where('status', OrderStatus::Paid)->count(),
             'newCustomers' => User::query()->whereBetween('created_at', [$periodStart, $now])->count(),
+            'lowStockThreshold' => Config::integer('shop.low_stock_threshold'),
             'lowStock' => Product::query()
-                ->where('stock', '<=', 5)
+                ->where('stock', '<=', Config::integer('shop.low_stock_threshold'))
                 ->orderBy('stock')
                 ->limit(5)
                 ->get(['id', 'name', 'stock']),
