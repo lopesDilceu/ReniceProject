@@ -17,9 +17,17 @@ All notable changes to this project are documented here. The format follows [Kee
 - **Rate limits:** 5 two-factor codes per minute per account being signed in, and 10 passkey ceremonies per minute per credential and IP.
 - **Password confirmation** is required to open the security page and to change two-factor or passkeys.
 - pt-BR messages for the two-factor and passkey errors.
+- **REST API `/api/v1`** ([`docs/api`](docs/api/README.md)) for the catalog, cart, addresses and orders, including placing an order with its Pix charge:
+  - **Tokens:** Sanctum tokens for 30 days with `read` and `write` scopes. Accounts with two-factor on must send the code to get a token.
+  - **Rate limits:** 60 requests per minute per token (per IP for the public catalog), and 5 token attempts per minute.
+  - **Resources:** versioned, separate from the web pages; exact stock is never exposed.
+  - **Errors:** always JSON.
+- **OpenAPI 3.1 document** generated from the code with Scramble. It is committed at `docs/api/openapi.json` and served at `/docs/api`.
+  - **Contract tests** validate real responses against the committed document.
+  - **The PostgreSQL CI job** fails when the document is out of date.
 
 ### Changed
-- Closing an account (soft delete) deletes its passkeys, so it keeps no working credentials.
+- Closing an account (soft delete) deletes its passkeys and revokes its API tokens, so it keeps no working credentials.
 
 ## [2.0.0-beta.2] — 2026-10-31
 

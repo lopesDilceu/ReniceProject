@@ -48,6 +48,7 @@ Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 | Database | MySQL | PostgreSQL 18 + pgvector |
 | Business rules | MySQL procedures and triggers | Tested application code |
 | Payments | none (orders marked completed at once) | Pix through Mercado Pago, with signed, idempotent webhooks |
+| API | none | REST `/api/v1` (Sanctum tokens with scopes), OpenAPI 3.1 generated from code, contract-tested |
 | Local environment | manual | Docker (Laravel Sail) |
 | Quality | — | Pest, Larastan (level 6), Pint, GitHub Actions |
 
@@ -59,6 +60,7 @@ Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 | [Initial audit](docs/audit/initial-audit.md) | Security, correctness and design findings |
 | [Database](docs/database.md) | Schema diagram and design rules |
 | [Payments](docs/payments.md) | Pix flow, webhook guarantees and the Mercado Pago sandbox |
+| [REST API](docs/api/README.md) | `/api/v1` with Sanctum tokens; OpenAPI document at `/docs/api` |
 | [Roadmap](docs/roadmap.md) | Phases, milestones and issues |
 | [Metrics](docs/metrics.md) | Baseline and progress |
 | [Decisions](docs/adr/README.md) | Architecture Decision Records |
