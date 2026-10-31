@@ -8,9 +8,15 @@ All notable changes to this project are documented here. The format follows [Kee
 - Order timeline: every status change is recorded in the append-only `order_status_changes` table, with the previous status, the actor (or the system) and a reason. Placing an order writes the first entry. Admins see who made each change; customers see when and why, under "Acompanhamento" on the order page.
 - Cancelling or refunding an order requires a reason.
 - An invalid transition throws `InvalidOrderTransition`.
+- Stock reservation:
+  - Checkout reserves the units until `orders.payment_due_at`, which is `SHOP_PAYMENT_WINDOW_MINUTES` after the order (30 by default).
+  - `orders:expire-unpaid` runs every minute on the scheduler. It cancels overdue orders as the system and releases their stock.
+  - The customer's order page says until when the items are reserved.
+- Ledger movement types `reservation`, `release` (cancellation or expiry) and `return` (refund). They replace `sale`, and the `adjustment` that cancellations used to write.
+- Concurrency test on PostgreSQL: eight PHP processes check out the last unit at the same instant, and exactly one succeeds. With the row locks removed, the test sold that unit three times.
 
 ### Changed
-- `ChangeOrderStatus` is now the only way an order's status changes. The demo seeder takes each order through it with realistic dates, so seeded cancellations now put stock back too.
+- `ChangeOrderStatus` is now the only way an order's status changes. The demo seeder takes each order through it with realistic dates, so seeded cancellations now put stock back too. Seeded orders that still await payment are recent, so they sit inside the payment window.
 
 ## [2.0.0-beta.1] — 2026-10-31
 

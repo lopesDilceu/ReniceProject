@@ -80,6 +80,7 @@ erDiagram
         string status "OrderStatus enum"
         int total_cents ">= 0"
         json shipping_address "snapshot"
+        timestamp payment_due_at "stock reserved until then"
     }
     order_items {
         bigint id PK
@@ -99,7 +100,7 @@ erDiagram
     inventory_movements {
         bigint id PK
         bigint product_id FK "restrict"
-        string type "purchase, sale, adjustment"
+        string type "purchase, reservation, release, return, adjustment"
         int quantity "signed, not zero"
         int stock_after "running balance, >= 0"
         morph source "supplier purchase, order..."
@@ -143,6 +144,18 @@ Stock is never edited directly. Every change goes through `App\Actions\Inventory
 
 Movements are append-only: the model throws on update or delete, and a correction is a new `adjustment`. This replaces v1's `atualizar_estoque_produto` procedure and its four triggers. Supplier purchases go through `RecordSupplierPurchase`, which records cost on the purchase and adds a `purchase` movement. It never copies cost into the sale price, which was v1's BUG-01.
 
+### Stock reservation
+
+| Movement | When | Quantity |
+|---|---|---|
+| `reservation` | `PlaceOrder`: checkout takes the units while the order waits for payment | negative |
+| `release` | The order is cancelled, by an admin or because the payment window closed | positive |
+| `return` | A paid order is refunded | positive |
+
+A paid order keeps its reservation, because the units are sold. `PlaceOrder` sets `orders.payment_due_at` to now plus `SHOP_PAYMENT_WINDOW_MINUTES` (30 by default). Every minute, the scheduler runs `orders:expire-unpaid` (`App\Actions\Orders\ExpireUnpaidOrders`), which cancels overdue orders as the system and releases their stock. A payment that arrives at the same moment is safe: `ChangeOrderStatus` re-reads the status under a row lock, so the order ends up either paid or expired, never both.
+
+**Overselling** is prevented by row locks. `PlaceOrder` locks the cart and its products in id order, and `RecordInventoryMovement` locks the product again. `tests/Feature/Checkout/ConcurrentCheckoutTest.php` proves it on PostgreSQL: eight separate PHP processes check out the last unit at the same instant, and exactly one succeeds. With the locks removed, the same test sold that unit three times.
+
 ## Order lifecycle
 
 ```mermaid
@@ -164,7 +177,7 @@ stateDiagram-v2
 1. locks the order row;
 2. throws `InvalidOrderTransition` if the lifecycle doesn't allow the move, or if a cancellation or refund has no reason;
 3. updates `orders.status` and appends a row to `order_status_changes` with the previous status, the actor and the reason;
-4. when cancelling or refunding, puts the items back in stock through the inventory ledger.
+4. when cancelling or refunding, puts the items back in stock through the inventory ledger (`release` or `return`).
 
 `PlaceOrder` writes the first timeline row. The timeline is append-only, like the ledger. Admins see who made each change; when the actor is null, the system made it (payment webhooks and Pix expiry, [#33](https://github.com/lopesDilceu/ReniceProject/issues/33)). Customers see the status, the date and the reason, but not which admin made the change.
 

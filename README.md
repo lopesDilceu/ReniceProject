@@ -95,6 +95,8 @@ For better file-system performance, Laravel recommends keeping the project insid
 
 The seed builds a demo store with the original product line, nine customers, orders, stock history and reviews, all through the real domain actions. Run `migrate:fresh --seed` to reset it.
 
+Unpaid orders expire after 30 minutes (`SHOP_PAYMENT_WINDOW_MINUTES`) and release their stock. The expiry runs on the scheduler; locally, keep `php artisan schedule:work` running inside the container, or run `php artisan orders:expire-unpaid` by hand.
+
 | Demo account | E-mail | Password |
 |---|---|---|
 | Admin | `admin@renice.test` | `password` |
