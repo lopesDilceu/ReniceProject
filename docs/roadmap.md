@@ -19,11 +19,10 @@ The modernization runs in phases. Each phase is a [GitHub milestone](https://git
 - [#3](https://github.com/lopesDilceu/ReniceProject/issues/3) Code style and static analysis (Pint + Larastan)
 - [#4](https://github.com/lopesDilceu/ReniceProject/issues/4) Pest and the test baseline
 - [#5](https://github.com/lopesDilceu/ReniceProject/issues/5) CI pipeline on GitHub Actions
-- [#6](https://github.com/lopesDilceu/ReniceProject/issues/6) Containerized local environment
 
 ## Phase 1 — Framework upgrade
 
-- [#7](https://github.com/lopesDilceu/ReniceProject/issues/7) Laravel 11 → 12 (clears 5 security advisories)
+- [#7](https://github.com/lopesDilceu/ReniceProject/issues/7) Laravel 11 → 12 (clears 5 security advisories). Done ahead of the Phase 0 tooling: Composer 2.9+ refuses to install new packages next to a vulnerable Laravel 11
 - [#8](https://github.com/lopesDilceu/ReniceProject/issues/8) Laravel 12 → 13 and PHP 8.4+
 - [#9](https://github.com/lopesDilceu/ReniceProject/issues/9) Replace the abandoned `yoeunes/toastr`
 - [#10](https://github.com/lopesDilceu/ReniceProject/issues/10) Dev dependencies to current majors
@@ -36,6 +35,7 @@ The modernization runs in phases. Each phase is a [GitHub milestone](https://git
 - [#14](https://github.com/lopesDilceu/ReniceProject/issues/14) Fix: supplier purchase overwrites the sale price
 - [#15](https://github.com/lopesDilceu/ReniceProject/issues/15) Fix: best-sellers report counts rows instead of units
 - [#16](https://github.com/lopesDilceu/ReniceProject/issues/16) Factories and demo seeders
+- [#6](https://github.com/lopesDilceu/ReniceProject/issues/6) Containerized local environment (moved from Phase 0: depends on the database engine decision)
 
 ## Phase 3 — Inertia + React rewrite
 
