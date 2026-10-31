@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\OrderStatus;
+use App\Events\OrderStatusChanged;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use LogicException;
@@ -12,7 +13,8 @@ use LogicException;
  * @property OrderStatus $to_status
  *
  * One step of an order's timeline: who moved it, when and why. Rows are
- * written only through record() and are never updated or deleted.
+ * written only through record(), which also fires OrderStatusChanged, and
+ * are never updated or deleted.
  */
 class OrderStatusChange extends Model
 {
@@ -42,6 +44,8 @@ class OrderStatusChange extends Model
             'user_id' => $actor?->getKey(),
             'reason' => $reason,
         ])->save();
+
+        OrderStatusChanged::dispatch($order, $change);
 
         return $change;
     }

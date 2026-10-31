@@ -59,6 +59,20 @@ class DemoSeeder extends Seeder
 
     public function run(): void
     {
+        // The demo customers are fictional: their order e-mails (and the
+        // low-stock alerts) are rendered and dropped, not queued for Mailpit.
+        $previous = ['queue.default' => config('queue.default'), 'mail.default' => config('mail.default')];
+        config(['queue.default' => 'sync', 'mail.default' => 'array']);
+
+        try {
+            $this->seedStore();
+        } finally {
+            config($previous);
+        }
+    }
+
+    private function seedStore(): void
+    {
         fake()->seed(2024);
 
         $admin = User::factory()->admin()->create([
