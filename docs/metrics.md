@@ -13,16 +13,16 @@ How each number is collected is in [How to measure](#how-to-measure).
 | Known security advisories (`composer audit`) | 5 | 0 | 0 |
 | Abandoned packages | 1 | 0 | 0 |
 | Direct dependencies behind a major version | 4 | 0 | 0 |
-| Frontend libraries loaded from CDNs | 4 | 4 | 0 |
+| Frontend libraries loaded from CDNs | 4 | 0 | 0 |
 
 ## Quality
 
 | Metric | v1.0-academic | Current | Target |
 |---|---|---|---|
-| Automated tests | 0 (2 framework examples) | 232 passing on SQLite, 239 on PostgreSQL; 0 pending | — |
+| Automated tests | 0 (2 framework examples) | 253 passing on SQLite, 260 on PostgreSQL; 0 pending | — |
 | Test suite status | 1 of 2 example tests failing | green | green |
 | Line coverage on `app/` | 0% | **80.3%** (target met; remaining gap is the legacy admin) | ≥ 80% |
-| Static analysis | not configured | Larastan level 6, 98 legacy errors baselined (a test keeps new code out of the baseline) (new code: 0) | level 6+, empty baseline |
+| Static analysis | not configured | Larastan level 6, **no baseline**: 0 ignored errors | level 6+, empty baseline |
 | Enforced code style | no | Pint (Laravel preset) in CI | Pint in CI |
 | CI pipeline | none | lint + analyse + test on PHP 8.4/8.5, migrations + tests on PostgreSQL, dependency audit | lint + analyse + test + audit |
 
@@ -30,23 +30,24 @@ How each number is collected is in [How to measure](#how-to-measure).
 
 | Metric | v1.0-academic | Current | Target |
 |---|---|---|---|
-| Open audit findings (critical / high) | 3 / 6 | **0 / 0**² | 0 / 0 |
+| Open audit findings (all severities) | 28 | **0**² | 0 / 0 |
 | State-changing routes without `auth` (excluding login, sign-up, logout) | 6 | 0 | 0 |
 | Raw SQL with interpolated input | 1 | 0 | 0 |
 | Domain tables with migrations | 0 of 11 | 11 of 11 | all |
 | Business rules in procedures / triggers | 2 / 8 | 0 / 0: all replaced by tested actions (`RecordInventoryMovement`, `RecordSupplierPurchase`, `PlaceOrder`) or FK rules | 0 / 0 |
 | Fresh clone → running app | not possible | `docker compose up -d` + `migrate --seed` (demo store) | one command |
 
-² All critical and high findings are resolved: DM-01 (schema and rules versioned), SEC-07 (Laravel upgrade), BUG-01 (#14), BUG-02 (#13), SEC-06 and BUG-05 (#22), SEC-02, SEC-03, SEC-04 and BUG-03 (#29), SEC-01 and SEC-05 (#30). Medium and low findings left are in the legacy admin, rewritten in #31.
+² All 28 findings are resolved: DM-01–09 (schema, #11/#12), SEC-07 (Laravel upgrade), BUG-01 (#14), BUG-02 (#13), BUG-06 (#15), SEC-06 and BUG-05 (#22), SEC-02/03/04 and BUG-03 (#29), SEC-01 and SEC-05 (#30), BUG-04, MNT-01, MNT-04, MNT-05 and MNT-06 (#31), MNT-02 and MNT-03 (Phase 0).
 
 ## Size
 
 | Metric | v1.0-academic | Current |
 |---|---|---|
-| PHP lines (`app/`, `routes/`) | 1,745 | 1,768 (after Pint formatting) |
-| Blade lines | 2,859 | 2,859 |
-| Controllers / empty methods | 12 / 56 | 12 / 56 |
-| Routes | 45 | 45 |
+| PHP lines (`app/`, `routes/`) | 1,745 | 3,600 (all v2; v1 removed) |
+| Blade lines | 2,859 | 47 (the Inertia root view) |
+| TypeScript/React lines (excluding shadcn/ui) | 0 | 4,793 |
+| Controllers / empty methods | 12 / 56 | 17 / 0 |
+| Routes (application, excluding Fortify and Debugbar) | 45 | 50 |
 
 ## Performance
 

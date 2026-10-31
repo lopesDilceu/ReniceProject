@@ -6,7 +6,7 @@
 
 An e-commerce application that started as a university project in 2024 and is being rebuilt, in the open, to a 2026 production standard.
 
-> **Status: modernization in progress.** The code on `main` is still close to the original version, which has known security issues and is not meant to be deployed. Follow the progress in the [roadmap](docs/roadmap.md).
+> **Status:** the store and the admin are fully rewritten (Phases 0–3), and every finding of the [initial audit](docs/audit/initial-audit.md) is resolved. Next: Pix payments and the order lifecycle (Phase 4). Follow the [roadmap](docs/roadmap.md).
 
 ![Renice v1 product catalog](docs/legacy/images/03-product-catalog.jpg)
 
@@ -100,7 +100,7 @@ The seed builds a demo store with the original product line, nine customers, ord
 | Admin | `admin@renice.test` | `password` |
 | Customer | `cliente@renice.test` | `password` |
 
-The schema is documented in [`docs/database.md`](docs/database.md). The legacy screens still query the v1 tables until each module is rewritten in Phase 3, so only the pages that do not need the database work today.
+The schema is documented in [`docs/database.md`](docs/database.md).
 
 Quality checks (no Docker needed; tests use in-memory SQLite):
 
