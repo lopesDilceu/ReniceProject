@@ -1,66 +1,72 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Renice
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**English** · [Português](README.pt-BR.md)
 
-## About Laravel
+An e-commerce application that started as a university project in 2024 and is being rebuilt, in the open, to a 2026 production standard.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+> **Status: modernization in progress.** The code on `main` is still close to the original version, which has known security issues and is not meant to be deployed. Follow the progress in the [roadmap](docs/roadmap.md).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+![Renice v1 product catalog](docs/legacy/images/03-product-catalog.jpg)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## The story
 
-## Learning Laravel
+Renice is a fictional brand that sells ready-to-drink cups with ice. In June 2024 it became the final project for two courses in the Information Systems program at Unimontes: a Laravel storefront with an admin back office (Programming II) and a MySQL design built on stored procedures and triggers (Database II).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+That version is frozen at [`v1.0-academic`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v1.0-academic). This repository now documents the work of taking it from coursework to a codebase I would put in production:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. **Audit:** 28 findings, from privilege escalation and SQL injection to business rules hidden in triggers ([read the audit](docs/audit/initial-audit.md)).
+2. **Platform:** Laravel 11 → 13, PHP 8.4+, CI with static analysis and tests.
+3. **Data layer:** a versioned schema and business rules moved from the database into tested application code.
+4. **Frontend:** a rewrite with Inertia, React and TypeScript.
+5. **Commerce:** order lifecycle, Pix payments with webhooks, concurrency-safe inventory.
+6. **2026 features:** semantic search, AI review summaries, a realtime admin, a public API and an MCP server for AI agents.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Every step is an issue, a pull request and, when there is a real trade-off, an [architecture decision record](docs/adr/README.md).
 
-## Laravel Sponsors
+## Progress
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+| Phase | Status |
+|---|---|
+| 0 — Foundation | In progress |
+| 1 — Framework upgrade | Planned |
+| 2 — Data layer redesign | Planned |
+| 3 — Inertia + React rewrite | Planned |
+| 4 — Commerce core | Planned |
+| 5 — Showcase features | Planned |
+| 6 — Production & case study | Planned |
 
-### Premium Partners
+Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Stack
 
-## Contributing
+| | v1.0-academic | Target |
+|---|---|---|
+| Backend | Laravel 11, PHP 8.2 | Laravel 13, PHP 8.4+ |
+| Frontend | Blade, Bootstrap, jQuery | Inertia, React, TypeScript, Tailwind |
+| Business rules | MySQL procedures and triggers | Tested application code |
+| Quality | — | Pest, Larastan, Pint, GitHub Actions |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Documentation
 
-## Code of Conduct
+| | |
+|---|---|
+| [Original system](docs/legacy/README.md) | What v1 did, its database design and screenshots |
+| [Initial audit](docs/audit/initial-audit.md) | Security, correctness and design findings |
+| [Roadmap](docs/roadmap.md) | Phases, milestones and issues |
+| [Metrics](docs/metrics.md) | Baseline and progress |
+| [Decisions](docs/adr/README.md) | Architecture Decision Records |
+| [Contributing](CONTRIBUTING.md) | Workflow, commits and releases |
+| [Changelog](CHANGELOG.md) | Notable changes per release |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Running locally
 
-## Security Vulnerabilities
+Not yet possible from a fresh clone: the original database schema was never versioned. A one-command setup with demo data arrives in Phase 0/2 ([#6](https://github.com/lopesDilceu/ReniceProject/issues/6), [#11](https://github.com/lopesDilceu/ReniceProject/issues/11)).
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Authors
+
+- **Dilceu Lopes:** application, database and modernization
+- **Renan Iago Figueiredo Silva Ciríaco:** database design in v1
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[MIT](LICENSE)

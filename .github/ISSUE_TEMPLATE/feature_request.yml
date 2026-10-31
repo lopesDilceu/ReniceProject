@@ -1,0 +1,23 @@
+name: Feature or improvement
+description: New capability, refactoring or upgrade
+labels: ["feature"]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: The problem or opportunity, and why it matters now.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: What to build. If there are real alternatives, plan an ADR.
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] ..."
+    validations:
+      required: true
