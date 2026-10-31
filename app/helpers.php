@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('formatar_cpf')) {
+if (! function_exists('formatar_cpf')) {
     function formatar_cpf($cpf)
     {
         // Remove tudo que não for número
@@ -11,7 +11,7 @@ if (!function_exists('formatar_cpf')) {
     }
 }
 
-if (!function_exists('formatar_cep')) {
+if (! function_exists('formatar_cep')) {
     function formatar_cep($cep)
     {
         // Remove tudo que não for número
@@ -22,7 +22,7 @@ if (!function_exists('formatar_cep')) {
     }
 }
 
-if (!function_exists('formatar_tel')) {
+if (! function_exists('formatar_tel')) {
     function formatar_tel($telefone)
     {
         // Remove tudo que não for número

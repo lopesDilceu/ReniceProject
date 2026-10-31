@@ -29,6 +29,7 @@ class User extends Authenticatable
     ];
 
     use SoftDeletes;
+
     /**
      * The attributes that should be hidden for serialization.
      *

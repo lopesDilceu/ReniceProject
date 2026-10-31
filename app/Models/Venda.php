@@ -25,4 +25,3 @@ class Venda extends Model
         return $this->hasMany(ItensVenda::class, 'iv_id_venda');
     }
 }
-

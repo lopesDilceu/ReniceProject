@@ -7,7 +7,6 @@ use App\Models\Produto;
 use App\Models\User;
 use App\Models\Venda;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class VendaController extends Controller
 {
@@ -17,10 +16,11 @@ class VendaController extends Controller
     public function index()
     {
         //
-        $vendas = Venda::all(); 
+        $vendas = Venda::all();
         $users = User::all();
         $itensvenda = ItensVenda::all();
         $produtos = Produto::all();
+
         return view('adm.vendas.list', compact('vendas', 'users', 'itensvenda', 'produtos'));
     }
 
@@ -30,6 +30,7 @@ class VendaController extends Controller
         $vendas = Venda::where('ve_id_usuario', auth()->id())->orderBy('created_at', 'desc')->get();
         $itensvenda = ItensVenda::all();
         $produtos = Produto::all();
+
         return view('main.usuarios.minhas-compras', compact('vendas', 'itensvenda', 'produtos'));
     }
 

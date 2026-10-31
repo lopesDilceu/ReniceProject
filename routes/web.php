@@ -7,7 +7,6 @@ use App\Http\Controllers\ItensCarrinhoController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendaController;
-use App\Models\Estoque;
 use Illuminate\Support\Facades\Route;
 
 // Rotas principais do site
@@ -18,8 +17,6 @@ Route::get('/', function () {
 Route::get('/sobre', function () {
     return view('main.sobre');
 })->name('sobre');
-
-
 
 Route::get('/avaliacoes', [AvaliacaoController::class, 'index'])->name('avaliacoes');
 
@@ -39,8 +36,6 @@ Route::prefix('usuarios')->group(function () {
 
     Route::post('/store', [UserController::class, 'store'])->name('usuarios.store');
 
-
-
     Route::get('/carrinho', function () {
         return view('main.usuarios.carrinho');
     })->name('usuarios.carrinho');
@@ -59,17 +54,13 @@ Route::prefix('usuarios')->group(function () {
     Route::get('/finalizar/{ic_id_carrinho}', [ItensCarrinhoController::class, 'finalizarCompra'])->name('usuario.finalizar');
     Route::get('/compra-finalizada', [ItensCarrinhoController::class, 'compraFinalizada'])->name('compra-finalizada');
 
-
     Route::middleware('auth')->get('/minha-conta', [UserController::class, 'minhaConta'])->name('minha-conta');
     Route::middleware('auth')->get('/editar-dados', [UserController::class, 'editar'])->name('editar');
     Route::put('/edit/{us_id}', [UserController::class, 'edit'])->name('usuarios.edit');
 
     Route::get('/minhas-compras', [VendaController::class, 'minhasCompras'])->name('minhas-compras');
-    
 
 });
-
-
 
 // Rotas relacionadas à área administrativa
 Route::prefix('adm')->middleware('admin')->group(function () {
@@ -107,7 +98,6 @@ Route::prefix('adm')->middleware('admin')->group(function () {
     Route::post('/produto', [ProdutoController::class, 'store'])->name('adm.produto.store');
     Route::put('/produtos/{pr_id?}', [ProdutoController::class, 'edit'])->name('adm.produto.edit');
     Route::delete('/produtos/{pr_id}', [ProdutoController::class, 'destroy'])->name('adm.produtos.destroy');
-    
 
     Route::get('/usuarios', [UserController::class, 'index'])->name('adm.usuarios.list');
     Route::put('/usuarios/{pr_id?}', [UserController::class, 'edit'])->name('adm.usuario.edit');
@@ -120,16 +110,12 @@ Route::prefix('adm')->middleware('admin')->group(function () {
     Route::delete('/avaliacoes/{av_id}', [AvaliacaoController::class, 'destroy'])->name('adm.avaliacoes.destroy');
 });
 
-
 // Rota para listar produtos
 Route::get('/produtos', [ProdutoController::class, 'indexHome'])->name('produtos');
 Route::get('/avaliar-produto/{produto_id}', [ProdutoController::class, 'avaliarProduto'])->name('avaliar.produto');
 Route::post('/salvar-avaliacao', [ProdutoController::class, 'salvarAvaliacao'])->name('salvar.avaliacao');
 Route::get('/produtos/pesquisa', [ProdutoController::class, 'pesquisa'])->name('pesquisa');
 
-//Rota para armazenar no carrinho
+// Rota para armazenar no carrinho
 Route::post('/carrinho/store', [ItensCarrinhoController::class, 'store'])->name('carrinho.store');
 Route::patch('/carrinho/{id}', [ItensCarrinhoController::class, 'update'])->name('usuario.carrinho.update');
-
-
-

@@ -1,0 +1,925 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method App\\Http\\Controllers\\AvaliacaoController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/AvaliacaoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\AvaliacaoController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/AvaliacaoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\AvaliacaoController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/AvaliacaoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\AvaliacaoController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/AvaliacaoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\AvaliacaoController\:\:listAvaliacoes\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/AvaliacaoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\AvaliacaoController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/AvaliacaoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\AvaliacaoController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/AvaliacaoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\AvaliacaoController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/AvaliacaoController.php
+
+		-
+			message: '#^Relation ''avaliacoes'' is not found in App\\Models\\Produto model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/AvaliacaoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\CarrinhoController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/CarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\CarrinhoController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/CarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\CarrinhoController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/CarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\CarrinhoController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/CarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\CarrinhoController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/CarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\CarrinhoController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/CarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\CarrinhoController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/CarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\CompraController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/CompraController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\CompraController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/CompraController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\CompraController\:\:destroy\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/CompraController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\CompraController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/CompraController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\CompraController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/CompraController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\CompraController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/CompraController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\CompraController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/CompraController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\CompraController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/CompraController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\EnderecoController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/EnderecoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\EnderecoController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/EnderecoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\EnderecoController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/EnderecoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\EnderecoController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/EnderecoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\EnderecoController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/EnderecoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\EnderecoController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/EnderecoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\EnderecoController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/EnderecoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\EstoqueController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/EstoqueController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\EstoqueController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/EstoqueController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\EstoqueController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/EstoqueController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\EstoqueController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/EstoqueController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\EstoqueController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/EstoqueController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\EstoqueController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/EstoqueController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\EstoqueController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/EstoqueController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Carrinho\:\:\$ca_id_usuario\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ItensCarrinho\:\:\$ic_id_carrinho\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ItensCarrinho\:\:\$ic_id_produto\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ItensCarrinho\:\:\$ic_quantidade\.$#'
+			identifier: property.notFound
+			count: 5
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ItensCarrinho\:\:\$produto\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Produto\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\Produto\>\:\:\$pr_preco\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:compraFinalizada\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:confirmacaoPagamento\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:finalizarCompra\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:finalizarCompra\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:indexPagamento\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Parameter \#1 \$view of function view expects view\-string\|null, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/ItensCarrinhoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensVendaController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensVendaController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensVendaController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensVendaController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensVendaController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensVendaController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensVendaController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensVendaController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensVendaController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensVendaController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensVendaController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensVendaController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ItensVendaController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ItensVendaController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Avaliacao\:\:\$av_comentario\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/ProdutoController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Avaliacao\:\:\$av_id_produto\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/ProdutoController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Avaliacao\:\:\$av_id_usuario\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/ProdutoController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Avaliacao\:\:\$av_nota\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/ProdutoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ProdutoController\:\:avaliarProduto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ProdutoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ProdutoController\:\:avaliarProduto\(\) has parameter \$produto_id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/ProdutoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ProdutoController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ProdutoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ProdutoController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ProdutoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ProdutoController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ProdutoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ProdutoController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ProdutoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ProdutoController\:\:indexHome\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ProdutoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ProdutoController\:\:pesquisa\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ProdutoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ProdutoController\:\:salvarAvaliacao\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ProdutoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ProdutoController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ProdutoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ProdutoController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ProdutoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\ProdutoController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/ProdutoController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\TelefoneController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/TelefoneController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\TelefoneController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/TelefoneController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\TelefoneController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/TelefoneController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\TelefoneController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/TelefoneController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\TelefoneController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/TelefoneController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\TelefoneController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/TelefoneController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\TelefoneController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/TelefoneController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\User\:\:\$us_foto\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/UserController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\UserController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/UserController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\UserController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/UserController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\UserController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/UserController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\UserController\:\:editar\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/UserController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\UserController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/UserController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\UserController\:\:indexPerfil\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/UserController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\UserController\:\:login\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/UserController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\UserController\:\:logout\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/UserController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\UserController\:\:minhaConta\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/UserController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\UserController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/UserController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\UserController\:\:show\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/UserController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\UserController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/UserController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\UserController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/UserController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\VendaController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/VendaController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\VendaController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/VendaController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\VendaController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/VendaController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\VendaController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/VendaController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\VendaController\:\:minhasCompras\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/VendaController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\VendaController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/VendaController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\VendaController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/VendaController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\VendaController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/VendaController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\User\:\:\$us_adm\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Middleware/CheckAdmin.php
+
+		-
+			message: '#^Class App\\Models\\Avaliacao uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Avaliacao.php
+
+		-
+			message: '#^Method App\\Models\\Avaliacao\:\:produto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Avaliacao.php
+
+		-
+			message: '#^Method App\\Models\\Avaliacao\:\:user\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Avaliacao.php
+
+		-
+			message: '#^Class App\\Models\\Carrinho uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Carrinho.php
+
+		-
+			message: '#^Method App\\Models\\Carrinho\:\:itensCarrinho\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Carrinho.php
+
+		-
+			message: '#^Method App\\Models\\Carrinho\:\:user\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Carrinho.php
+
+		-
+			message: '#^Class App\\Models\\Compra uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Compra.php
+
+		-
+			message: '#^Method App\\Models\\Compra\:\:produto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Compra.php
+
+		-
+			message: '#^Class App\\Models\\Endereco uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Endereco.php
+
+		-
+			message: '#^Method App\\Models\\Endereco\:\:user\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Endereco.php
+
+		-
+			message: '#^Class App\\Models\\Estoque uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Estoque.php
+
+		-
+			message: '#^Method App\\Models\\Estoque\:\:produto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Estoque.php
+
+		-
+			message: '#^Class App\\Models\\ItensCarrinho uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/ItensCarrinho.php
+
+		-
+			message: '#^Method App\\Models\\ItensCarrinho\:\:carrinho\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/ItensCarrinho.php
+
+		-
+			message: '#^Method App\\Models\\ItensCarrinho\:\:produto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/ItensCarrinho.php
+
+		-
+			message: '#^Class App\\Models\\ItensVenda uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/ItensVenda.php
+
+		-
+			message: '#^Method App\\Models\\ItensVenda\:\:produto\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/ItensVenda.php
+
+		-
+			message: '#^Method App\\Models\\ItensVenda\:\:venda\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/ItensVenda.php
+
+		-
+			message: '#^Class App\\Models\\Produto uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Produto.php
+
+		-
+			message: '#^Method App\\Models\\Produto\:\:avaliacoes\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Produto.php
+
+		-
+			message: '#^Method App\\Models\\Produto\:\:compras\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Produto.php
+
+		-
+			message: '#^Method App\\Models\\Produto\:\:estoque\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Produto.php
+
+		-
+			message: '#^Method App\\Models\\Produto\:\:itensCarrinho\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Produto.php
+
+		-
+			message: '#^Method App\\Models\\Produto\:\:itensVenda\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Produto.php
+
+		-
+			message: '#^Class App\\Models\\Telefone uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Telefone.php
+
+		-
+			message: '#^Method App\\Models\\Telefone\:\:user\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Telefone.php
+
+		-
+			message: '#^Property App\\Models\\Telefone\:\:\$primaryKey \(string\) does not accept default value of type array\<int, string\>\.$#'
+			identifier: property.defaultValue
+			count: 1
+			path: app/Models/Telefone.php
+
+		-
+			message: '#^Class App\\Models\\User uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:avaliacoes\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:carrinho\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:enderecos\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:telefones\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:vendas\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^PHPDoc type array\<int, string\> of property App\\Models\\User\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^PHPDoc type array\<int, string\> of property App\\Models\\User\:\:\$hidden is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$hidden\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Class App\\Models\\Venda uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Venda.php
+
+		-
+			message: '#^Method App\\Models\\Venda\:\:itensVenda\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Venda.php
+
+		-
+			message: '#^Method App\\Models\\Venda\:\:user\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Venda.php
+
+		-
+			message: '#^Function formatar_cep\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/helpers.php
+
+		-
+			message: '#^Function formatar_cep\(\) has parameter \$cep with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/helpers.php
+
+		-
+			message: '#^Function formatar_cpf\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/helpers.php
+
+		-
+			message: '#^Function formatar_cpf\(\) has parameter \$cpf with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/helpers.php
+
+		-
+			message: '#^Function formatar_tel\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/helpers.php
+
+		-
+			message: '#^Function formatar_tel\(\) has parameter \$telefone with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/helpers.php
