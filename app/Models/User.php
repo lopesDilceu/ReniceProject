@@ -10,7 +10,15 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
+/**
+ * Cast attribute types, which Larastan otherwise reads from the migration:
+ *
+ * @property Carbon|null $birth_date
+ * @property bool $is_admin
+ */
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
@@ -56,6 +64,11 @@ class User extends Authenticatable implements MustVerifyEmail
             'birth_date' => 'date',
             'is_admin' => 'boolean',
         ];
+    }
+
+    public function avatarUrl(): ?string
+    {
+        return $this->avatar_path ? Storage::disk('public')->url($this->avatar_path) : null;
     }
 
     /**

@@ -6,7 +6,6 @@ use App\Models\Endereco;
 use App\Models\Telefone;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -21,60 +20,6 @@ class UserController extends Controller
         $enderecos = Endereco::all();
 
         return view('adm.usuarios.list', compact('users', 'telefones', 'enderecos'));
-    }
-
-    public function indexPerfil()
-    {
-        $user = User::find(Auth::id());
-
-        return view('layouts.frame', compact('user'));
-    }
-
-    public function minhaConta()
-    {
-        if (Auth::check()) {
-            $usuario = User::find(Auth::id());
-
-            if (! $usuario) {
-                // Tratar o caso de usuário não encontrado, por exemplo, redirecionar para a página de login.
-                return redirect()->route('login')->with('error', 'Usuário não encontrado.');
-            }
-            // Recuperar telefones do usuário
-            $telefones = Telefone::where('te_us_id', $usuario->us_id)->get();
-
-            // Recuperar endereço do usuário
-            $endereco = Endereco::where('en_usuario_id', $usuario->us_id)->first();
-
-            return view('main.usuarios.show', compact('usuario', 'telefones', 'endereco'));
-        } else {
-            // Caso o usuário não esteja autenticado, redirecionar para a página de login
-            return redirect()->route('login')->with('error', 'Você precisa estar logado para acessar esta página.');
-        }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        $usuario = User::find(Auth::id());
-        $telefones = Telefone::where('te_us_id', $usuario->us_id)->get();
-
-        // Recuperar endereço do usuário
-        $endereco = Endereco::where('en_usuario_id', $usuario->us_id)->first();
-
-        return view('main.usuarios.show', compact('usuario', 'telefones', 'endereco'));
-    }
-
-    public function editar()
-    {
-        $usuario = User::find(Auth::id());
-        $telefones = Telefone::where('te_us_id', $usuario->us_id)->get();
-
-        // Recuperar endereço do usuário
-        $endereco = Endereco::where('en_usuario_id', $usuario->us_id)->first();
-
-        return view('main.usuarios.edit', compact('usuario', 'telefones', 'endereco'));
     }
 
     /**

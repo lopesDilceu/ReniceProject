@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Avaliacao;
 use App\Models\Produto;
 use Illuminate\Http\Request;
 
@@ -64,28 +63,6 @@ class ProdutoController extends Controller
     public function show(string $id)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function avaliarProduto($produto_id)
-    {
-        return view('main.usuarios.avaliacao', ['pr_id' => $produto_id]);
-    }
-
-    public function salvarAvaliacao(Request $request)
-    {
-        $avaliacao = new Avaliacao;
-        $avaliacao->av_id_produto = $request->av_id_produto;
-        $avaliacao->av_id_usuario = auth()->id(); // assumindo que o usuário está autenticado
-        $avaliacao->av_nota = $request->av_nota;
-        $avaliacao->av_comentario = $request->av_comentario;
-        $avaliacao->save();
-
-        flash('Avaliação enviada com sucesso!', 'success', [], 'Sucesso');
-
-        return redirect()->route('minhas-compras');
     }
 
     public function edit(Request $request, string $id)

@@ -116,8 +116,8 @@
                       <!-- Exibe o menu de opções da conta -->
                       <li><span class="dropdown-item bg-body">{{strtoupper(auth()->user()->name)}}</span></li>
                       <li><a class="dropdown-item" href="{{ route('cart.show') }}">Carrinho
-                      <li><a class="dropdown-item" href="{{ route('minha-conta') }}">Minhas Conta</a></li>
-                      <li><a class="dropdown-item" href="{{ route('minhas-compras') }}">Minhas Compras</a></li>
+                      <li><a class="dropdown-item" href="{{ route('account.edit') }}">Minhas Conta</a></li>
+                      <li><a class="dropdown-item" href="{{ route('orders.index') }}">Minhas Compras</a></li>
                       <li>
                           <!-- Formulário para fazer logout -->
                           <form action="{{ route('logout') }}" method="POST">

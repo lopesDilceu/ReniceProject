@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * Cast attribute types, which Larastan otherwise reads from the migration:
+ *
+ * @property OrderStatus $status
+ * @property int $total_cents
+ * @property array<string, string|null> $shipping_address
+ */
 class Order extends Model
 {
     /** @use HasFactory<OrderFactory> */

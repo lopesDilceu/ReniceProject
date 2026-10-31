@@ -24,8 +24,11 @@ class OrderResource extends JsonResource
             'total_cents' => $this->total_cents,
             'shipping_address' => AddressResource::format($this->shipping_address),
             'created_at' => $this->created_at?->toIso8601String(),
+            'items_count' => $this->whenCounted('items'),
             'items' => $this->whenLoaded('items', fn () => $this->items->map(fn (OrderItem $item) => [
                 'id' => $item->id,
+                'product_id' => $item->product_id,
+                'product_slug' => $item->product?->slug,
                 'product_name' => $item->product_name,
                 'unit_price_cents' => $item->unit_price_cents,
                 'quantity' => $item->quantity,
