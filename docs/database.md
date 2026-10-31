@@ -9,6 +9,7 @@ erDiagram
     users ||--o| carts : owns
     users ||--o{ orders : places
     users ||--o{ reviews : writes
+    users ||--o{ passkeys : "signs in with"
     carts ||--o{ cart_items : contains
     products ||--o{ cart_items : "added as"
     products ||--o{ order_items : "sold as"
@@ -29,7 +30,18 @@ erDiagram
         date birth_date
         boolean is_admin "not mass-assignable"
         string avatar_path
+        text two_factor_secret "encrypted, hidden"
+        text two_factor_recovery_codes "encrypted, hidden"
+        timestamp two_factor_confirmed_at "null until the first valid code"
         timestamp deleted_at "soft delete"
+    }
+    passkeys {
+        bigint id PK
+        bigint user_id FK "deleted with the account"
+        string name "the device, chosen by the user"
+        string credential_id UK
+        json credential "public key only"
+        timestamp last_used_at
     }
     phones {
         bigint id PK
