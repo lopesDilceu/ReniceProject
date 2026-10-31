@@ -72,7 +72,7 @@ composer install            # or: docker run --rm -v "$(pwd)":/app -w /app compo
 cp .env.example .env
 vendor/bin/sail up -d
 vendor/bin/sail artisan key:generate
-vendor/bin/sail artisan migrate
+vendor/bin/sail artisan migrate --seed
 ```
 
 **Windows without WSL:** the `sail` script only runs on Linux, macOS and WSL2. Use Docker Compose directly from PowerShell. It is the same stack, and `.env.example` already has the `WWWUSER`/`WWWGROUP` values it needs:
@@ -80,7 +80,7 @@ vendor/bin/sail artisan migrate
 ```powershell
 docker compose up -d
 docker compose exec laravel.test php artisan key:generate
-docker compose exec laravel.test php artisan migrate
+docker compose exec laravel.test php artisan migrate --seed
 ```
 
 For better file-system performance, Laravel recommends keeping the project inside the WSL2 file system and using `sail` from there.
@@ -91,7 +91,14 @@ For better file-system performance, Laravel recommends keeping the project insid
 | Mailpit (caught e-mails) | http://localhost:8025 |
 | PostgreSQL | `localhost:5432`, user `sail`, password `password` |
 
-The new schema is in place ([`docs/database.md`](docs/database.md)). Demo data arrives with [#16](https://github.com/lopesDilceu/ReniceProject/issues/16). The legacy screens still query the v1 tables until each module is rewritten in Phase 3, so only the pages that do not need the database work today.
+The seed builds a demo store with the original product line, nine customers, orders, stock history and reviews, all through the real domain actions. Run `migrate:fresh --seed` to reset it.
+
+| Demo account | E-mail | Password |
+|---|---|---|
+| Admin | `admin@renice.test` | `password` |
+| Customer | `cliente@renice.test` | `password` |
+
+The schema is documented in [`docs/database.md`](docs/database.md). The legacy screens still query the v1 tables until each module is rewritten in Phase 3, so only the pages that do not need the database work today.
 
 Quality checks (no Docker needed; tests use in-memory SQLite):
 
