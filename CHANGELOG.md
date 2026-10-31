@@ -7,9 +7,18 @@ All notable changes to this project are documented here. The format follows [Kee
 ### Added
 - [ADR 0005](docs/adr/0005-postgresql.md): PostgreSQL 18 with pgvector as the database, chosen for Laravel's native vector search and Laravel Cloud's serverless Postgres.
 - Docker development environment on Laravel Sail (`compose.yaml`): PHP 8.5, PostgreSQL 18 + pgvector, Mailpit.
+- Versioned domain schema: users, phones, addresses, products, supplier purchases, carts, orders and reviews, in English with Laravel conventions. Money in integer cents, order snapshots (product name, unit price, shipping address), unique and foreign-key rules, and PostgreSQL CHECK constraints. Documented with an ER diagram in [`docs/database.md`](docs/database.md).
+- Eloquent models, factories and the `OrderStatus` enum for the new schema.
+- Schema tests (factories, uniqueness, snapshots, delete restrictions, cart totals scoped to one cart) and PostgreSQL-only constraint tests.
+- CI job running migrations (up, down, up) and the full suite on PostgreSQL 18 + pgvector.
 
 ### Changed
 - `.env.example` targets the Sail services and the Brazilian locale (`pt_BR`, also for Faker).
+- Framework `cache` and `jobs` migrations restored (they were commented out in v1).
+- The legacy admin middleware and layout read `is_admin` / `avatar_path` from the new users table.
+
+### Removed
+- Legacy migrations that altered tables never created in the repository (`produtos`, and the separate `users` soft-delete migration).
 
 ## [2.0.0-alpha.2] — 2026-10-30
 

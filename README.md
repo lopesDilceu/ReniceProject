@@ -56,6 +56,7 @@ Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 |---|---|
 | [Original system](docs/legacy/README.md) | What v1 did, its database design and screenshots |
 | [Initial audit](docs/audit/initial-audit.md) | Security, correctness and design findings |
+| [Database](docs/database.md) | Schema diagram and design rules |
 | [Roadmap](docs/roadmap.md) | Phases, milestones and issues |
 | [Metrics](docs/metrics.md) | Baseline and progress |
 | [Decisions](docs/adr/README.md) | Architecture Decision Records |
@@ -71,6 +72,7 @@ composer install            # or: docker run --rm -v "$(pwd)":/app -w /app compo
 cp .env.example .env
 vendor/bin/sail up -d
 vendor/bin/sail artisan key:generate
+vendor/bin/sail artisan migrate
 ```
 
 | Service | URL |
@@ -79,7 +81,7 @@ vendor/bin/sail artisan key:generate
 | Mailpit (caught e-mails) | http://localhost:8025 |
 | PostgreSQL | `localhost:5432`, user `sail`, password `password` |
 
-The domain schema and demo data are being rebuilt in Phase 2 ([#11](https://github.com/lopesDilceu/ReniceProject/issues/11), [#16](https://github.com/lopesDilceu/ReniceProject/issues/16)). Until then, only the pages that do not need the database work.
+The new schema is in place ([`docs/database.md`](docs/database.md)). Demo data arrives with [#16](https://github.com/lopesDilceu/ReniceProject/issues/16). The legacy screens still query the v1 tables until each module is rewritten in Phase 3, so only the pages that do not need the database work today.
 
 Quality checks (no Docker needed; tests use in-memory SQLite):
 
