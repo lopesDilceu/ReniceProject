@@ -10,3 +10,4 @@ Write one whenever a choice has real alternatives and would be expensive to reve
 | [0002](0002-business-rules-in-the-application.md) | Move business rules from the database to the application | Accepted |
 | [0003](0003-schema-naming-conventions.md) | Schema in English following Laravel conventions | Accepted |
 | [0004](0004-modernization-strategy.md) | Modernize in place, rewrite module by module | Accepted |
+| [0005](0005-postgresql.md) | PostgreSQL 18 with pgvector as the database | Accepted |
