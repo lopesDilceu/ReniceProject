@@ -19,10 +19,10 @@ How each number is collected is in [How to measure](#how-to-measure).
 
 | Metric | v1.0-academic | Current | Target |
 |---|---|---|---|
-| Automated tests | 0 (2 framework examples) | 123 passing on SQLite, 130 on PostgreSQL; 10 pending security tests | — |
+| Automated tests | 0 (2 framework examples) | 159 passing on SQLite, 166 on PostgreSQL; 5 pending security tests | — |
 | Test suite status | 1 of 2 example tests failing | green | green |
 | Line coverage on `app/` | 0% | 58.5% (new code covered; legacy controllers: 0%) | ≥ 80% |
-| Static analysis | not configured | Larastan level 6, 148 legacy errors baselined (new code: 0) | level 6+, empty baseline |
+| Static analysis | not configured | Larastan level 6, 120 legacy errors baselined (new code: 0) | level 6+, empty baseline |
 | Enforced code style | no | Pint (Laravel preset) in CI | Pint in CI |
 | CI pipeline | none | lint + analyse + test on PHP 8.4/8.5, migrations + tests on PostgreSQL, dependency audit | lint + analyse + test + audit |
 
@@ -30,14 +30,14 @@ How each number is collected is in [How to measure](#how-to-measure).
 
 | Metric | v1.0-academic | Current | Target |
 |---|---|---|---|
-| Open audit findings (critical / high) | 3 / 6 | 2 / 3² | 0 / 0 |
-| State-changing routes without `auth` (excluding login, sign-up, logout) | 6 | 6 | 0 |
-| Raw SQL with interpolated input | 1 | 1 | 0 |
+| Open audit findings (critical / high) | 3 / 6 | 1 / 0² | 0 / 0 |
+| State-changing routes without `auth` (excluding login, sign-up, logout) | 6 | 2 (legacy profile update and review, #30) | 0 |
+| Raw SQL with interpolated input | 1 | 0 | 0 |
 | Domain tables with migrations | 0 of 11 | 11 of 11 | all |
-| Business rules in procedures / triggers | 2 / 8 | 0 / 0: all replaced by tested actions (`RecordInventoryMovement`, `RecordSupplierPurchase`, `PlaceOrder`) or FK rules. The legacy checkout controller still issues `CALL finalizar_venda` until it is rewritten (#29) | 0 / 0 |
+| Business rules in procedures / triggers | 2 / 8 | 0 / 0: all replaced by tested actions (`RecordInventoryMovement`, `RecordSupplierPurchase`, `PlaceOrder`) or FK rules | 0 / 0 |
 | Fresh clone → running app | not possible | `docker compose up -d` + `migrate --seed` (demo store) | one command |
 
-² Resolved: DM-01 (schema and rules versioned), SEC-07 (Laravel upgrade), BUG-01 (#14), BUG-02 (#13), SEC-06 and BUG-05 (#22). Still open in the legacy controllers until Phase 3: SEC-01, SEC-02 (critical), SEC-03, SEC-04, BUG-03 (high).
+² Resolved: DM-01 (schema and rules versioned), SEC-07 (Laravel upgrade), BUG-01 (#14), BUG-02 (#13), SEC-06 and BUG-05 (#22), SEC-02, SEC-03, SEC-04 and BUG-03 (#29). Still open: SEC-01 (critical, legacy profile update, #30) and SEC-05 (reviews, #30).
 
 ## Size
 
