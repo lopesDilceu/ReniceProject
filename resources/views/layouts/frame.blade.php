@@ -66,10 +66,10 @@
                 <a class="nav-link @yield('home')" href="{{ route('home') }}" style="font-family: Akkurat-Mono, monospace;">HOME</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link @yield('produtos')" href="{{ route('produtos') }}" style="font-family: Akkurat-Mono, monospace;">PRODUTOS</a>
+                <a class="nav-link @yield('produtos')" href="{{ route('products.index') }}" style="font-family: Akkurat-Mono, monospace;">PRODUTOS</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link  @yield('avaliacoes')" href="{{ route('avaliacoes') }}" style="font-family: Akkurat-Mono, monospace;">AVALIAÇÕES</a>
+                <a class="nav-link  @yield('avaliacoes')" href="{{ route('products.index') }}" style="font-family: Akkurat-Mono, monospace;">AVALIAÇÕES</a>
               </li>
               {{-- <li class="nav-item">
                 <a class="nav-link  @yield('sobre')" href="{{ route('sobre') }}" style="font-family: Akkurat-Mono, monospace;">SOBRE O PROJETO</a>
@@ -92,10 +92,10 @@
                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 </div>
               </form> -->
-              <form class="d-flex" action="{{route('pesquisa')}}" method="GET" id="formSearch">
+              <form class="d-flex" action="{{route('products.index')}}" method="GET" id="formSearch">
                 @csrf
                 <button class="btn" type="submit"><img src="{{asset('/images/icons/search.png')}}" alt="pesquisa" width="24px" height="24px"></button>
-                <input class="form-control me-3" type="search" placeholder="" aria-label="Search" name="query">
+                <input class="form-control me-3" type="search" placeholder="" aria-label="Search" name="q">
                 
               </form>
               

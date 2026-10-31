@@ -19,12 +19,6 @@ parameters:
 			path: app/Http/Controllers/AvaliacaoController.php
 
 		-
-			message: '#^Method App\\Http\\Controllers\\AvaliacaoController\:\:index\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/AvaliacaoController.php
-
-		-
 			message: '#^Method App\\Http\\Controllers\\AvaliacaoController\:\:listAvaliacoes\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -45,12 +39,6 @@ parameters:
 		-
 			message: '#^Method App\\Http\\Controllers\\AvaliacaoController\:\:update\(\) has no return type specified\.$#'
 			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/AvaliacaoController.php
-
-		-
-			message: '#^Relation ''avaliacoes'' is not found in App\\Models\\Produto model\.$#'
-			identifier: larastan.relationExistence
 			count: 1
 			path: app/Http/Controllers/AvaliacaoController.php
 
@@ -440,18 +428,6 @@ parameters:
 
 		-
 			message: '#^Method App\\Http\\Controllers\\ProdutoController\:\:index\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/ProdutoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\ProdutoController\:\:indexHome\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/ProdutoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\ProdutoController\:\:pesquisa\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
 			path: app/Http/Controllers/ProdutoController.php

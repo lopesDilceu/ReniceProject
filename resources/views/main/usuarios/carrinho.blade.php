@@ -105,7 +105,7 @@
 
     <!-- Botão de Pagamento -->
     <div class="text-end mt-3">
-        <a href="{{ route('produtos') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
+        <a href="{{ route('products.index') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
         @if ($itenscarrinho->isEmpty())
             <a href="#" class="btn btn-lg btn-outline-dark disabled" aria-disabled="true">Pagamento</a>
         @else
