@@ -1,20 +1,51 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Testing\AssertableInertia as Assert;
+
+uses(RefreshDatabase::class);
+
 /*
-| Smoke tests for the pages that render without the database. Pages that
-| query domain tables are covered once the schema exists (issue #11).
+| Smoke tests for the public pages. Inertia pages assert the component and
+| shared props; legacy Blade pages assert the rendered title.
 */
 
-it('renders public pages', function (string $uri, string $title) {
+it('renders the Inertia pages', function (string $uri, string $component) {
+    $this->get($uri)
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component($component)
+            ->where('name', 'Renice')
+            ->where('auth.user', null));
+})->with([
+    'home' => ['/', 'home'],
+    'about' => ['/sobre', 'about'],
+]);
+
+it('renders the legacy Blade pages', function (string $uri, string $title) {
     $this->get($uri)
         ->assertOk()
         ->assertSee("Renice - {$title}", escape: false);
 })->with([
-    'home' => ['/', 'Home'],
-    'about' => ['/sobre', 'Sobre'],
     'login' => ['/usuarios/login', 'Login'],
     'sign-up' => ['/usuarios/cadastro', 'Cadastro'],
 ]);
+
+it('shares only non-sensitive fields of the signed-in user', function () {
+    $user = User::factory()->create(['name' => 'Cliente Demo']);
+
+    $this->actingAs($user)
+        ->get('/')
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('auth.user', [
+                'id' => $user->id,
+                'name' => 'Cliente Demo',
+                'email' => $user->email,
+                'is_admin' => false,
+                'avatar_url' => null,
+            ]));
+});
 
 it('exposes a health check', function () {
     $this->get('/up')->assertOk();

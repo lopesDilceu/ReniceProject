@@ -9,14 +9,12 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendaController;
 use Illuminate\Support\Facades\Route;
 
-// Rotas principais do site
-Route::get('/', function () {
-    return view('main.home');
-})->name('home');
+// Inertia + React pages (v2). Everything below the legacy marker is v1 Blade,
+// replaced module by module in Phase 3 (ADR 0004).
+Route::inertia('/', 'home')->name('home');
+Route::inertia('/sobre', 'about')->name('sobre');
 
-Route::get('/sobre', function () {
-    return view('main.sobre');
-})->name('sobre');
+// --- Legacy (v1) routes ---
 
 Route::get('/avaliacoes', [AvaliacaoController::class, 'index'])->name('avaliacoes');
 
