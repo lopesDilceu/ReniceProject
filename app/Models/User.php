@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\Contracts\PasskeyUser;
 use Laravel\Fortify\PasskeyAuthenticatable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * Cast attribute types, which Larastan otherwise reads from the migration:
@@ -26,13 +27,16 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, PasskeyAuthenticatable, SoftDeletes, TwoFactorAuthenticatable;
+    use HasApiTokens, HasFactory, Notifiable, PasskeyAuthenticatable, SoftDeletes, TwoFactorAuthenticatable;
 
     protected static function booted(): void
     {
         // A closed account keeps its orders (soft delete) but must not keep
-        // working credentials: its passkeys go with it.
-        static::deleted(fn (User $user) => $user->passkeys()->delete());
+        // working credentials: its passkeys and API tokens go with it.
+        static::deleted(function (User $user) {
+            $user->passkeys()->delete();
+            $user->tokens()->delete();
+        });
     }
 
     /**
