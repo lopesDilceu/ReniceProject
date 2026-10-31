@@ -1,6 +1,8 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import LiveUpdates, { LiveIndicator } from '@/components/live-updates';
+import type { OrderUpdated } from '@/components/live-updates';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { formatDate, formatMoney } from '@/lib/format';
@@ -56,8 +58,17 @@ export default function AdminOrdersIndex({
         <>
             <Head title="Pedidos · Admin" />
 
+            <LiveUpdates<OrderUpdated>
+                channel="admin"
+                events={['order.updated']}
+                onEvent={() => router.reload({ only: ['orders'] })}
+            />
+
             <div className="space-y-6">
-                <h1 className="text-2xl font-semibold">Pedidos</h1>
+                <div className="flex items-center justify-between gap-4">
+                    <h1 className="text-2xl font-semibold">Pedidos</h1>
+                    <LiveIndicator />
+                </div>
 
                 <div
                     className="flex flex-wrap gap-2"

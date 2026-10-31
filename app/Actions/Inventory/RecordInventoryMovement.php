@@ -3,6 +3,7 @@
 namespace App\Actions\Inventory;
 
 use App\Enums\InventoryMovementType;
+use App\Events\Broadcast\StockRunningLow;
 use App\Exceptions\InsufficientStock;
 use App\Models\InventoryMovement;
 use App\Models\Product;
@@ -83,6 +84,7 @@ class RecordInventoryMovement
 
         if ($stockBefore > $threshold && $stockAfter <= $threshold) {
             Notification::send(User::query()->where('is_admin', true)->get(), new LowStockAlert($product, $stockAfter));
+            StockRunningLow::dispatch($product, $stockAfter);
         }
     }
 }

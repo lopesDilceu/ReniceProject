@@ -95,16 +95,18 @@ For better file-system performance, Laravel recommends keeping the project insid
 |---|---|
 | Application | http://localhost |
 | Mailpit (caught e-mails) | http://localhost:8025 |
+| Reverb (WebSockets) | `ws://localhost:8080` |
 | PostgreSQL | `localhost:5432`, user `sail`, password `password` |
 
 The seed builds a demo store with the original product line, nine customers, orders, stock history and reviews, all through the real domain actions. Run `migrate:fresh --seed` to reset it.
 
-Two background processes run alongside the app. Locally, keep them running inside the container:
+`docker compose up -d` also starts three background services from the same image:
 
-| Command | What it does |
+| Service | What it does |
 |---|---|
-| `php artisan queue:work` | Processes payment notifications and sends the queued e-mails (order confirmation, payment confirmed, shipped, cancelled with the reason, and low-stock alerts for admins). The e-mails show up in Mailpit. The seed doesn't queue e-mails for its fictional customers. |
-| `php artisan schedule:work` | Cancels unpaid orders after 60 minutes (`SHOP_PAYMENT_WINDOW_MINUTES`) and releases their stock. You can also run `php artisan orders:expire-unpaid` by hand. |
+| `queue` (`queue:work`) | Processes payment notifications, sends the queued e-mails and pushes the live updates. E-mails: order confirmation, payment confirmed, shipped, cancelled (with the reason), and low-stock alerts for admins. They show up in Mailpit. The seed queues nothing for its fictional customers. |
+| `scheduler` (`schedule:work`) | Cancels unpaid orders after 60 minutes (`SHOP_PAYMENT_WINDOW_MINUTES`) and releases their stock. `php artisan orders:expire-unpaid` does it by hand. |
+| `reverb` (`reverb:start`) | WebSockets on port 8080. The admin dashboard and order list show new orders, confirmed payments and low stock live ("Ao vivo"), and the customer's order page turns to "Pago" as soon as the Pix is confirmed. Without it, the pages fall back to polling. |
 
 Payments use a local fake gateway by default: checkout shows a real QR code, and the order page has a **Simular pagamento** button. To use the Mercado Pago sandbox instead, see [`docs/payments.md`](docs/payments.md).
 

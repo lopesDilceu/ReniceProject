@@ -21,6 +21,9 @@
         </include>
     </source>
     <php>
+        <!-- The suite runs in one process: generating the OpenAPI document and
+             the architecture tests need more than a stock 128M php.ini. -->
+        <ini name="memory_limit" value="512M"/>
         <env name="APP_ENV" value="testing"/>
         <env name="APP_NAME" value="Renice"/>
         <env name="APP_LOCALE" value="pt_BR"/>
@@ -28,6 +31,7 @@
         <env name="APP_KEY" value="base64:dGVzdGluZy1rZXktbm90LWZvci1wcm9kdWN0aW9uISE="/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="BROADCAST_CONNECTION" value="null"/>
         <env name="CACHE_STORE" value="array"/>
         <env name="DB_CONNECTION" value="sqlite"/>
         <env name="DB_DATABASE" value=":memory:"/>
