@@ -19,10 +19,10 @@ How each number is collected is in [How to measure](#how-to-measure).
 
 | Metric | v1.0-academic | Current | Target |
 |---|---|---|---|
-| Automated tests | 0 (2 framework examples) | 104 passing on SQLite, 111 on PostgreSQL; 10 pending security tests | — |
+| Automated tests | 0 (2 framework examples) | 123 passing on SQLite, 130 on PostgreSQL; 10 pending security tests | — |
 | Test suite status | 1 of 2 example tests failing | green | green |
 | Line coverage on `app/` | 0% | 50.3% (new code covered; legacy controllers: 0%) | ≥ 80% |
-| Static analysis | not configured | Larastan level 6, 152 legacy errors baselined (new code: 0) | level 6+, empty baseline |
+| Static analysis | not configured | Larastan level 6, 148 legacy errors baselined (new code: 0) | level 6+, empty baseline |
 | Enforced code style | no | Pint (Laravel preset) in CI | Pint in CI |
 | CI pipeline | none | lint + analyse + test on PHP 8.4/8.5, migrations + tests on PostgreSQL, dependency audit | lint + analyse + test + audit |
 
@@ -54,7 +54,8 @@ Measured once the application can run from migrations (Phase 2). Recorded per pa
 
 | Page | v1.0-academic | Current |
 |---|---|---|
-| Catalog | not measurable¹ | — |
+| Catalog (`/produtos`) | not measurable¹ | 5 queries, constant in product count (tested) |
+| Product page | — | 7 queries |
 | Cart | not measurable¹ | — |
 | Admin sales | not measurable¹ | — |
 

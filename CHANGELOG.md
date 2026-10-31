@@ -11,16 +11,21 @@ All notable changes to this project are documented here. The format follows [Kee
 - CI job: frontend build, lint/format and type check.
 - Authentication with Laravel Fortify and React pages: sign in (5 attempts per minute per e-mail and IP), sign up, forgot/reset password, e-mail verification (Mailpit locally) and password confirmation. Sign-up asks for name, e-mail, CPF (validated by check digits, masked as typed) and birth date (16+).
 - `Cpf` validation rule and pt-BR translations for validation, auth and password messages.
+- Catalog in React (`/produtos`): search across name and description, sorting (featured, price, rating, newest), "available only" filter, 12 per page, branded image placeholder, sold-out and low-stock badges. Exact stock is never sent to the browser.
+- Product page (`/produtos/{slug}`): price, availability, description, rating summary with distribution and the latest reviews (author shown as first name and last initial).
+- `Model::preventLazyLoading()` outside production, so N+1 queries fail in tests.
 
 ### Changed
 - Hero image re-encoded from a 5.9 MB PNG to a 342 KB WebP.
 - Shared Inertia props expose only non-sensitive user fields (no CPF, birth date or addresses).
 - v1 URLs `/usuarios/login` and `/usuarios/cadastro` redirect permanently to `/login` and `/register`.
+- v1 `/produtos/pesquisa?query=…` redirects to `/produtos?q=…`; `/avaliacoes` redirects to the catalog (reviews now live on each product page).
 - Production password policy: 12+ characters, mixed case, numbers, symbols and a breach check; destructive database commands are blocked in production.
 
 ### Removed
 - v1 Blade home and about views, the unused Laravel welcome view and the unused axios bootstrap.
 - v1 login, logout and sign-up (controller methods and Blade views), which had no rate limiting, no session regeneration and no password reset (SEC-06), and crashed on sign-up without a photo (BUG-05).
+- v1 catalog, search and reviews pages (`indexHome`, `pesquisa`, `AvaliacaoController@index` and their Blade views), which loaded every product and stock row and matched them in nested loops.
 
 ### Security
 - Login throttling, session regeneration on login, session invalidation and CSRF token rotation on logout (SEC-06, with regression tests).
