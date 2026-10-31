@@ -30,9 +30,9 @@ Every step is an issue, a pull request and, when there is a real trade-off, an [
 | Phase | Status |
 |---|---|
 | 0 — Foundation | Done ([`v2.0.0-alpha.1`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-alpha.1)) |
-| 1 — Framework upgrade | In progress |
-| 2 — Data layer redesign | Planned |
-| 3 — Inertia + React rewrite | Planned |
+| 1 — Framework upgrade | Done ([`v2.0.0-alpha.2`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-alpha.2)) |
+| 2 — Data layer redesign | Done ([`v2.0.0-alpha.3`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-alpha.3)) |
+| 3 — Inertia + React rewrite | In progress |
 | 4 — Commerce core | Planned |
 | 5 — Showcase features | Planned |
 | 6 — Production & case study | Planned |
@@ -44,7 +44,7 @@ Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 | | v1.0-academic | Target |
 |---|---|---|
 | Backend | Laravel 11, PHP 8.2 | Laravel 13, PHP 8.4+ |
-| Frontend | Blade, Bootstrap, jQuery | Inertia, React, TypeScript, Tailwind |
+| Frontend | Blade, Bootstrap, jQuery | Inertia 3, React 19 (React Compiler), TypeScript, Tailwind 4, shadcn/ui, Wayfinder |
 | Database | MySQL | PostgreSQL 18 + pgvector |
 | Business rules | MySQL procedures and triggers | Tested application code |
 | Local environment | manual | Docker (Laravel Sail) |

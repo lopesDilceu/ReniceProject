@@ -5,6 +5,23 @@ All notable changes to this project are documented here. The format follows [Kee
 ## [Unreleased]
 
 ### Added
+- Inertia 3 + React 19 + TypeScript (strict) frontend, following Laravel's official React starter kit: Tailwind 4, shadcn/ui components, React Compiler, Vite+ (build, lint, format), Wayfinder typed route helpers, light/dark/system appearance.
+- Store layout (header, mobile menu, user menu, theme switcher, footer) in the Renice brand color. Links to pages still served by v1 Blade views use full page loads until each module is rewritten.
+- Home and "Sobre o projeto" rewritten as React pages; the about page tells the modernization story and links to the audit, roadmap, ADRs and metrics.
+- CI job: frontend build, lint/format and type check.
+
+### Changed
+- Hero image re-encoded from a 5.9 MB PNG to a 342 KB WebP.
+- Shared Inertia props expose only non-sensitive user fields (no CPF, birth date or addresses).
+
+### Removed
+- v1 Blade home and about views, the unused Laravel welcome view and the unused axios bootstrap.
+
+## [2.0.0-alpha.3] — 2026-10-31
+
+End of Phase 2 (Data layer redesign).
+
+### Added
 - [ADR 0005](docs/adr/0005-postgresql.md): PostgreSQL 18 with pgvector as the database, chosen for Laravel's native vector search and Laravel Cloud's serverless Postgres.
 - Docker development environment on Laravel Sail (`compose.yaml`): PHP 8.5, PostgreSQL 18 + pgvector, Mailpit.
 - Inventory movements ledger: append-only history of every stock change with signed quantity, running balance, source and actor; `RecordInventoryMovement` locks the product row and refuses negative stock. Replaces v1's `atualizar_estoque_produto` procedure and its triggers.
@@ -65,7 +82,8 @@ End of Phase 0 (Foundation). The application code is still the legacy code. This
 
 Original version delivered as the final project for the Programming II and Database II courses at Unimontes. See the [release notes](https://github.com/lopesDilceu/ReniceProject/releases/tag/v1.0-academic) and [`docs/legacy`](docs/legacy/README.md).
 
-[Unreleased]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.2...HEAD
+[Unreleased]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.3...HEAD
+[2.0.0-alpha.3]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.2...v2.0.0-alpha.3
 [2.0.0-alpha.2]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.1...v2.0.0-alpha.2
 [2.0.0-alpha.1]: https://github.com/lopesDilceu/ReniceProject/compare/v1.0-academic...v2.0.0-alpha.1
 [1.0-academic]: https://github.com/lopesDilceu/ReniceProject/releases/tag/v1.0-academic
