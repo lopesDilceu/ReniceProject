@@ -56,6 +56,8 @@ class FortifyServiceProvider extends ServiceProvider
         ]));
 
         Fortify::confirmPasswordView(fn () => Inertia::render('auth/confirm-password'));
+
+        Fortify::twoFactorChallengeView(fn () => Inertia::render('auth/two-factor-challenge'));
     }
 
     private function configureRateLimiting(): void
@@ -66,5 +68,14 @@ class FortifyServiceProvider extends ServiceProvider
 
             return Limit::perMinute(5)->by($throttleKey);
         });
+
+        // Five codes per minute for the account being signed in: a 6-digit
+        // code cannot be brute-forced at that pace before it rotates.
+        RateLimiter::for('two-factor', fn (Request $request) => Limit::perMinute(5)->by($request->session()->get('login.id')));
+
+        // Ten passkey ceremonies per minute per credential (or session) and IP.
+        RateLimiter::for('passkeys', fn (Request $request) => Limit::perMinute(10)->by(
+            ($request->input('credential.id') ?: $request->session()->getId()).'|'.$request->ip(),
+        ));
     }
 }

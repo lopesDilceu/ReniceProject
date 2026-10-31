@@ -1,4 +1,5 @@
 import { Form, Head } from '@inertiajs/react';
+import PasskeyButton from '@/components/auth/passkey-button';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
 import TextLink from '@/components/text-link';
@@ -26,6 +27,11 @@ export default function Login({ status, canResetPassword }: Props) {
                     {status}
                 </div>
             )}
+
+            <PasskeyButton
+                label="Entrar com passkey"
+                separator="ou com e-mail e senha"
+            />
 
             <Form
                 {...store.form()}

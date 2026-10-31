@@ -116,6 +116,8 @@ return [
 
     'limiters' => [
         'login' => 'login',
+        'two-factor' => 'two-factor',
+        'passkeys' => 'passkeys',
     ],
 
     /*
@@ -142,11 +144,36 @@ return [
     |
     */
 
-    // Passkeys and two-factor authentication are tracked separately.
+    /*
+    |--------------------------------------------------------------------------
+    | Passkeys
+    |--------------------------------------------------------------------------
+    |
+    | WebAuthn settings, passed on to laravel/passkeys. The relying party is
+    | the APP_URL host: passkeys created on localhost only work on localhost.
+    |
+    */
+
+    'passkeys' => [
+        'relying_party_id' => parse_url((string) config('app.url'), PHP_URL_HOST),
+        'allowed_origins' => [config('app.url')],
+        'user_handle_secret' => env('PASSKEYS_USER_HANDLE_SECRET', config('app.key')),
+        'timeout' => 60000,
+    ],
+
     'features' => [
         Features::registration(),
         Features::resetPasswords(),
         Features::emailVerification(),
+        // TOTP codes from an authenticator app, enabled only after the first
+        // valid code; turning it on or off asks for the password again.
+        Features::twoFactorAuthentication([
+            'confirm' => true,
+            'confirmPassword' => true,
+        ]),
+        Features::passkeys([
+            'confirmPassword' => true,
+        ]),
     ],
 
 ];

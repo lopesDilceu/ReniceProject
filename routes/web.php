@@ -5,6 +5,7 @@ use App\Http\Controllers\Account\AvatarController;
 use App\Http\Controllers\Account\PasswordController;
 use App\Http\Controllers\Account\PhoneController;
 use App\Http\Controllers\Account\ProfileController;
+use App\Http\Controllers\Account\SecurityController;
 use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InventoryController;
@@ -68,6 +69,9 @@ Route::middleware('auth')->group(function () {
     Route::put('/conta/senha', [PasswordController::class, 'update'])
         ->middleware('throttle:6,1')
         ->name('account.password.update');
+    Route::get('/conta/seguranca', [SecurityController::class, 'edit'])
+        ->middleware('password.confirm')
+        ->name('account.security');
     Route::post('/conta/telefones', [PhoneController::class, 'store'])->name('phones.store');
     Route::delete('/conta/telefones/{phone}', [PhoneController::class, 'destroy'])->name('phones.destroy');
     Route::delete('/enderecos/{address}', [AddressController::class, 'destroy'])->name('addresses.destroy');
@@ -76,6 +80,13 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin. Every route requires the 'admin' ability (see AppServiceProvider).
+// Tells password managers where users enroll and manage passkeys
+// (W3C "well-known URL for passkey endpoints").
+Route::get('/.well-known/passkey-endpoints', fn () => response()->json([
+    'enroll' => route('account.security'),
+    'manage' => route('account.security'),
+]))->name('well-known.passkeys');
+
 // Payment provider notifications: no session or CSRF token, authenticated
 // by the provider's signature instead.
 Route::post('/webhooks/mercadopago', MercadoPagoWebhookController::class)
