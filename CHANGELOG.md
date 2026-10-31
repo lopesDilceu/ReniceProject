@@ -4,9 +4,13 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [2.0.0-beta.1] — 2026-10-31
+
+End of Phase 3 (Inertia + React rewrite). Every screen of the store and the admin is rewritten in React on Inertia 3, all v1 code is gone, and every finding of the initial audit is resolved with a regression test.
+
 ### Added
 - Inertia 3 + React 19 + TypeScript (strict) frontend, following Laravel's official React starter kit: Tailwind 4, shadcn/ui components, React Compiler, Vite+ (build, lint, format), Wayfinder typed route helpers, light/dark/system appearance.
-- Store layout (header, mobile menu, user menu, theme switcher, footer) in the Renice brand color. Links to pages still served by v1 Blade views use full page loads until each module is rewritten.
+- Store layout (header, mobile menu, user menu, theme switcher, footer) in the Renice brand color.
 - Home and "Sobre o projeto" rewritten as React pages; the about page tells the modernization story and links to the audit, roadmap, ADRs and metrics.
 - CI job: frontend build, lint/format and type check.
 - Authentication with Laravel Fortify and React pages: sign in (5 attempts per minute per e-mail and IP), sign up, forgot/reset password, e-mail verification (Mailpit locally) and password confirmation. Sign-up asks for name, e-mail, CPF (validated by check digits, masked as typed) and birth date (16+).
@@ -28,7 +32,7 @@ All notable changes to this project are documented here. The format follows [Kee
 - v1 `/produtos/pesquisa?query=…` redirects to `/produtos?q=…`; `/avaliacoes` redirects to the catalog (reviews now live on each product page).
 - v1 `/usuarios/carrinho` and `/usuarios/pagamento` redirect to `/carrinho` and `/checkout`.
 - v1 `/usuarios/minha-conta`, `/usuarios/editar-dados` and `/usuarios/minhas-compras` redirect to the account area.
-- A test fails if the Larastan baseline ever includes a non-legacy file, so regenerating it cannot hide errors in new code.
+- Larastan level 6 runs with no baseline; a test fails if a baseline or ignored errors are added back.
 - Production password policy: 12+ characters, mixed case, numbers, symbols and a breach check; destructive database commands are blocked in production.
 
 ### Removed
@@ -114,7 +118,8 @@ End of Phase 0 (Foundation). The application code is still the legacy code. This
 
 Original version delivered as the final project for the Programming II and Database II courses at Unimontes. See the [release notes](https://github.com/lopesDilceu/ReniceProject/releases/tag/v1.0-academic) and [`docs/legacy`](docs/legacy/README.md).
 
-[Unreleased]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.3...HEAD
+[Unreleased]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-beta.1...HEAD
+[2.0.0-beta.1]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.3...v2.0.0-beta.1
 [2.0.0-alpha.3]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.2...v2.0.0-alpha.3
 [2.0.0-alpha.2]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.1...v2.0.0-alpha.2
 [2.0.0-alpha.1]: https://github.com/lopesDilceu/ReniceProject/compare/v1.0-academic...v2.0.0-alpha.1
