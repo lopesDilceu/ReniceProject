@@ -56,7 +56,7 @@ describe('orders', function () {
         [$order, $product] = placedOrder(stock: 10, quantity: 3);
         expect($product->fresh()->stock)->toBe(7);
 
-        $this->actingAs($this->admin)->patch(route('admin.orders.update', $order), ['status' => 'cancelled']);
+        $this->actingAs($this->admin)->patch(route('admin.orders.update', $order), ['status' => 'cancelled', 'reason' => 'Cliente desistiu.']);
 
         $restock = $product->inventoryMovements()->latest('id')->first();
 
@@ -88,9 +88,33 @@ describe('orders', function () {
         $this->actingAs($this->admin)->get(route('admin.orders.show', $order))
             ->assertInertia(fn (Assert $page) => $page
                 ->where('nextStatuses', [
-                    ['value' => 'shipped', 'label' => 'Enviado'],
-                    ['value' => 'refunded', 'label' => 'Reembolsado'],
+                    ['value' => 'shipped', 'label' => 'Enviado', 'requires_reason' => false],
+                    ['value' => 'refunded', 'label' => 'Reembolsado', 'requires_reason' => true],
                 ]));
+    });
+
+    it('requires a reason to cancel or refund', function () {
+        [$order, $product] = placedOrder(stock: 10, quantity: 3);
+
+        $this->actingAs($this->admin)->patch(route('admin.orders.update', $order), ['status' => 'cancelled', 'reason' => ' '])
+            ->assertSessionHasErrors('reason');
+
+        expect($order->fresh()->status)->toBe(OrderStatus::PendingPayment)
+            ->and($product->fresh()->stock)->toBe(7);
+    });
+
+    it('shows the timeline with who made each change and why', function () {
+        [$order] = placedOrder();
+        $this->actingAs($this->admin)->patch(route('admin.orders.update', $order), ['status' => 'cancelled', 'reason' => 'Pagamento não identificado.']);
+
+        $this->actingAs($this->admin)->get(route('admin.orders.show', $order))
+            ->assertInertia(fn (Assert $page) => $page
+                ->has('order.timeline', 2)
+                ->where('order.timeline.0.status', 'pending_payment')
+                ->where('order.timeline.0.actor', $order->user->name)
+                ->where('order.timeline.1.status', 'cancelled')
+                ->where('order.timeline.1.reason', 'Pagamento não identificado.')
+                ->where('order.timeline.1.actor', 'Admin Renice'));
     });
 });
 

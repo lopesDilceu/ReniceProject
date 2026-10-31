@@ -3,8 +3,8 @@
 namespace App\Enums;
 
 /**
- * Order lifecycle. Phase 4 (#32) adds the transition history and payment
- * webhooks on top of these rules.
+ * Order lifecycle. The transitions below are the only ones allowed;
+ * ChangeOrderStatus enforces them and records each one in the timeline.
  */
 enum OrderStatus: string
 {
@@ -52,5 +52,13 @@ enum OrderStatus: string
     public function returnsStock(): bool
     {
         return $this === self::Cancelled || $this === self::Refunded;
+    }
+
+    /**
+     * Undoing a sale must say why, so the timeline explains it.
+     */
+    public function requiresReason(): bool
+    {
+        return $this->returnsStock();
     }
 }

@@ -12,6 +12,7 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\OrderStatusChange;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -70,6 +71,8 @@ class PlaceOrder
                 'total_cents' => $items->sum(fn (CartItem $item) => $products[$item->product_id]->price_cents * $item->quantity),
                 'shipping_address' => $shippingAddress->toSnapshot(),
             ])->save();
+
+            OrderStatusChange::record($order, from: null, actor: $customer);
 
             foreach ($items as $item) {
                 $product = $products[$item->product_id];

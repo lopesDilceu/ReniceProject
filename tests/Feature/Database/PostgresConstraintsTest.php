@@ -6,8 +6,11 @@
 | the in-memory SQLite run.
 */
 
+use App\Enums\OrderStatus;
 use App\Models\Address;
 use App\Models\CartItem;
+use App\Models\Order;
+use App\Models\OrderStatusChange;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\User;
@@ -33,4 +36,5 @@ it('rejects invalid values at the database level', function (Closure $write) {
     'zero quantity in cart' => fn () => CartItem::factory()->create(['quantity' => 0]),
     'CPF with letters' => fn () => User::factory()->create(['cpf' => '1234567890A']),
     'lowercase state' => fn () => Address::factory()->create(['state' => 'mg']),
+    'status change to the same status' => fn () => OrderStatusChange::record(Order::factory()->create(), OrderStatus::PendingPayment, null),
 ])->throws(QueryException::class)->group('pgsql');

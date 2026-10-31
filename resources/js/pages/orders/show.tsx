@@ -1,5 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
 import { CircleCheck } from 'lucide-react';
+import OrderTimeline from '@/components/orders/order-timeline';
 import ReviewForm from '@/components/orders/review-form';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -67,6 +68,11 @@ export default function OrderShow({ order, reviewableProductIds }: Props) {
                             {formatMoney(order.total_cents)}
                         </span>
                     </div>
+                </section>
+
+                <section className="space-y-4 rounded-xl border p-4">
+                    <h2 className="text-sm font-medium">Acompanhamento</h2>
+                    <OrderTimeline timeline={order.timeline} />
                 </section>
 
                 <section className="space-y-1 rounded-xl border p-4 text-sm">

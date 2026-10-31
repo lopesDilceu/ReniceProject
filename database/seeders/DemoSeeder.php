@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Actions\Checkout\PlaceOrder;
 use App\Actions\Inventory\RecordSupplierPurchase;
+use App\Actions\Orders\ChangeOrderStatus;
 use App\Enums\OrderStatus;
 use App\Models\Address;
 use App\Models\Order;
@@ -11,6 +12,7 @@ use App\Models\Product;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 
 /**
@@ -36,9 +38,23 @@ class DemoSeeder extends Seeder
         ['name' => 'Copo Fresh 500ml gelo médio', 'description' => 'Copo de 500ml com embalagem customizada tema refrescante. O gelo que acompanha o copo é de tamanho médio.', 'price_cents' => 1490, 'stock' => 0],
     ];
 
+    /**
+     * Steps from a new order to each demo status, through ChangeOrderStatus.
+     *
+     * @var array<string, list<OrderStatus>>
+     */
+    private const LIFECYCLE = [
+        'pending_payment' => [],
+        'paid' => [OrderStatus::Paid],
+        'shipped' => [OrderStatus::Paid, OrderStatus::Shipped],
+        'delivered' => [OrderStatus::Paid, OrderStatus::Shipped, OrderStatus::Delivered],
+        'cancelled' => [OrderStatus::Cancelled],
+    ];
+
     public function __construct(
         private readonly RecordSupplierPurchase $recordPurchase,
         private readonly PlaceOrder $placeOrder,
+        private readonly ChangeOrderStatus $changeStatus,
     ) {}
 
     public function run(): void
@@ -90,7 +106,7 @@ class DemoSeeder extends Seeder
 
         foreach ($customers as $user) {
             foreach (range(1, fake()->numberBetween(1, 3)) as $ignored) {
-                $this->placeDemoOrder($user, $inStock->random(fake()->numberBetween(1, 3)));
+                $this->placeDemoOrder($user, $inStock->random(fake()->numberBetween(1, 3)), $admin);
             }
         }
     }
@@ -98,7 +114,7 @@ class DemoSeeder extends Seeder
     /**
      * @param  iterable<Product>  $products
      */
-    private function placeDemoOrder(User $user, iterable $products): void
+    private function placeDemoOrder(User $user, iterable $products, User $admin): void
     {
         $cart = $user->cart()->firstOrCreate();
 
@@ -106,15 +122,26 @@ class DemoSeeder extends Seeder
             $cart->items()->create(['product_id' => $product->getKey(), 'quantity' => fake()->numberBetween(1, 4)]);
         }
 
-        $order = $this->placeOrder->handle($user, $user->addresses()->firstOrFail());
-
-        // The lifecycle is enforced in Phase 4 (#32); demo history is set directly.
         $status = fake()->randomElement([
             OrderStatus::Delivered, OrderStatus::Delivered, OrderStatus::Delivered,
             OrderStatus::Shipped, OrderStatus::Paid, OrderStatus::PendingPayment, OrderStatus::Cancelled,
         ]);
-        $placedAt = now()->subDays(fake()->numberBetween(1, 40));
-        $order->forceFill(['status' => $status, 'created_at' => $placedAt, 'updated_at' => $placedAt])->save();
+
+        // The clock is moved back so the order and every step of its timeline
+        // (and the stock movements they cause) get realistic dates.
+        $at = now()->subDays(fake()->numberBetween(5, 40))->setTime(fake()->numberBetween(8, 21), fake()->numberBetween(0, 59));
+
+        try {
+            Date::setTestNow($at);
+            $order = $this->placeOrder->handle($user, $user->addresses()->firstOrFail());
+
+            foreach (self::LIFECYCLE[$status->value] as $next) {
+                Date::setTestNow($at = $at->copy()->addHours(fake()->numberBetween(2, 30)));
+                $this->changeStatus->handle($order, $next, $admin, $next === OrderStatus::Cancelled ? 'Pagamento não identificado.' : null);
+            }
+        } finally {
+            Date::setTestNow();
+        }
 
         if ($status === OrderStatus::Delivered) {
             $this->review($user, $order);

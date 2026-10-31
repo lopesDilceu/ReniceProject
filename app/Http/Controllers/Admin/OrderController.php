@@ -4,17 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Actions\Orders\ChangeOrderStatus;
 use App\Enums\OrderStatus;
+use App\Exceptions\InvalidOrderTransition;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ChangeOrderStatusRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
-use InvalidArgumentException;
 
 class OrderController extends Controller
 {
@@ -48,23 +48,22 @@ class OrderController extends Controller
 
     public function show(Request $request, Order $order): Response
     {
-        $order->load(['items.product', 'user:id,name,email']);
+        // Loading the actor makes the resource show who made each change.
+        $order->load(['items.product', 'user:id,name,email', 'statusChanges.user:id,name']);
 
         return Inertia::render('admin/orders/show', [
             'order' => (new OrderResource($order))->resolve($request),
             'customer' => ['name' => $order->user->name, 'email' => $order->user->email],
             'nextStatuses' => collect($order->status->nextStatuses())
-                ->map(fn (OrderStatus $s) => ['value' => $s->value, 'label' => $s->label()]),
+                ->map(fn (OrderStatus $s) => ['value' => $s->value, 'label' => $s->label(), 'requires_reason' => $s->requiresReason()]),
         ]);
     }
 
-    public function update(Request $request, Order $order, ChangeOrderStatus $change): RedirectResponse
+    public function update(ChangeOrderStatusRequest $request, Order $order, ChangeOrderStatus $change): RedirectResponse
     {
-        $validated = $request->validate(['status' => ['required', Rule::enum(OrderStatus::class)]]);
-
         try {
-            $change->handle($order, OrderStatus::from($validated['status']), $request->user());
-        } catch (InvalidArgumentException $exception) {
+            $change->handle($order, $request->status(), $request->user(), $request->validated('reason'));
+        } catch (InvalidOrderTransition $exception) {
             throw ValidationException::withMessages(['status' => $exception->getMessage()]);
         }
 

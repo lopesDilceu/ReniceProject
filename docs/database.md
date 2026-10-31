@@ -17,6 +17,8 @@ erDiagram
     products ||--o{ inventory_movements : "stock changed by"
     users ||--o{ inventory_movements : "triggered"
     orders ||--|{ order_items : contains
+    orders ||--|{ order_status_changes : "timeline"
+    users ||--o{ order_status_changes : "made"
 
     users {
         bigint id PK
@@ -105,6 +107,15 @@ erDiagram
         string note
         timestamp created_at "no updated_at: append-only"
     }
+    order_status_changes {
+        bigint id PK
+        bigint order_id FK
+        string from_status "null when placed"
+        string to_status "differs from from_status"
+        bigint user_id FK "actor, null for the system"
+        string reason "required to cancel or refund"
+        timestamp created_at "no updated_at: append-only"
+    }
 ```
 
 ## Design rules
@@ -131,6 +142,31 @@ Stock is never edited directly. Every change goes through `App\Actions\Inventory
 4. updates `products.stock`, the cached balance.
 
 Movements are append-only: the model throws on update or delete, and a correction is a new `adjustment`. This replaces v1's `atualizar_estoque_produto` procedure and its four triggers. Supplier purchases go through `RecordSupplierPurchase`, which records cost on the purchase and adds a `purchase` movement. It never copies cost into the sale price, which was v1's BUG-01.
+
+## Order lifecycle
+
+```mermaid
+stateDiagram-v2
+    [*] --> pending_payment : PlaceOrder
+    pending_payment --> paid
+    pending_payment --> cancelled : restocks
+    paid --> shipped
+    paid --> refunded : restocks
+    shipped --> delivered
+    shipped --> refunded : restocks
+    delivered --> refunded : restocks
+    cancelled --> [*]
+    refunded --> [*]
+```
+
+`App\Enums\OrderStatus` defines the allowed transitions. `App\Actions\Orders\ChangeOrderStatus` is the only code that changes a status. In one transaction it:
+
+1. locks the order row;
+2. throws `InvalidOrderTransition` if the lifecycle doesn't allow the move, or if a cancellation or refund has no reason;
+3. updates `orders.status` and appends a row to `order_status_changes` with the previous status, the actor and the reason;
+4. when cancelling or refunding, puts the items back in stock through the inventory ledger.
+
+`PlaceOrder` writes the first timeline row. The timeline is append-only, like the ledger. Admins see who made each change; when the actor is null, the system made it (payment webhooks and Pix expiry, [#33](https://github.com/lopesDilceu/ReniceProject/issues/33)). Customers see the status, the date and the reason, but not which admin made the change.
 
 ## Coming next
 
