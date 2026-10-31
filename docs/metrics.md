@@ -19,9 +19,9 @@ How each number is collected is in [How to measure](#how-to-measure).
 
 | Metric | v1.0-academic | Current | Target |
 |---|---|---|---|
-| Automated tests | 0 (2 framework examples) | 321 passing on SQLite, 330 on PostgreSQL (including a concurrent-checkout test with 8 processes); 0 pending | — |
+| Automated tests | 0 (2 framework examples) | 405 passing on SQLite, 423 on PostgreSQL (including a concurrent-checkout test with 8 processes and OpenAPI contract tests); 0 pending | — |
 | Test suite status | 1 of 2 example tests failing | green | green |
-| Line coverage on `app/` | 0% | **97.8%** | ≥ 80% |
+| Line coverage on `app/` | 0% | **93.5%** (measured on the SQLite job: the PostgreSQL-only paths, such as vector search, run in the PostgreSQL job, which does not measure coverage) | ≥ 80% |
 | Static analysis | not configured | Larastan level 6, **no baseline**: 0 ignored errors | level 6+, empty baseline |
 | Enforced code style | no | Pint (Laravel preset) in CI | Pint in CI |
 | CI pipeline | none | lint + analyse + test on PHP 8.4/8.5, migrations + tests on PostgreSQL, dependency audit | lint + analyse + test + audit |
@@ -38,6 +38,8 @@ How each number is collected is in [How to measure](#how-to-measure).
 | Fresh clone → running app | not possible | `docker compose up -d` + `migrate --seed` (demo store) | one command |
 | Payment | none: orders marked completed at once (BUG-02) | Pix with signed webhooks, idempotent at three levels (charge, notification, status) | — |
 | Overselling under concurrency | not handled | 8 simultaneous checkouts for the last unit: exactly 1 succeeds (3 without the row locks) | 0 oversold |
+| Sign-in factors | password | password, TOTP two-factor with recovery codes, passkeys (WebAuthn) | — |
+| Integrations | none | REST API `/api/v1` (scoped, rate-limited tokens; OpenAPI 3.1), MCP server; AI agents cannot place orders without the customer | — |
 
 ² All 28 findings are resolved: DM-01–09 (schema, #11/#12), SEC-07 (Laravel upgrade), BUG-01 (#14), BUG-02 (#13), BUG-06 (#15), SEC-06 and BUG-05 (#22), SEC-02/03/04 and BUG-03 (#29), SEC-01 and SEC-05 (#30), BUG-04, MNT-01, MNT-04, MNT-05 and MNT-06 (#31), MNT-02 and MNT-03 (Phase 0).
 
@@ -45,11 +47,11 @@ How each number is collected is in [How to measure](#how-to-measure).
 
 | Metric | v1.0-academic | Current |
 |---|---|---|
-| PHP lines (`app/`, `routes/`) | 1,745 | 5,037 (all v2; v1 removed) |
+| PHP lines (`app/`, `routes/`) | 1,745 | 7,154 (all v2; v1 removed) |
 | Blade lines | 2,859 | 47 (the Inertia root view) |
-| TypeScript/React lines (excluding shadcn/ui) | 0 | 5,472 |
-| Controllers / empty methods | 12 / 56 | 19 / 0 |
-| Routes (application, excluding Fortify and Debugbar) | 45 | 53 |
+| TypeScript/React lines (excluding shadcn/ui) | 0 | 6,436 |
+| Controllers / empty methods | 12 / 56 | 26 / 0 |
+| Routes (application, excluding Fortify and Debugbar) | 45 | 58 web + 12 REST API + 1 MCP endpoint |
 
 ## Performance
 

@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [2.0.0-rc.1] — 2026-10-31
+
+End of Phase 5 (Showcase features). Passkeys and two-factor sign-in, a versioned REST API with an OpenAPI contract, a realtime admin over WebSockets, an MCP server for AI agents (with orders always confirmed by the customer), semantic search on pgvector and AI review summaries. The AI features run through `laravel/ai` and stay off until a provider is configured.
+
 ### Added
 - **Passkeys** (WebAuthn), through Fortify's passkey feature and `@laravel/passkeys`:
   - sign in with a passkey from the login page;
@@ -202,7 +206,8 @@ End of Phase 0 (Foundation). The application code is still the legacy code. This
 
 Original version delivered as the final project for the Programming II and Database II courses at Unimontes. See the [release notes](https://github.com/lopesDilceu/ReniceProject/releases/tag/v1.0-academic) and [`docs/legacy`](docs/legacy/README.md).
 
-[Unreleased]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-beta.2...HEAD
+[Unreleased]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-rc.1...HEAD
+[2.0.0-rc.1]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-beta.2...v2.0.0-rc.1
 [2.0.0-beta.2]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-beta.1...v2.0.0-beta.2
 [2.0.0-beta.1]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.3...v2.0.0-beta.1
 [2.0.0-alpha.3]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.2...v2.0.0-alpha.3
