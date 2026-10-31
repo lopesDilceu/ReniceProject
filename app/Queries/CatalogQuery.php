@@ -18,9 +18,10 @@ class CatalogQuery
     public const PER_PAGE = 12;
 
     /**
+     * @param  int|null  $page  Defaults to the request's ?page=; the MCP tools pass it explicitly.
      * @return LengthAwarePaginator<int, Product>
      */
-    public function paginate(?string $search, CatalogSort $sort, bool $onlyAvailable): LengthAwarePaginator
+    public function paginate(?string $search, CatalogSort $sort, bool $onlyAvailable, ?int $page = null): LengthAwarePaginator
     {
         return Product::query()
             ->withAvg('reviews', 'rating')
@@ -33,7 +34,7 @@ class CatalogQuery
             ->when($onlyAvailable, fn (Builder $query) => $query->where('stock', '>', 0))
             ->tap(fn (Builder $query) => $this->sort($query, $sort))
             ->orderBy('id')
-            ->paginate(self::PER_PAGE)
+            ->paginate(self::PER_PAGE, page: $page)
             ->withQueryString();
     }
 

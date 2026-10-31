@@ -31,6 +31,12 @@ All notable changes to this project are documented here. The format follows [Kee
 - **Private channels**, authorized by role: `admin` for admins only, and `orders.{id}` for the order's customer and admins.
 - **Broadcast events** are queued and dispatched after commit, so a rolled-back change is never shown and a WebSocket outage never breaks checkout. Their payloads carry no customer data.
 - **`compose.yaml`** now runs `reverb`, `queue` and `scheduler` services next to the app.
+- **MCP server for AI agents** at `/mcp` (`laravel/mcp`, [`docs/mcp.md`](docs/mcp.md)):
+  - **Tools:** search products, check whether a quantity can be ordered, view and change the cart, list addresses and orders, and prepare a checkout.
+  - **Auth:** the same Sanctum tokens, scopes and rate limit as the REST API. Read-only tokens do not see the write tools.
+- **Agent checkouts are confirmed by the customer:**
+  - `start-checkout` returns a signed, 15-minute link to `/checkout/confirmar`. The order is placed only when the customer confirms it there, signed in.
+  - The link pins the customer, the address and the exact cart and prices, so a changed cart, another account, tampering or a second use places nothing.
 
 ### Changed
 - Closing an account (soft delete) deletes its passkeys and revokes its API tokens, so it keeps no working credentials.
