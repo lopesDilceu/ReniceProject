@@ -19,10 +19,10 @@ How each number is collected is in [How to measure](#how-to-measure).
 
 | Metric | v1.0-academic | Current | Target |
 |---|---|---|---|
-| Automated tests | 0 (2 framework examples) | 159 passing on SQLite, 166 on PostgreSQL; 5 pending security tests | — |
+| Automated tests | 0 (2 framework examples) | 196 passing on SQLite, 203 on PostgreSQL; 0 pending | — |
 | Test suite status | 1 of 2 example tests failing | green | green |
 | Line coverage on `app/` | 0% | 73.6% (new code covered; legacy controllers: 0%) | ≥ 80% |
-| Static analysis | not configured | Larastan level 6, 120 legacy errors baselined (new code: 0) | level 6+, empty baseline |
+| Static analysis | not configured | Larastan level 6, 98 legacy errors baselined (a test keeps new code out of the baseline) (new code: 0) | level 6+, empty baseline |
 | Enforced code style | no | Pint (Laravel preset) in CI | Pint in CI |
 | CI pipeline | none | lint + analyse + test on PHP 8.4/8.5, migrations + tests on PostgreSQL, dependency audit | lint + analyse + test + audit |
 
@@ -30,14 +30,14 @@ How each number is collected is in [How to measure](#how-to-measure).
 
 | Metric | v1.0-academic | Current | Target |
 |---|---|---|---|
-| Open audit findings (critical / high) | 3 / 6 | 1 / 0² | 0 / 0 |
-| State-changing routes without `auth` (excluding login, sign-up, logout) | 6 | 2 (legacy profile update and review, #30) | 0 |
+| Open audit findings (critical / high) | 3 / 6 | **0 / 0**² | 0 / 0 |
+| State-changing routes without `auth` (excluding login, sign-up, logout) | 6 | 0 | 0 |
 | Raw SQL with interpolated input | 1 | 0 | 0 |
 | Domain tables with migrations | 0 of 11 | 11 of 11 | all |
 | Business rules in procedures / triggers | 2 / 8 | 0 / 0: all replaced by tested actions (`RecordInventoryMovement`, `RecordSupplierPurchase`, `PlaceOrder`) or FK rules | 0 / 0 |
 | Fresh clone → running app | not possible | `docker compose up -d` + `migrate --seed` (demo store) | one command |
 
-² Resolved: DM-01 (schema and rules versioned), SEC-07 (Laravel upgrade), BUG-01 (#14), BUG-02 (#13), SEC-06 and BUG-05 (#22), SEC-02, SEC-03, SEC-04 and BUG-03 (#29). Still open: SEC-01 (critical, legacy profile update, #30) and SEC-05 (reviews, #30).
+² All critical and high findings are resolved: DM-01 (schema and rules versioned), SEC-07 (Laravel upgrade), BUG-01 (#14), BUG-02 (#13), SEC-06 and BUG-05 (#22), SEC-02, SEC-03, SEC-04 and BUG-03 (#29), SEC-01 and SEC-05 (#30). Medium and low findings left are in the legacy admin, rewritten in #31.
 
 ## Size
 
