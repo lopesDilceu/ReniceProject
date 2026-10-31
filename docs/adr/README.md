@@ -12,3 +12,4 @@ Write one whenever a choice has real alternatives and would be expensive to reve
 | [0004](0004-modernization-strategy.md) | Modernize in place, rewrite module by module | Accepted |
 | [0005](0005-postgresql.md) | PostgreSQL 18 with pgvector as the database | Accepted |
 | [0006](0006-pix-with-mercado-pago.md) | Pix through Mercado Pago, behind a gateway interface | Accepted |
+| [0007](0007-semantic-search-with-pgvector.md) | Semantic search with pgvector embeddings, hybrid with keywords | Accepted |
