@@ -41,4 +41,15 @@ export type Order = {
     shipping_address: Address;
     created_at: string;
     items: OrderItem[];
+    timeline: OrderStatusChange[];
+};
+
+export type OrderStatusChange = {
+    id: number;
+    status: string;
+    status_label: string;
+    reason: string | null;
+    created_at: string;
+    /** Admin pages only; null means the system made the change. */
+    actor?: string | null;
 };

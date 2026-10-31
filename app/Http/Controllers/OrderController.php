@@ -28,7 +28,8 @@ class OrderController extends Controller
     {
         Gate::authorize('view', $order);
 
-        $order->load('items.product');
+        // Without the actor: customers see when and why, not which admin.
+        $order->load(['items.product', 'statusChanges']);
         $user = $request->user();
 
         // Products from this order the customer can still review: delivered,

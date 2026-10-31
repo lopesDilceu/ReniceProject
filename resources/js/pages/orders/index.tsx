@@ -9,7 +9,9 @@ import { show } from '@/routes/orders';
 import { index as products } from '@/routes/products';
 import type { Order, Paginated } from '@/types';
 
-type OrderSummary = Omit<Order, 'items'> & { items_count: number };
+type OrderSummary = Omit<Order, 'items' | 'timeline'> & {
+    items_count: number;
+};
 
 export default function OrdersIndex({
     orders,

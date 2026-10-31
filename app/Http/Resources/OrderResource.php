@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\OrderStatusChange;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -33,6 +34,15 @@ class OrderResource extends JsonResource
                 'unit_price_cents' => $item->unit_price_cents,
                 'quantity' => $item->quantity,
                 'subtotal_cents' => $item->subtotalCents(),
+            ])),
+            'timeline' => $this->whenLoaded('statusChanges', fn () => $this->statusChanges->map(fn (OrderStatusChange $change) => [
+                'id' => $change->id,
+                'status' => $change->to_status->value,
+                'status_label' => $change->to_status->label(),
+                'reason' => $change->reason,
+                'created_at' => $change->created_at->toIso8601String(),
+                // Only when the controller loaded it (the admin page); null means the system.
+                ...($change->relationLoaded('user') ? ['actor' => $change->user?->name] : []),
             ])),
         ];
     }

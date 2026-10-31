@@ -27,6 +27,13 @@ export function formatDate(iso: string): string {
     );
 }
 
+export function formatDateTime(iso: string): string {
+    return new Intl.DateTimeFormat('pt-BR', {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+    }).format(new Date(iso));
+}
+
 /** (38) 99999-0000 as the user types; the server keeps digits only. */
 export function maskPhone(value: string): string {
     const digits = value.replace(/\D/g, '').slice(0, 11);

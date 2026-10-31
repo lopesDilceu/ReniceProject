@@ -56,4 +56,14 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    /**
+     * The timeline, oldest first.
+     *
+     * @return HasMany<OrderStatusChange, $this>
+     */
+    public function statusChanges(): HasMany
+    {
+        return $this->hasMany(OrderStatusChange::class)->orderBy('id');
+    }
 }
