@@ -8,9 +8,9 @@ How each number is collected is in [How to measure](#how-to-measure).
 
 | Metric | v1.0-academic | Current | Target |
 |---|---|---|---|
-| Laravel | 11.10.0 (11.57.1 after `composer update`) | 11.57.1 | 13.x |
+| Laravel | 11.10.0 (11.57.1 after `composer update`) | 12.70.2 | 13.x |
 | PHP constraint | `^8.2` | `^8.2` | `^8.4` |
-| Known security advisories (`composer audit`) | 5 | 5 | 0 |
+| Known security advisories (`composer audit`) | 5 | 0 | 0 |
 | Abandoned packages | 1 | 1 | 0 |
 | Direct dependencies behind a major version | 4 | 4 | 0 |
 | Frontend libraries loaded from CDNs | 4 | 4 | 0 |
