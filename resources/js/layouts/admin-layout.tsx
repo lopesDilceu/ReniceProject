@@ -1,0 +1,99 @@
+import { Link } from '@inertiajs/react';
+import { ArrowLeft, Menu, Package, Truck } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import type { ReactNode } from 'react';
+import AppLogo from '@/components/app-logo';
+import { Button } from '@/components/ui/button';
+import {
+    Sheet,
+    SheetContent,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from '@/components/ui/sheet';
+import { useCurrentUrl } from '@/hooks/use-current-url';
+import { useFlashToast } from '@/hooks/use-flash-toast';
+import { cn } from '@/lib/utils';
+import { home } from '@/routes';
+import products from '@/routes/admin/products';
+import purchases from '@/routes/admin/purchases';
+
+type Item = { title: string; href: string; icon: LucideIcon };
+
+const items: Item[] = [
+    { title: 'Produtos', href: products.index.url(), icon: Package },
+    { title: 'Compras', href: purchases.index.url(), icon: Truck },
+];
+
+function Navigation() {
+    const { isCurrentOrParentUrl } = useCurrentUrl();
+
+    return (
+        <nav aria-label="Administração" className="flex flex-col gap-1">
+            {items.map(({ title, href, icon: Icon }) => (
+                <Link
+                    key={href}
+                    href={href}
+                    className={cn(
+                        'flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground',
+                        isCurrentOrParentUrl(href) &&
+                            'bg-accent font-medium text-foreground',
+                    )}
+                >
+                    <Icon className="size-4" /> {title}
+                </Link>
+            ))}
+            <Link
+                href={home()}
+                className="mt-4 flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground"
+            >
+                <ArrowLeft className="size-4" /> Voltar à loja
+            </Link>
+        </nav>
+    );
+}
+
+export default function AdminLayout({ children }: { children: ReactNode }) {
+    useFlashToast();
+
+    return (
+        <div className="flex min-h-svh bg-muted/30">
+            <aside className="hidden w-60 shrink-0 border-r bg-background p-4 md:block">
+                <div className="mb-6 px-3">
+                    <AppLogo />
+                    <p className="mt-1 text-xs text-muted-foreground">
+                        Administração
+                    </p>
+                </div>
+                <Navigation />
+            </aside>
+
+            <div className="flex-1">
+                <header className="flex h-14 items-center gap-3 border-b bg-background px-4 md:hidden">
+                    <Sheet>
+                        <SheetTrigger asChild>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                aria-label="Abrir menu"
+                            >
+                                <Menu className="size-5" />
+                            </Button>
+                        </SheetTrigger>
+                        <SheetContent side="left" className="w-64 p-4">
+                            <SheetHeader className="px-3">
+                                <SheetTitle>
+                                    <AppLogo />
+                                </SheetTitle>
+                            </SheetHeader>
+                            <Navigation />
+                        </SheetContent>
+                    </Sheet>
+                    <span className="font-medium">Administração</span>
+                </header>
+
+                <main className="mx-auto max-w-6xl p-4 md:p-8">{children}</main>
+            </div>
+        </div>
+    );
+}

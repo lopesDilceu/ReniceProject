@@ -11,6 +11,10 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use LogicException;
 
 /**
+ * @property InventoryMovementType $type
+ * @property int $quantity
+ * @property int $stock_after
+ *
  * One stock change. Rows are written only by RecordInventoryMovement and are
  * never updated or deleted: corrections are new adjustment movements.
  */

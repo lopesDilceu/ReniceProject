@@ -37,7 +37,7 @@ import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
 import { home, login, logout, register, sobre } from '@/routes';
 import account from '@/routes/account';
-import adm from '@/routes/adm';
+import admin from '@/routes/admin';
 import products from '@/routes/products';
 import cart from '@/routes/cart';
 import orders from '@/routes/orders';
@@ -141,9 +141,9 @@ function UserMenu({ user }: { user: User }) {
                 </DropdownMenuItem>
                 {user.is_admin && (
                     <DropdownMenuItem asChild>
-                        <a href={adm.home.url()}>
+                        <Link href={admin.home()}>
                             <Shield className="size-4" /> Administração
-                        </a>
+                        </Link>
                     </DropdownMenuItem>
                 )}
                 <DropdownMenuSeparator />

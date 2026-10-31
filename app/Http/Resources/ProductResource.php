@@ -32,7 +32,7 @@ class ProductResource extends JsonResource
             'excerpt' => Str::limit((string) $this->description, 110),
             'description' => $this->when($request->routeIs('products.show'), $this->description),
             'price_cents' => $this->price_cents,
-            'image_url' => $this->image_path ? asset($this->image_path) : null,
+            'image_url' => $this->imageUrl(),
             'available' => $this->isAvailable(),
             'low_stock' => $this->isAvailable() && $this->stock <= self::LOW_STOCK,
             'rating' => $rating === null ? null : round((float) $rating, 1),
