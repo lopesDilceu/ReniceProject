@@ -1,9 +1,9 @@
 import { Head, Link } from '@inertiajs/react';
-import { ArrowLeft, ShoppingCart } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
+import AddToCart from '@/components/catalog/add-to-cart';
 import ProductImage from '@/components/catalog/product-image';
 import RatingStars from '@/components/catalog/rating-stars';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { formatDate, formatMoney } from '@/lib/format';
 import { index } from '@/routes/products';
@@ -125,20 +125,7 @@ export default function ProductsShow({
                             )}
                         </div>
 
-                        <div className="space-y-2">
-                            {/* The cart moves to React in the next module (#29). */}
-                            <Button
-                                size="lg"
-                                className="w-full sm:w-auto"
-                                disabled
-                            >
-                                <ShoppingCart className="size-4" />
-                                Adicionar ao carrinho
-                            </Button>
-                            <p className="text-xs text-muted-foreground">
-                                Carrinho em migração para a nova versão.
-                            </p>
-                        </div>
+                        <AddToCart product={product} />
 
                         {product.description && (
                             <>
