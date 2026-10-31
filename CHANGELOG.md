@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+- Order timeline: every status change is recorded in the append-only `order_status_changes` table, with the previous status, the actor (or the system) and a reason. Placing an order writes the first entry. Admins see who made each change; customers see when and why, under "Acompanhamento" on the order page.
+- Cancelling or refunding an order requires a reason.
+- An invalid transition throws `InvalidOrderTransition`.
+
+### Changed
+- `ChangeOrderStatus` is now the only way an order's status changes. The demo seeder takes each order through it with realistic dates, so seeded cancellations now put stock back too.
+
 ## [2.0.0-beta.1] — 2026-10-31
 
 End of Phase 3 (Inertia + React rewrite). Every screen of the store and the admin is rewritten in React on Inertia 3, all v1 code is gone, and every finding of the initial audit is resolved with a regression test.
