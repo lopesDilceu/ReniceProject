@@ -5,6 +5,9 @@ use App\Http\Controllers\Account\AvatarController;
 use App\Http\Controllers\Account\PasswordController;
 use App\Http\Controllers\Account\PhoneController;
 use App\Http\Controllers\Account\ProfileController;
+use App\Http\Controllers\Admin\InventoryController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\SupplierPurchaseController;
 use App\Http\Controllers\AvaliacaoController;
 use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Catalog\ProductController;
@@ -71,6 +74,27 @@ Route::middleware('auth')->group(function () {
     Route::delete('/enderecos/{address}', [AddressController::class, 'destroy'])->name('addresses.destroy');
 
     Route::post('/produtos/{product:slug}/avaliacoes', [ReviewController::class, 'store'])->name('reviews.store');
+});
+
+// Admin (v2). Every route requires the 'admin' ability (see AppServiceProvider).
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'can:admin'])->group(function () {
+    Route::redirect('/', '/admin/produtos')->name('home');
+
+    Route::get('/produtos', [AdminProductController::class, 'index'])->name('products.index');
+    Route::get('/produtos/novo', [AdminProductController::class, 'create'])->name('products.create');
+    Route::post('/produtos', [AdminProductController::class, 'store'])->name('products.store');
+    Route::get('/produtos/{product}/editar', [AdminProductController::class, 'edit'])->name('products.edit');
+    Route::put('/produtos/{product}', [AdminProductController::class, 'update'])->name('products.update');
+    Route::delete('/produtos/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
+    Route::patch('/produtos/{product}/restaurar', [AdminProductController::class, 'restore'])
+        ->withTrashed()
+        ->name('products.restore');
+
+    Route::get('/produtos/{product}/estoque', [InventoryController::class, 'show'])->withTrashed()->name('inventory.show');
+    Route::post('/produtos/{product}/estoque', [InventoryController::class, 'store'])->name('inventory.store');
+
+    Route::get('/compras', [SupplierPurchaseController::class, 'index'])->name('purchases.index');
+    Route::post('/compras', [SupplierPurchaseController::class, 'store'])->name('purchases.store');
 });
 
 // v1 cart, payment and account URLs.

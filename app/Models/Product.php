@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 /**
  * Aggregates loaded on demand with withAvg('reviews', 'rating') and
@@ -42,6 +44,27 @@ class Product extends Model
             'price_cents' => 'integer',
             'stock' => 'integer',
         ];
+    }
+
+    /**
+     * A URL slug not used by any product, removed ones included, so old
+     * links never point at a different product.
+     */
+    public static function uniqueSlug(string $name): string
+    {
+        $base = Str::slug($name);
+        $slug = $base;
+
+        for ($suffix = 2; static::withTrashed()->where('slug', $slug)->exists(); $suffix++) {
+            $slug = "{$base}-{$suffix}";
+        }
+
+        return $slug;
+    }
+
+    public function imageUrl(): ?string
+    {
+        return $this->image_path ? Storage::disk('public')->url($this->image_path) : null;
     }
 
     public function isAvailable(): bool

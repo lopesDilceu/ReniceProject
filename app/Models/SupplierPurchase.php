@@ -6,7 +6,15 @@ use Database\Factories\SupplierPurchaseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
+/**
+ * Cast attribute types, which Larastan otherwise reads from the migration:
+ *
+ * @property Carbon $purchased_at
+ * @property int $quantity
+ * @property int $unit_cost_cents
+ */
 class SupplierPurchase extends Model
 {
     /** @use HasFactory<SupplierPurchaseFactory> */

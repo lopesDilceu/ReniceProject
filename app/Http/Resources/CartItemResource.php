@@ -29,7 +29,7 @@ class CartItemResource extends JsonResource
                 'name' => $product->name,
                 'slug' => $product->slug,
                 'price_cents' => $product->price_cents,
-                'image_url' => $product->image_path ? asset($product->image_path) : null,
+                'image_url' => $product->imageUrl(),
                 'available' => $product->isAvailable(),
             ],
         ];
