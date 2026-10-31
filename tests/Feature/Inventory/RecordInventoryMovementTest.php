@@ -31,7 +31,7 @@ it('removes stock', function () {
     $product = Product::factory()->create();
     $this->record->handle($product, InventoryMovementType::Adjustment, 10);
 
-    $this->record->handle($product, InventoryMovementType::Sale, -4);
+    $this->record->handle($product, InventoryMovementType::Reservation, -4);
 
     expect($product->fresh()->stock)->toBe(6);
 });
@@ -40,7 +40,7 @@ it('refuses to make stock negative and changes nothing', function () {
     $product = Product::factory()->create();
     $this->record->handle($product, InventoryMovementType::Adjustment, 3);
 
-    expect(fn () => $this->record->handle($product, InventoryMovementType::Sale, -4))
+    expect(fn () => $this->record->handle($product, InventoryMovementType::Reservation, -4))
         ->toThrow(InsufficientStock::class);
 
     expect($product->fresh()->stock)->toBe(3)

@@ -129,7 +129,10 @@ class DemoSeeder extends Seeder
 
         // The clock is moved back so the order and every step of its timeline
         // (and the stock movements they cause) get realistic dates.
-        $at = now()->subDays(fake()->numberBetween(5, 40))->setTime(fake()->numberBetween(8, 21), fake()->numberBetween(0, 59));
+        // Orders still waiting for payment are recent, inside the payment window.
+        $at = $status === OrderStatus::PendingPayment
+            ? now()->subMinutes(fake()->numberBetween(1, 15))
+            : now()->subDays(fake()->numberBetween(5, 40))->setTime(fake()->numberBetween(8, 21), fake()->numberBetween(0, 59));
 
         try {
             Date::setTestNow($at);

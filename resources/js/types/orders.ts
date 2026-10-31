@@ -40,6 +40,8 @@ export type Order = {
     total_cents: number;
     shipping_address: Address;
     created_at: string;
+    /** Only while the order waits for payment. */
+    payment_due_at: string | null;
     items: OrderItem[];
     timeline: OrderStatusChange[];
 };
