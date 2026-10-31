@@ -45,7 +45,9 @@ Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 |---|---|---|
 | Backend | Laravel 11, PHP 8.2 | Laravel 13, PHP 8.4+ |
 | Frontend | Blade, Bootstrap, jQuery | Inertia, React, TypeScript, Tailwind |
+| Database | MySQL | PostgreSQL 18 + pgvector |
 | Business rules | MySQL procedures and triggers | Tested application code |
+| Local environment | manual | Docker (Laravel Sail) |
 | Quality | — | Pest, Larastan (level 6), Pint, GitHub Actions |
 
 ## Documentation
@@ -62,13 +64,26 @@ Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 
 ## Running locally
 
-The application cannot run end to end yet: the original database schema was never versioned. A one-command setup with demo data arrives in Phase 2 ([#6](https://github.com/lopesDilceu/ReniceProject/issues/6), [#11](https://github.com/lopesDilceu/ReniceProject/issues/11)).
-
-The quality checks already run from a fresh clone:
+Requirements: Docker. The environment runs on [Laravel Sail](https://laravel.com/docs/sail): PHP 8.5, PostgreSQL 18 with pgvector ([ADR 0005](docs/adr/0005-postgresql.md)) and Mailpit.
 
 ```bash
-composer install
+composer install            # or: docker run --rm -v "$(pwd)":/app -w /app composer install
 cp .env.example .env
+vendor/bin/sail up -d
+vendor/bin/sail artisan key:generate
+```
+
+| Service | URL |
+|---|---|
+| Application | http://localhost |
+| Mailpit (caught e-mails) | http://localhost:8025 |
+| PostgreSQL | `localhost:5432`, user `sail`, password `password` |
+
+The domain schema and demo data are being rebuilt in Phase 2 ([#11](https://github.com/lopesDilceu/ReniceProject/issues/11), [#16](https://github.com/lopesDilceu/ReniceProject/issues/16)). Until then, only the pages that do not need the database work.
+
+Quality checks (no Docker needed; tests use in-memory SQLite):
+
+```bash
 composer check   # Pint, Larastan and Pest, as in CI
 ```
 

@@ -4,6 +4,17 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+- [ADR 0005](docs/adr/0005-postgresql.md): PostgreSQL 18 with pgvector as the database, chosen for Laravel's native vector search and Laravel Cloud's serverless Postgres.
+- Docker development environment on Laravel Sail (`compose.yaml`): PHP 8.5, PostgreSQL 18 + pgvector, Mailpit.
+
+### Changed
+- `.env.example` targets the Sail services and the Brazilian locale (`pt_BR`, also for Faker).
+
+## [2.0.0-alpha.2] — 2026-10-30
+
+End of Phase 1 (Framework upgrade). The application code is still the legacy code; the platform underneath is now current.
+
 ### Changed
 - Laravel 12.70 → 13.39 and PHP requirement `^8.2` → `^8.4`.
 - Tinker 2 → 3, Debugbar 3 → 4, Pest 4 → 5 (PHPUnit 12 → 13). No direct dependency is behind a major version anymore.
@@ -40,6 +51,7 @@ End of Phase 0 (Foundation). The application code is still the legacy code. This
 
 Original version delivered as the final project for the Programming II and Database II courses at Unimontes. See the [release notes](https://github.com/lopesDilceu/ReniceProject/releases/tag/v1.0-academic) and [`docs/legacy`](docs/legacy/README.md).
 
-[Unreleased]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.1...HEAD
+[Unreleased]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.2...HEAD
+[2.0.0-alpha.2]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.1...v2.0.0-alpha.2
 [2.0.0-alpha.1]: https://github.com/lopesDilceu/ReniceProject/compare/v1.0-academic...v2.0.0-alpha.1
 [1.0-academic]: https://github.com/lopesDilceu/ReniceProject/releases/tag/v1.0-academic
