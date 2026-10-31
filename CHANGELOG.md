@@ -9,19 +9,27 @@ All notable changes to this project are documented here. The format follows [Kee
 - Cancelling or refunding an order requires a reason.
 - An invalid transition throws `InvalidOrderTransition`.
 - Stock reservation:
-  - Checkout reserves the units until `orders.payment_due_at`, which is `SHOP_PAYMENT_WINDOW_MINUTES` after the order (30 by default).
+  - Checkout reserves the units until `orders.payment_due_at`, which is `SHOP_PAYMENT_WINDOW_MINUTES` after the order (60 by default).
   - `orders:expire-unpaid` runs every minute on the scheduler. It cancels overdue orders as the system and releases their stock.
   - The customer's order page says until when the items are reserved.
 - Ledger movement types `reservation`, `release` (cancellation or expiry) and `return` (refund). They replace `sale`, and the `adjustment` that cancellations used to write.
 - Transactional e-mails in Portuguese, through queued notifications (5 tries, backoff of 10 s, 1 min and 5 min). They go out only after the transaction commits, so a rolled-back change never e-mails anyone:
   - The customer gets an e-mail when the order is placed (with the reservation deadline in the store's timezone), paid, shipped (with the delivery address) and cancelled (with the reason).
   - Admins get a low-stock alert when a product drops to `SHOP_LOW_STOCK_THRESHOLD` units (5 by default). It is sent once per crossing; a restock arms it again. The admin dashboard uses the same threshold.
+- Pix payments through Mercado Pago ([ADR 0006](docs/adr/0006-pix-with-mercado-pago.md), [`docs/payments.md`](docs/payments.md)):
+  - **Checkout:** creates the charge with an idempotency key, one per order. The order page shows the QR code and the "copia e cola", and reloads every 5 s until the payment is confirmed. If the provider is down, the order is kept and the customer can generate the Pix again ("Gerar Pix").
+  - **Webhook:** `POST /webhooks/mercadopago` verifies the HMAC-SHA256 signature (401 otherwise) and stores each notification once (`webhook_calls`, `ON CONFLICT DO NOTHING`). A queued job then reads the status back from the API instead of trusting the body.
+  - **Effect on the order:** an approved Pix marks the order paid, by the system. A refund in the provider panel marks it refunded and returns the stock. Cancelling or expiring an order cancels its charge at the provider. A payment that arrives after expiry is recorded and flagged for refund.
+  - **Admin:** the admin order page shows the payment.
+  - **Local fake gateway:** the default (`PAYMENT_GATEWAY=fake`). It makes real QR codes and adds a "Simular pagamento" button, so the store and the demo run without an account. The demo seed pays its orders through it.
 - `OrderStatusChanged` event, fired for every timeline entry. The `EmailCustomerAboutOrder` listener picks which e-mail to send.
 - Concurrency test on PostgreSQL: eight PHP processes check out the last unit at the same instant, and exactly one succeeds. With the row locks removed, the test sold that unit three times.
 
 ### Changed
 - `ChangeOrderStatus` is now the only way an order's status changes. The demo seeder takes each order through it with realistic dates, so seeded cancellations now put stock back too. Seeded orders that still await payment are recent, so they sit inside the payment window. The seed renders its e-mails but sends none, and queues none for Mailpit.
 - The e-mail sender in `.env.example` is `loja@renice.test`.
+- The default payment window is 60 minutes. Mercado Pago requires at least 30 minutes for a Pix expiration.
+- Tests refuse any HTTP request that is not faked (`Http::preventStrayRequests`), and always run with the fake payment gateway.
 
 ## [2.0.0-beta.1] — 2026-10-31
 
