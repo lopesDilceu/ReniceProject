@@ -14,6 +14,7 @@ type Props = {
     pendingPayment: number;
     toShip: number;
     newCustomers: number;
+    lowStockThreshold: number;
     lowStock: { id: number; name: string; stock: number }[];
     bestSellers: { name: string; units: number; revenue_cents: number }[];
     recentOrders: {
@@ -134,7 +135,8 @@ export default function AdminDashboard(props: Props) {
                         <h2 className="font-semibold">Estoque baixo</h2>
                         {props.lowStock.length === 0 ? (
                             <p className="text-sm text-muted-foreground">
-                                Todos os produtos com mais de 5 unidades.
+                                Todos os produtos com mais de{' '}
+                                {props.lowStockThreshold} unidades.
                             </p>
                         ) : (
                             <ul className="divide-y text-sm">
