@@ -46,6 +46,19 @@ export type Order = {
     timeline: OrderStatusChange[];
 };
 
+export type Payment = {
+    status: 'pending' | 'approved' | 'rejected' | 'cancelled' | 'refunded';
+    status_label: string;
+    provider: string;
+    provider_payment_id: string;
+    amount_cents: number;
+    /** Pix "copia e cola" and QR image (data URI), only while payable. */
+    pix_code: string | null;
+    pix_qr_image: string | null;
+    expires_at: string;
+    paid_at: string | null;
+};
+
 export type OrderStatusChange = {
     id: number;
     status: string;

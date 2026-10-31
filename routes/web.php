@@ -17,6 +17,9 @@ use App\Http\Controllers\Catalog\ProductController;
 use App\Http\Controllers\Catalog\ReviewController;
 use App\Http\Controllers\Checkout\CheckoutController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PixController;
+use App\Http\Controllers\Webhooks\MercadoPagoWebhookController;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +55,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/conta/pedidos', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/pedidos/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/pedidos/{order}/pix', [PixController::class, 'store'])->middleware('throttle:6,1')->name('orders.pix.store');
+    // 404 unless the fake gateway is on (demo payments).
+    Route::post('/pedidos/{order}/pix/simular', [PixController::class, 'simulate'])->name('orders.pix.simulate');
 
     // The account always acts on the signed-in user: no route takes a user id
     // (v1's PUT /usuarios/edit/{id} let anyone edit anyone: SEC-01).
@@ -70,6 +76,13 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin. Every route requires the 'admin' ability (see AppServiceProvider).
+// Payment provider notifications: no session or CSRF token, authenticated
+// by the provider's signature instead.
+Route::post('/webhooks/mercadopago', MercadoPagoWebhookController::class)
+    ->withoutMiddleware([PreventRequestForgery::class])
+    ->middleware('throttle:120,1')
+    ->name('webhooks.mercadopago');
+
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'can:admin'])->group(function () {
     Route::get('/', DashboardController::class)->name('home');
 

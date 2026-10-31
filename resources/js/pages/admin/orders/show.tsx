@@ -7,19 +7,21 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { formatDate, formatMoney } from '@/lib/format';
+import { formatDate, formatDateTime, formatMoney } from '@/lib/format';
 import orders from '@/routes/admin/orders';
-import type { Order } from '@/types';
+import type { Order, Payment } from '@/types';
 
 type Props = {
     order: Order;
     customer: { name: string; email: string };
+    payment: Payment | null;
     nextStatuses: { value: string; label: string; requires_reason: boolean }[];
 };
 
 export default function AdminOrderShow({
     order,
     customer,
+    payment,
     nextStatuses,
 }: Props) {
     const { errors } = usePage().props as { errors: Record<string, string> };
@@ -169,6 +171,32 @@ export default function AdminOrderShow({
                                 <br />
                                 CEP {address.cep}
                             </p>
+                        </section>
+                        <section className="space-y-1 rounded-xl border bg-background p-4 text-sm">
+                            <h2 className="font-medium">Pagamento</h2>
+                            {payment ? (
+                                <>
+                                    <p>
+                                        Pix ·{' '}
+                                        <Badge variant="secondary">
+                                            {payment.status_label}
+                                        </Badge>
+                                    </p>
+                                    <p className="text-muted-foreground">
+                                        {payment.paid_at
+                                            ? `Pago em ${formatDateTime(payment.paid_at)}`
+                                            : `Expira em ${formatDateTime(payment.expires_at)}`}
+                                    </p>
+                                    <p className="font-mono text-xs break-all text-muted-foreground">
+                                        {payment.provider} ·{' '}
+                                        {payment.provider_payment_id}
+                                    </p>
+                                </>
+                            ) : (
+                                <p className="text-muted-foreground">
+                                    Nenhuma cobrança gerada.
+                                </p>
+                            )}
                         </section>
                     </aside>
                 </div>

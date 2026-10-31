@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Checkout;
 
 use App\Actions\Checkout\PlaceOrder;
+use App\Actions\Payments\CreatePixCharge;
 use App\Exceptions\EmptyCart;
 use App\Exceptions\InsufficientStock;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Checkout\PlaceOrderRequest;
 use App\Http\Resources\AddressResource;
 use App\Http\Resources\CartItemResource;
+use App\Payments\PaymentGatewayException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -40,7 +42,7 @@ class CheckoutController extends Controller
         ]);
     }
 
-    public function store(PlaceOrderRequest $request, PlaceOrder $placeOrder): RedirectResponse
+    public function store(PlaceOrderRequest $request, PlaceOrder $placeOrder, CreatePixCharge $createCharge): RedirectResponse
     {
         try {
             $order = $placeOrder->handle($request->user(), $request->address());
@@ -52,7 +54,15 @@ class CheckoutController extends Controller
             throw ValidationException::withMessages(['cart' => $exception->getMessage()]);
         }
 
-        $this->toast('success', 'Pedido recebido!');
+        // The order and its stock reservation are already committed; if the
+        // provider is down, the customer generates the Pix from the order page.
+        try {
+            $createCharge->handle($order);
+            $this->toast('success', 'Pedido recebido! Pague com Pix para confirmar.');
+        } catch (PaymentGatewayException $exception) {
+            report($exception);
+            $this->toast('warning', 'Pedido recebido, mas não conseguimos gerar o Pix agora. Tente novamente na página do pedido.');
+        }
 
         return to_route('orders.show', $order);
     }
