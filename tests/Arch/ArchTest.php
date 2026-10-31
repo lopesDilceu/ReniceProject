@@ -15,3 +15,7 @@ arch('controllers are suffixed')
 arch('models extend Eloquent')
     ->expect('App\Models')
     ->toExtend('Illuminate\Database\Eloquent\Model');
+
+arch('enums are backed enums')
+    ->expect('App\Enums')
+    ->toBeStringBackedEnums();
