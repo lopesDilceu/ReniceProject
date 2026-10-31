@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -7,6 +8,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 dataset('admin pages', [
+    'dashboard' => fn () => route('admin.home'),
+    'orders' => fn () => route('admin.orders.index'),
+    'order' => fn () => route('admin.orders.show', Order::factory()->create()),
+    'customers' => fn () => route('admin.customers.index'),
+    'reviews' => fn () => route('admin.reviews.index'),
     'products' => fn () => route('admin.products.index'),
     'new product' => fn () => route('admin.products.create'),
     'edit product' => fn () => route('admin.products.edit', Product::factory()->create()),
