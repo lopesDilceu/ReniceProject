@@ -6,7 +6,7 @@
 
 An e-commerce application that started as a university project in 2024 and is being rebuilt, in the open, to a 2026 production standard.
 
-> **Status:** the store and the admin are fully rewritten (Phases 0–3), and every finding of the [initial audit](docs/audit/initial-audit.md) is resolved. Next: Pix payments and the order lifecycle (Phase 4). Follow the [roadmap](docs/roadmap.md).
+> **Status:** the store and the admin are rewritten and take Pix payments, with an audited order lifecycle and concurrency-safe stock (Phases 0–4). Every finding of the [initial audit](docs/audit/initial-audit.md) is resolved. Next: showcase features such as semantic search, AI review summaries and passkeys (Phase 5). Follow the [roadmap](docs/roadmap.md).
 
 ![Renice v1 product catalog](docs/legacy/images/03-product-catalog.jpg)
 
@@ -33,7 +33,7 @@ Every step is an issue, a pull request and, when there is a real trade-off, an [
 | 1 — Framework upgrade | Done ([`v2.0.0-alpha.2`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-alpha.2)) |
 | 2 — Data layer redesign | Done ([`v2.0.0-alpha.3`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-alpha.3)) |
 | 3 — Inertia + React rewrite | Done ([`v2.0.0-beta.1`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-beta.1)) |
-| 4 — Commerce core | Planned |
+| 4 — Commerce core | Done ([`v2.0.0-beta.2`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-beta.2)) |
 | 5 — Showcase features | Planned |
 | 6 — Production & case study | Planned |
 

@@ -4,7 +4,7 @@
 
 Um e-commerce que nasceu como projeto de faculdade em 2024 e está sendo reconstruído, em público, no padrão de produção de 2026.
 
-> **Status:** a loja e o admin foram totalmente reescritos (Fases 0 a 3), e todos os achados da [auditoria inicial](docs/audit/initial-audit.md) estão resolvidos. Próximo passo: pagamento via Pix e ciclo de vida do pedido (Fase 4). Acompanhe pelo [roadmap](docs/roadmap.md).
+> **Status:** a loja e o admin foram reescritos e recebem pagamentos via Pix, com ciclo de vida do pedido auditado e estoque seguro sob concorrência (Fases 0 a 4). Todos os achados da [auditoria inicial](docs/audit/initial-audit.md) estão resolvidos. Próximo passo: recursos de destaque, como busca semântica, resumos de avaliações com IA e passkeys (Fase 5). Acompanhe pelo [roadmap](docs/roadmap.md).
 
 ![Catálogo de produtos da Renice v1](docs/legacy/images/03-product-catalog.jpg)
 
@@ -31,7 +31,7 @@ Cada passo é uma issue, um pull request e, quando há um trade-off real, um [re
 | 1 — Upgrade do framework | Concluída ([`v2.0.0-alpha.2`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-alpha.2)) |
 | 2 — Redesenho da camada de dados | Concluída ([`v2.0.0-alpha.3`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-alpha.3)) |
 | 3 — Reescrita com Inertia + React | Concluída ([`v2.0.0-beta.1`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-beta.1)) |
-| 4 — Núcleo de comércio | Planejada |
+| 4 — Núcleo de comércio | Concluída ([`v2.0.0-beta.2`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-beta.2)) |
 | 5 — Recursos de destaque | Planejada |
 | 6 — Produção e estudo de caso | Planejada |
 

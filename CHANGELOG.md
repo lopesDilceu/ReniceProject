@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [2.0.0-beta.2] — 2026-10-31
+
+End of Phase 4 (Commerce core). The store takes Pix payments through Mercado Pago, with signed and idempotent webhooks. Orders follow an audited lifecycle, stock is reserved at checkout and cannot be oversold under concurrency, and customers and admins get queued e-mails.
+
 ### Added
 - Order timeline: every status change is recorded in the append-only `order_status_changes` table, with the previous status, the actor (or the system) and a reason. Placing an order writes the first entry. Admins see who made each change; customers see when and why, under "Acompanhamento" on the order page.
 - Cancelling or refunding an order requires a reason.
@@ -145,7 +149,8 @@ End of Phase 0 (Foundation). The application code is still the legacy code. This
 
 Original version delivered as the final project for the Programming II and Database II courses at Unimontes. See the [release notes](https://github.com/lopesDilceu/ReniceProject/releases/tag/v1.0-academic) and [`docs/legacy`](docs/legacy/README.md).
 
-[Unreleased]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-beta.1...HEAD
+[Unreleased]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-beta.2...HEAD
+[2.0.0-beta.2]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-beta.1...v2.0.0-beta.2
 [2.0.0-beta.1]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.3...v2.0.0-beta.1
 [2.0.0-alpha.3]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.2...v2.0.0-alpha.3
 [2.0.0-alpha.2]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.1...v2.0.0-alpha.2
