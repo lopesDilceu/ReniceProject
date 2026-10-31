@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [2.0.0-alpha.1] — 2026-10-30
+
+End of Phase 0 (Foundation). The application code is still the legacy code. This release adds the documentation, tooling and pipeline that every later change depends on, plus the Laravel 12 upgrade, which had to come first (see #7).
+
 ### Added
 - Documentation of the original system and its database design ([`docs/legacy`](docs/legacy/README.md)).
 - Initial audit with 28 findings and links to their tracking issues ([`docs/audit/initial-audit.md`](docs/audit/initial-audit.md)).
@@ -28,5 +32,6 @@ All notable changes to this project are documented here. The format follows [Kee
 
 Original version delivered as the final project for the Programming II and Database II courses at Unimontes. See the [release notes](https://github.com/lopesDilceu/ReniceProject/releases/tag/v1.0-academic) and [`docs/legacy`](docs/legacy/README.md).
 
-[Unreleased]: https://github.com/lopesDilceu/ReniceProject/compare/v1.0-academic...HEAD
+[Unreleased]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.1...HEAD
+[2.0.0-alpha.1]: https://github.com/lopesDilceu/ReniceProject/compare/v1.0-academic...v2.0.0-alpha.1
 [1.0-academic]: https://github.com/lopesDilceu/ReniceProject/releases/tag/v1.0-academic
