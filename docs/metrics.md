@@ -19,10 +19,10 @@ How each number is collected is in [How to measure](#how-to-measure).
 
 | Metric | v1.0-academic | Current | Target |
 |---|---|---|---|
-| Automated tests | 0 (2 framework examples) | 71 passing on SQLite, 78 on PostgreSQL; 12 pending security tests | — |
+| Automated tests | 0 (2 framework examples) | 104 passing on SQLite, 111 on PostgreSQL; 10 pending security tests | — |
 | Test suite status | 1 of 2 example tests failing | green | green |
-| Line coverage on `app/` | 0% | 13.9% (new models: covered; legacy controllers: 0%) | ≥ 80% |
-| Static analysis | not configured | Larastan level 6, 158 legacy errors baselined (new code: 0) | level 6+, empty baseline |
+| Line coverage on `app/` | 0% | 50.3% (new code covered; legacy controllers: 0%) | ≥ 80% |
+| Static analysis | not configured | Larastan level 6, 152 legacy errors baselined (new code: 0) | level 6+, empty baseline |
 | Enforced code style | no | Pint (Laravel preset) in CI | Pint in CI |
 | CI pipeline | none | lint + analyse + test on PHP 8.4/8.5, migrations + tests on PostgreSQL, dependency audit | lint + analyse + test + audit |
 
@@ -37,7 +37,7 @@ How each number is collected is in [How to measure](#how-to-measure).
 | Business rules in procedures / triggers | 2 / 8 | 0 / 0: all replaced by tested actions (`RecordInventoryMovement`, `RecordSupplierPurchase`, `PlaceOrder`) or FK rules. The legacy checkout controller still issues `CALL finalizar_venda` until it is rewritten (#29) | 0 / 0 |
 | Fresh clone → running app | not possible | `docker compose up -d` + `migrate --seed` (demo store) | one command |
 
-² Resolved: DM-01 (schema and rules versioned), SEC-07 (Laravel upgrade), BUG-01 (#14), BUG-02 (#13). Still open in the legacy controllers until Phase 3: SEC-01, SEC-02 (critical), SEC-03, SEC-04, BUG-03 (high).
+² Resolved: DM-01 (schema and rules versioned), SEC-07 (Laravel upgrade), BUG-01 (#14), BUG-02 (#13), SEC-06 and BUG-05 (#22). Still open in the legacy controllers until Phase 3: SEC-01, SEC-02 (critical), SEC-03, SEC-04, BUG-03 (high).
 
 ## Size
 

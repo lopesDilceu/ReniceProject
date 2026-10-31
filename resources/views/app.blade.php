@@ -30,9 +30,6 @@
             }
         </style>
 
-        {{-- Read by plain forms that post to legacy (v1) routes, e.g. logout. --}}
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
         <link rel="icon" href="/images/logo/renice-icon.ico" sizes="any">
         <link rel="apple-touch-icon" href="/images/logo/renice-icon.png">
 

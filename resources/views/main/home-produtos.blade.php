@@ -33,7 +33,7 @@
                                         @auth
                                             <button type="submit" class="btn btn-outline-success">ADCIONAR <img src="{{asset('/images/icons/carrinho.png')}}" alt="addToCarrinho" width="24px" height="24px"></button>
                                         @else
-                                            <a href="{{ route('usuarios.login') }}" class="btn btn-outline-success">ADCIONAR <img src="{{asset('/images/icons/carrinho.png')}}" alt="addToCarrinho" width="24px" height="24px"></a>
+                                            <a href="{{ route('login') }}" class="btn btn-outline-success">ADCIONAR <img src="{{asset('/images/icons/carrinho.png')}}" alt="addToCarrinho" width="24px" height="24px"></a>
                                         @endauth
                                     @else
                                         <a href="#" class="btn btn-outline-danger disabled" style="opacity: 40%;">INDISPONÍVEL <img src="{{asset('/images/icons/carrinho.png')}}" alt="addToCarrinho" width="24px" height="24px"></a>
