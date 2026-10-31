@@ -1,5 +1,7 @@
 # Renice
 
+[![CI](https://github.com/lopesDilceu/ReniceProject/actions/workflows/ci.yml/badge.svg)](https://github.com/lopesDilceu/ReniceProject/actions/workflows/ci.yml)
+
 **English** · [Português](README.pt-BR.md)
 
 An e-commerce application that started as a university project in 2024 and is being rebuilt, in the open, to a 2026 production standard.
@@ -44,7 +46,7 @@ Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 | Backend | Laravel 11, PHP 8.2 | Laravel 13, PHP 8.4+ |
 | Frontend | Blade, Bootstrap, jQuery | Inertia, React, TypeScript, Tailwind |
 | Business rules | MySQL procedures and triggers | Tested application code |
-| Quality | — | Pest, Larastan, Pint, GitHub Actions |
+| Quality | — | Pest, Larastan (level 6), Pint, GitHub Actions |
 
 ## Documentation
 
@@ -60,7 +62,15 @@ Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 
 ## Running locally
 
-Not yet possible from a fresh clone: the original database schema was never versioned. A one-command setup with demo data arrives in Phase 0/2 ([#6](https://github.com/lopesDilceu/ReniceProject/issues/6), [#11](https://github.com/lopesDilceu/ReniceProject/issues/11)).
+The application cannot run end to end yet: the original database schema was never versioned. A one-command setup with demo data arrives in Phase 2 ([#6](https://github.com/lopesDilceu/ReniceProject/issues/6), [#11](https://github.com/lopesDilceu/ReniceProject/issues/11)).
+
+The quality checks already run from a fresh clone:
+
+```bash
+composer install
+cp .env.example .env
+composer check   # Pint, Larastan and Pest, as in CI
+```
 
 ## Authors
 

@@ -10,8 +10,14 @@ All notable changes to this project are documented here. The format follows [Kee
 - Baseline metrics ([`docs/metrics.md`](docs/metrics.md)) and phased roadmap ([`docs/roadmap.md`](docs/roadmap.md)).
 - Architecture Decision Records 0001–0004.
 - Contribution workflow, pull request template, issue forms and security policy.
+- Pest 4 test suite: helper characterization tests, public page smoke tests, architecture tests, and pending tests for every audited security finding.
+- Larastan at level 6 with a baseline of 159 legacy errors; Pint with the Laravel preset.
+- Composer scripts `lint`, `format`, `analyse`, `test`, `test:coverage` and `check`.
+- GitHub Actions CI: style, static analysis and tests with coverage on PHP 8.4 and 8.5, plus a dependency audit that fails on known vulnerabilities.
 
 ### Changed
+- Codebase formatted with Pint (formatting only).
+- PHPUnit replaced by Pest 4 (on PHPUnit 12).
 - Laravel 11.10 → 12.70; Tinker, Collision and PHPUnit constraints raised to Laravel 12 minimums.
 - `config/database.php` uses `Pdo\Mysql::ATTR_SSL_CA` on PHP 8.5+ (the `PDO::MYSQL_*` constants are deprecated there).
 

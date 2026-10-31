@@ -12,19 +12,21 @@ How each number is collected is in [How to measure](#how-to-measure).
 | PHP constraint | `^8.2` | `^8.2` | `^8.4` |
 | Known security advisories (`composer audit`) | 5 | 0 | 0 |
 | Abandoned packages | 1 | 1 | 0 |
-| Direct dependencies behind a major version | 4 | 4 | 0 |
+| Direct dependencies behind a major version | 4 | 5¹ | 0 |
 | Frontend libraries loaded from CDNs | 4 | 4 | 0 |
+
+¹ Laravel 13, Tinker 3, Debugbar 4, Pest 5 and its Laravel plugin. Pest 4 was added in Phase 0; Pest 5 needs Laravel 13 (#8, #10).
 
 ## Quality
 
 | Metric | v1.0-academic | Current | Target |
 |---|---|---|---|
-| Automated tests (domain) | 0 | 0 | — |
-| Test suite status | 1 of 2 example tests failing | same | green |
-| Line coverage | 0% | 0% | ≥ 80% on `app/` |
-| Static analysis (Larastan level) | not configured | not configured | ≥ 6 |
-| Enforced code style | no | no | Pint in CI |
-| CI pipeline | none | none | lint + analyse + test + audit |
+| Automated tests | 0 (2 framework examples) | 19 passing + 12 pending security tests | — |
+| Test suite status | 1 of 2 example tests failing | green | green |
+| Line coverage on `app/` | 0% | reported by CI | ≥ 80% |
+| Static analysis | not configured | Larastan level 6, 159 legacy errors baselined | level 6+, empty baseline |
+| Enforced code style | no | Pint (Laravel preset) in CI | Pint in CI |
+| CI pipeline | none | lint + analyse + test on PHP 8.4/8.5, dependency audit | lint + analyse + test + audit |
 
 ## Security and data
 
@@ -41,7 +43,7 @@ How each number is collected is in [How to measure](#how-to-measure).
 
 | Metric | v1.0-academic | Current |
 |---|---|---|
-| PHP lines (`app/`, `routes/`) | 1,745 | 1,745 |
+| PHP lines (`app/`, `routes/`) | 1,745 | 1,768 (after Pint formatting) |
 | Blade lines | 2,859 | 2,859 |
 | Controllers / empty methods | 12 / 56 | 12 / 56 |
 | Routes | 45 | 45 |
