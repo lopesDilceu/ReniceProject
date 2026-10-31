@@ -1,5 +1,8 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
+import { toast } from 'sonner';
+import LiveUpdates, { LiveIndicator } from '@/components/live-updates';
+import type { OrderUpdated, StockRunningLow } from '@/components/live-updates';
 import { Badge } from '@/components/ui/badge';
 import { formatDate, formatMoney } from '@/lib/format';
 import { cn } from '@/lib/utils';
@@ -72,10 +75,33 @@ export default function AdminDashboard(props: Props) {
         <>
             <Head title="Visão geral · Admin" />
 
+            <LiveUpdates<OrderUpdated | StockRunningLow>
+                channel="admin"
+                events={['order.updated', 'stock.low']}
+                onEvent={(event) => {
+                    router.reload();
+
+                    if ('product_id' in event) {
+                        toast.warning(
+                            `Estoque baixo: ${event.name} (${event.stock} un.)`,
+                        );
+                    } else if (event.placed) {
+                        toast.info(
+                            `Novo pedido #${event.id} · ${formatMoney(event.total_cents)}`,
+                        );
+                    } else if (event.status === 'paid') {
+                        toast.success(`Pedido #${event.id} pago`);
+                    }
+                }}
+            />
+
             <div className="space-y-8">
-                <div>
-                    <h1 className="text-2xl font-semibold">Visão geral</h1>
-                    <p className="text-muted-foreground">Últimos 30 dias</p>
+                <div className="flex items-start justify-between gap-4">
+                    <div>
+                        <h1 className="text-2xl font-semibold">Visão geral</h1>
+                        <p className="text-muted-foreground">Últimos 30 dias</p>
+                    </div>
+                    <LiveIndicator />
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

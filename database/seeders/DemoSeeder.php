@@ -66,13 +66,15 @@ class DemoSeeder extends Seeder
     {
         // The demo customers are fictional: their order e-mails (and the
         // low-stock alerts) are rendered and dropped, not queued for Mailpit,
-        // and their Pix charges are local fakes, never real provider calls.
+        // their Pix charges are local fakes, never real provider calls, and
+        // weeks of history are not replayed live to the admin dashboard.
         $previous = [
             'queue.default' => config('queue.default'),
             'mail.default' => config('mail.default'),
             'payments.gateway' => config('payments.gateway'),
+            'broadcasting.default' => config('broadcasting.default'),
         ];
-        config(['queue.default' => 'sync', 'mail.default' => 'array', 'payments.gateway' => 'fake']);
+        config(['queue.default' => 'sync', 'mail.default' => 'array', 'payments.gateway' => 'fake', 'broadcasting.default' => 'null']);
 
         try {
             $this->seedStore();

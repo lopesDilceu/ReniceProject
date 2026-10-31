@@ -1,5 +1,8 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { CircleCheck } from 'lucide-react';
+import { toast } from 'sonner';
+import LiveUpdates from '@/components/live-updates';
+import type { OrderUpdated } from '@/components/live-updates';
 import OrderTimeline from '@/components/orders/order-timeline';
 import PixPayment from '@/components/orders/pix-payment';
 import ReviewForm from '@/components/orders/review-form';
@@ -27,6 +30,18 @@ export default function OrderShow({
     return (
         <>
             <Head title={`Pedido #${order.id}`} />
+
+            <LiveUpdates<OrderUpdated>
+                channel={`orders.${order.id}`}
+                events={['order.updated']}
+                onEvent={(event) => {
+                    router.reload({ only: ['order', 'payment'] });
+
+                    if (event.status === 'paid') {
+                        toast.success('Pagamento confirmado!');
+                    }
+                }}
+            />
 
             <div className="mx-auto max-w-3xl space-y-8 px-4 py-10">
                 <header className="space-y-3 text-center">

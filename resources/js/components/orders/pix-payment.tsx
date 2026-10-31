@@ -1,4 +1,5 @@
 import { router, usePoll } from '@inertiajs/react';
+import { echoIsConfigured } from '@laravel/echo-react';
 import { Check, Copy, QrCode } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -14,14 +15,16 @@ type Props = {
 };
 
 /**
- * Pix QR code and "copia e cola" for an unpaid order. While mounted it
- * reloads the order every few seconds, so the page turns to "Pago" as soon
- * as the provider's webhook confirms the payment.
+ * Pix QR code and "copia e cola" for an unpaid order. The order page turns
+ * to "Pago" when the provider's webhook confirms the payment: live over
+ * WebSockets, or on the next poll while mounted.
  */
 export default function PixPayment({ orderId, payment, canSimulate }: Props) {
     const [copied, setCopied] = useState(false);
 
-    usePoll(5000, { only: ['order', 'payment'] });
+    // The confirmation arrives over WebSockets (orders.{id}); polling is the
+    // fallback when they are unavailable, so it can be slow.
+    usePoll(echoIsConfigured() ? 30000 : 5000, { only: ['order', 'payment'] });
 
     if (!payment?.pix_code || !payment.pix_qr_image) {
         return (
