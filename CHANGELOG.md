@@ -4,6 +4,23 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+- **Passkeys** (WebAuthn), through Fortify's passkey feature and `@laravel/passkeys`:
+  - sign in with a passkey from the login page;
+  - confirm the password with a passkey;
+  - add and remove passkeys under "Minha conta → Segurança", with the authenticator's name and last use.
+- `/.well-known/passkey-endpoints`, so password managers can link to that page.
+- **Two-factor authentication** with TOTP:
+  - Set up by scanning a QR code; it is enabled only after the first valid code. A setup that is never confirmed is discarded.
+  - Eight one-time recovery codes, which can be viewed and regenerated.
+  - Signing in with a password asks for the code, or for a recovery code.
+- **Rate limits:** 5 two-factor codes per minute per account being signed in, and 10 passkey ceremonies per minute per credential and IP.
+- **Password confirmation** is required to open the security page and to change two-factor or passkeys.
+- pt-BR messages for the two-factor and passkey errors.
+
+### Changed
+- Closing an account (soft delete) deletes its passkeys, so it keeps no working credentials.
+
 ## [2.0.0-beta.2] — 2026-10-31
 
 End of Phase 4 (Commerce core). The store takes Pix payments through Mercado Pago, with signed and idempotent webhooks. Orders follow an audited lifecycle, stock is reserved at checkout and cannot be oversold under concurrency, and customers and admins get queued e-mails.

@@ -1,12 +1,13 @@
 import { Link } from '@inertiajs/react';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import { cn } from '@/lib/utils';
-import { edit } from '@/routes/account';
+import { edit, security } from '@/routes/account';
 import { index as orders } from '@/routes/orders';
 
 const tabs = [
     { title: 'Meus dados', href: edit.url() },
     { title: 'Meus pedidos', href: orders.url() },
+    { title: 'Segurança', href: security.url() },
 ];
 
 export default function AccountNav() {

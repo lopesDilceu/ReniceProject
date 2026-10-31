@@ -12,17 +12,28 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Fortify\Contracts\PasskeyUser;
+use Laravel\Fortify\PasskeyAuthenticatable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 
 /**
  * Cast attribute types, which Larastan otherwise reads from the migration:
  *
  * @property Carbon|null $birth_date
  * @property bool $is_admin
+ * @property Carbon|null $two_factor_confirmed_at
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable, PasskeyAuthenticatable, SoftDeletes, TwoFactorAuthenticatable;
+
+    protected static function booted(): void
+    {
+        // A closed account keeps its orders (soft delete) but must not keep
+        // working credentials: its passkeys go with it.
+        static::deleted(fn (User $user) => $user->passkeys()->delete());
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -49,6 +60,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        'two_factor_secret',
+        'two_factor_recovery_codes',
     ];
 
     /**
@@ -63,6 +76,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
             'birth_date' => 'date',
             'is_admin' => 'boolean',
+            'two_factor_confirmed_at' => 'datetime',
         ];
     }
 
