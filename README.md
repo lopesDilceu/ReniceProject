@@ -47,6 +47,7 @@ Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 | Frontend | Blade, Bootstrap, jQuery | Inertia 3, React 19 (React Compiler), TypeScript, Tailwind 4, shadcn/ui, Wayfinder |
 | Database | MySQL | PostgreSQL 18 + pgvector |
 | Business rules | MySQL procedures and triggers | Tested application code |
+| Payments | none (orders marked completed at once) | Pix through Mercado Pago, with signed, idempotent webhooks |
 | Local environment | manual | Docker (Laravel Sail) |
 | Quality | — | Pest, Larastan (level 6), Pint, GitHub Actions |
 
@@ -57,6 +58,7 @@ Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 | [Original system](docs/legacy/README.md) | What v1 did, its database design and screenshots |
 | [Initial audit](docs/audit/initial-audit.md) | Security, correctness and design findings |
 | [Database](docs/database.md) | Schema diagram and design rules |
+| [Payments](docs/payments.md) | Pix flow, webhook guarantees and the Mercado Pago sandbox |
 | [Roadmap](docs/roadmap.md) | Phases, milestones and issues |
 | [Metrics](docs/metrics.md) | Baseline and progress |
 | [Decisions](docs/adr/README.md) | Architecture Decision Records |
@@ -99,8 +101,10 @@ Two background processes run alongside the app. Locally, keep them running insid
 
 | Command | What it does |
 |---|---|
-| `php artisan queue:work` | Sends the queued e-mails: order confirmation, payment confirmed, shipped, cancelled (with the reason), and low-stock alerts for admins. They show up in Mailpit. The seed doesn't queue e-mails for its fictional customers. |
-| `php artisan schedule:work` | Cancels unpaid orders after 30 minutes (`SHOP_PAYMENT_WINDOW_MINUTES`) and releases their stock. You can also run `php artisan orders:expire-unpaid` by hand. |
+| `php artisan queue:work` | Processes payment notifications and sends the queued e-mails (order confirmation, payment confirmed, shipped, cancelled with the reason, and low-stock alerts for admins). The e-mails show up in Mailpit. The seed doesn't queue e-mails for its fictional customers. |
+| `php artisan schedule:work` | Cancels unpaid orders after 60 minutes (`SHOP_PAYMENT_WINDOW_MINUTES`) and releases their stock. You can also run `php artisan orders:expire-unpaid` by hand. |
+
+Payments use a local fake gateway by default: checkout shows a real QR code, and the order page has a **Simular pagamento** button. To use the Mercado Pago sandbox instead, see [`docs/payments.md`](docs/payments.md).
 
 | Demo account | E-mail | Password |
 |---|---|---|

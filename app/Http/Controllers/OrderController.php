@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
 use App\Http\Resources\OrderResource;
+use App\Http\Resources\PaymentResource;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -29,7 +30,7 @@ class OrderController extends Controller
         Gate::authorize('view', $order);
 
         // Without the actor: customers see when and why, not which admin.
-        $order->load(['items.product', 'statusChanges']);
+        $order->load(['items.product', 'statusChanges', 'payment']);
         $user = $request->user();
 
         // Products from this order the customer can still review: delivered,
@@ -41,6 +42,8 @@ class OrderController extends Controller
         return Inertia::render('orders/show', [
             'order' => (new OrderResource($order))->resolve($request),
             'reviewableProductIds' => $reviewable,
+            'payment' => $order->payment ? (new PaymentResource($order->payment))->resolve($request) : null,
+            'canSimulatePayment' => PixController::canSimulate() && $order->user_id === $user->getKey(),
         ]);
     }
 }

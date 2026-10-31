@@ -5,12 +5,17 @@ namespace Database\Seeders;
 use App\Actions\Checkout\PlaceOrder;
 use App\Actions\Inventory\RecordSupplierPurchase;
 use App\Actions\Orders\ChangeOrderStatus;
+use App\Actions\Orders\ExpireUnpaidOrders;
+use App\Actions\Payments\ApplyPaymentStatus;
+use App\Actions\Payments\CreatePixCharge;
 use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\User;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
@@ -60,9 +65,14 @@ class DemoSeeder extends Seeder
     public function run(): void
     {
         // The demo customers are fictional: their order e-mails (and the
-        // low-stock alerts) are rendered and dropped, not queued for Mailpit.
-        $previous = ['queue.default' => config('queue.default'), 'mail.default' => config('mail.default')];
-        config(['queue.default' => 'sync', 'mail.default' => 'array']);
+        // low-stock alerts) are rendered and dropped, not queued for Mailpit,
+        // and their Pix charges are local fakes, never real provider calls.
+        $previous = [
+            'queue.default' => config('queue.default'),
+            'mail.default' => config('mail.default'),
+            'payments.gateway' => config('payments.gateway'),
+        ];
+        config(['queue.default' => 'sync', 'mail.default' => 'array', 'payments.gateway' => 'fake']);
 
         try {
             $this->seedStore();
@@ -151,10 +161,19 @@ class DemoSeeder extends Seeder
         try {
             Date::setTestNow($at);
             $order = $this->placeOrder->handle($user, $user->addresses()->firstOrFail());
+            $payment = app(CreatePixCharge::class)->handle($order);
 
             foreach (self::LIFECYCLE[$status->value] as $next) {
-                Date::setTestNow($at = $at->copy()->addHours(fake()->numberBetween(2, 30)));
-                $this->changeStatus->handle($order, $next, $admin, $next === OrderStatus::Cancelled ? 'Pagamento não identificado.' : null);
+                match ($next) {
+                    // Paid within the window, the way a provider webhook confirms it.
+                    OrderStatus::Paid => $this->at($at = $at->copy()->addMinutes(fake()->numberBetween(2, 50)),
+                        fn () => app(ApplyPaymentStatus::class)->handle($payment, PaymentStatus::Approved)),
+                    // Never paid: expired by the scheduler at the deadline.
+                    OrderStatus::Cancelled => $this->at($at = $order->payment_due_at ?? $at,
+                        fn () => app(ExpireUnpaidOrders::class)->handle()),
+                    default => $this->at($at = $at->copy()->addHours(fake()->numberBetween(2, 30)),
+                        fn () => $this->changeStatus->handle($order, $next, $admin)),
+                };
             }
         } finally {
             Date::setTestNow();
@@ -163,6 +182,12 @@ class DemoSeeder extends Seeder
         if ($status === OrderStatus::Delivered) {
             $this->review($user, $order);
         }
+    }
+
+    private function at(CarbonInterface $time, callable $step): void
+    {
+        Date::setTestNow($time);
+        $step();
     }
 
     private function review(User $user, Order $order): void

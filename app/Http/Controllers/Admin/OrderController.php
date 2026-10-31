@@ -8,6 +8,7 @@ use App\Exceptions\InvalidOrderTransition;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ChangeOrderStatusRequest;
 use App\Http\Resources\OrderResource;
+use App\Http\Resources\PaymentResource;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
@@ -49,11 +50,12 @@ class OrderController extends Controller
     public function show(Request $request, Order $order): Response
     {
         // Loading the actor makes the resource show who made each change.
-        $order->load(['items.product', 'user:id,name,email', 'statusChanges.user:id,name']);
+        $order->load(['items.product', 'user:id,name,email', 'statusChanges.user:id,name', 'payment']);
 
         return Inertia::render('admin/orders/show', [
             'order' => (new OrderResource($order))->resolve($request),
             'customer' => ['name' => $order->user->name, 'email' => $order->user->email],
+            'payment' => $order->payment ? (new PaymentResource($order->payment))->resolve($request) : null,
             'nextStatuses' => collect($order->status->nextStatuses())
                 ->map(fn (OrderStatus $s) => ['value' => $s->value, 'label' => $s->label(), 'requires_reason' => $s->requiresReason()]),
         ]);

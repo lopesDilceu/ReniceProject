@@ -1,19 +1,27 @@
 import { Head, Link } from '@inertiajs/react';
 import { CircleCheck } from 'lucide-react';
 import OrderTimeline from '@/components/orders/order-timeline';
+import PixPayment from '@/components/orders/pix-payment';
 import ReviewForm from '@/components/orders/review-form';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { formatDate, formatDateTime, formatMoney } from '@/lib/format';
 import { index as products } from '@/routes/products';
-import type { Order } from '@/types';
+import type { Order, Payment } from '@/types';
 
 type Props = {
     order: Order;
     reviewableProductIds: number[];
+    payment: Payment | null;
+    canSimulatePayment: boolean;
 };
 
-export default function OrderShow({ order, reviewableProductIds }: Props) {
+export default function OrderShow({
+    order,
+    reviewableProductIds,
+    payment,
+    canSimulatePayment,
+}: Props) {
     const address = order.shipping_address;
 
     return (
@@ -81,6 +89,14 @@ export default function OrderShow({ order, reviewableProductIds }: Props) {
                         </span>
                     </div>
                 </section>
+
+                {order.status === 'pending_payment' && (
+                    <PixPayment
+                        orderId={order.id}
+                        payment={payment}
+                        canSimulate={canSimulatePayment}
+                    />
+                )}
 
                 <section className="space-y-4 rounded-xl border p-4">
                     <h2 className="text-sm font-medium">Acompanhamento</h2>

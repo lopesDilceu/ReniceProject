@@ -3,11 +3,17 @@
 namespace App\Providers;
 
 use App\Models\User;
+use App\Payments\FakeGateway;
+use App\Payments\MercadoPago\MercadoPagoGateway;
+use App\Payments\MercadoPago\WebhookSignature;
+use App\Payments\PaymentGateway;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use InvalidArgumentException;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,7 +22,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Resolved per use, so tests can switch gateways through config.
+        $this->app->bind(PaymentGateway::class, fn (): PaymentGateway => match (Config::string('payments.gateway')) {
+            'mercadopago' => new MercadoPagoGateway(
+                Config::string('services.mercadopago.access_token'),
+                Config::string('services.mercadopago.base_url'),
+            ),
+            'fake' => new FakeGateway,
+            default => throw new InvalidArgumentException('Unknown PAYMENT_GATEWAY "'.Config::string('payments.gateway').'".'),
+        });
+
+        $this->app->bind(WebhookSignature::class, fn () => new WebhookSignature((string) config('services.mercadopago.webhook_secret')));
     }
 
     /**

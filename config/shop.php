@@ -9,11 +9,12 @@ return [
     |
     | How long a new order keeps its stock reserved while waiting for payment.
     | After that, orders:expire-unpaid cancels it and releases the stock. Pix
-    | charges are created with the same expiry (#33).
+    | charges are created with the same expiry; Mercado Pago requires at
+    | least 30 minutes.
     |
     */
 
-    'payment_window_minutes' => (int) env('SHOP_PAYMENT_WINDOW_MINUTES', 30),
+    'payment_window_minutes' => (int) env('SHOP_PAYMENT_WINDOW_MINUTES', 60),
 
     /*
     |--------------------------------------------------------------------------

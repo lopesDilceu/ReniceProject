@@ -19,6 +19,7 @@ erDiagram
     orders ||--|{ order_items : contains
     orders ||--|{ order_status_changes : "timeline"
     users ||--o{ order_status_changes : "made"
+    orders ||--o| payments : "paid by"
 
     users {
         bigint id PK
@@ -117,7 +118,27 @@ erDiagram
         string reason "required to cancel or refund"
         timestamp created_at "no updated_at: append-only"
     }
+    payments {
+        bigint id PK
+        bigint order_id FK,UK "one Pix charge per order"
+        string provider "mercadopago or fake"
+        string provider_payment_id "unique per provider"
+        string status "PaymentStatus enum"
+        int amount_cents "> 0"
+        text pix_code "copia e cola"
+        timestamp expires_at
+        timestamp paid_at
+    }
+    webhook_calls {
+        bigint id PK
+        string provider
+        string event_key "unique per provider: dedupes retries"
+        json payload "as received"
+        timestamp processed_at
+    }
 ```
+
+`webhook_calls` stands alone: a notification references the provider's payment id, not a row. Payments are explained in [`docs/payments.md`](payments.md).
 
 ## Design rules
 
@@ -152,7 +173,7 @@ Movements are append-only: the model throws on update or delete, and a correctio
 | `release` | The order is cancelled, by an admin or because the payment window closed | positive |
 | `return` | A paid order is refunded | positive |
 
-A paid order keeps its reservation, because the units are sold. `PlaceOrder` sets `orders.payment_due_at` to now plus `SHOP_PAYMENT_WINDOW_MINUTES` (30 by default). Every minute, the scheduler runs `orders:expire-unpaid` (`App\Actions\Orders\ExpireUnpaidOrders`), which cancels overdue orders as the system and releases their stock. A payment that arrives at the same moment is safe: `ChangeOrderStatus` re-reads the status under a row lock, so the order ends up either paid or expired, never both.
+A paid order keeps its reservation, because the units are sold. `PlaceOrder` sets `orders.payment_due_at` to now plus `SHOP_PAYMENT_WINDOW_MINUTES` (60 by default; Mercado Pago requires at least 30 minutes for a Pix charge). Every minute, the scheduler runs `orders:expire-unpaid` (`App\Actions\Orders\ExpireUnpaidOrders`), which cancels overdue orders as the system and releases their stock. A payment that arrives at the same moment is safe: `ChangeOrderStatus` re-reads the status under a row lock, so the order ends up either paid or expired, never both.
 
 **Overselling** is prevented by row locks. `PlaceOrder` locks the cart and its products in id order, and `RecordInventoryMovement` locks the product again. `tests/Feature/Checkout/ConcurrentCheckoutTest.php` proves it on PostgreSQL: eight separate PHP processes check out the last unit at the same instant, and exactly one succeeds. With the locks removed, the same test sold that unit three times.
 
