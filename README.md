@@ -29,8 +29,8 @@ Every step is an issue, a pull request and, when there is a real trade-off, an [
 
 | Phase | Status |
 |---|---|
-| 0 — Foundation | In progress |
-| 1 — Framework upgrade | Planned |
+| 0 — Foundation | Done ([`v2.0.0-alpha.1`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-alpha.1)) |
+| 1 — Framework upgrade | In progress |
 | 2 — Data layer redesign | Planned |
 | 3 — Inertia + React rewrite | Planned |
 | 4 — Commerce core | Planned |

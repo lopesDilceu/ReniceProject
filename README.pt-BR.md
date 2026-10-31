@@ -27,8 +27,8 @@ Cada passo é uma issue, um pull request e, quando há um trade-off real, um [re
 
 | Fase | Status |
 |---|---|
-| 0 — Fundação | Em andamento |
-| 1 — Upgrade do framework | Planejada |
+| 0 — Fundação | Concluída ([`v2.0.0-alpha.1`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-alpha.1)) |
+| 1 — Upgrade do framework | Em andamento |
 | 2 — Redesenho da camada de dados | Planejada |
 | 3 — Reescrita com Inertia + React | Planejada |
 | 4 — Núcleo de comércio | Planejada |
