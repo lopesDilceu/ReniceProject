@@ -11,6 +11,7 @@ class Produto extends Model
     use HasFactory;
 
     protected $primaryKey = 'pr_id';
+
     protected $fillable = [
         'pr_nome',
         'pr_descricao',
@@ -19,6 +20,7 @@ class Produto extends Model
     ];
 
     use SoftDeletes;
+
     public function avaliacoes()
     {
         return $this->hasMany(Avaliacao::class, 'av_id_produto');

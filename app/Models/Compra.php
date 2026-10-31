@@ -10,6 +10,7 @@ class Compra extends Model
     use HasFactory;
 
     protected $primaryKey = 'co_id';
+
     protected $fillable = [
         'co_id_produto',
         'co_quantidade',

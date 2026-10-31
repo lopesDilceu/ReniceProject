@@ -13,8 +13,9 @@ class CompraController extends Controller
      */
     public function index()
     {
-        $compras = Compra::all(); 
+        $compras = Compra::all();
         $produtos = Produto::all();
+
         return view('adm.compras.list', compact('compras', 'produtos'));
     }
 
@@ -39,7 +40,8 @@ class CompraController extends Controller
             'co_fornecedor' => $request->co_fornecedor,
         ]);
 
-        flash('Compra cadastrada com sucesso!', 'success',[], 'Sucesso');
+        flash('Compra cadastrada com sucesso!', 'success', [], 'Sucesso');
+
         return redirect()->back();
     }
 

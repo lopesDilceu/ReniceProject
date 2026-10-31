@@ -10,7 +10,9 @@ class Telefone extends Model
     use HasFactory;
 
     protected $primaryKey = ['te_us_id', 'te_numero'];
+
     public $incrementing = false;
+
     public $timestamps = false;
 
     protected $fillable = [
