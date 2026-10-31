@@ -66,7 +66,6 @@ jobs:
           coverage: none
           tools: composer:v2
 
-      # Known vulnerabilities fail the build. Abandoned packages are reported
-      # only until yoeunes/toastr is replaced (#9); then drop --abandoned.
+      # Fails on known vulnerabilities and on abandoned packages.
       - name: composer audit
-        run: composer audit --locked --abandoned=report
+        run: composer audit --locked --abandoned=fail

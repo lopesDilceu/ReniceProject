@@ -11,7 +11,7 @@ How each number is collected is in [How to measure](#how-to-measure).
 | Laravel | 11.10.0 (11.57.1 after `composer update`) | 13.39.0 | 13.x |
 | PHP constraint | `^8.2` | `^8.4` | `^8.4` |
 | Known security advisories (`composer audit`) | 5 | 0 | 0 |
-| Abandoned packages | 1 | 1 | 0 |
+| Abandoned packages | 1 | 0 | 0 |
 | Direct dependencies behind a major version | 4 | 0 | 0 |
 | Frontend libraries loaded from CDNs | 4 | 4 | 0 |
 
