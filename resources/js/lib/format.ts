@@ -40,3 +40,8 @@ export function maskPhone(value: string): string {
 
     return `(${digits.slice(0, 2)}) ${rest.slice(0, split)}${rest.length > split ? `-${rest.slice(split)}` : ''}`;
 }
+
+/** 1125 -> "11,25", for editable money inputs. */
+export function centsToInput(cents: number): string {
+    return (cents / 100).toFixed(2).replace('.', ',');
+}
