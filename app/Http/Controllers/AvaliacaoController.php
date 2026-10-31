@@ -9,18 +9,6 @@ use Illuminate\Http\Request;
 
 class AvaliacaoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        // Carrega todos os produtos com suas avaliações e os usuários que fizeram as avaliações
-        $produtos = Produto::with(['avaliacoes.user'])->get();
-
-        // Passa os dados para a view
-        return view('main.avaliacoes', compact('produtos'));
-    }
-
     public function listAvaliacoes()
     {
         $avaliacoes = Avaliacao::all();

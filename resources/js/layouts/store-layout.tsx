@@ -36,17 +36,16 @@ import { useFlashToast } from '@/hooks/use-flash-toast';
 import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
 import {
-    avaliacoes,
     home,
     login,
     logout,
     minhaConta,
     minhasCompras,
-    produtos,
     register,
     sobre,
 } from '@/routes';
 import adm from '@/routes/adm';
+import products from '@/routes/products';
 import usuario from '@/routes/usuario';
 import type { User } from '@/types';
 
@@ -59,8 +58,7 @@ type NavLink = { title: string; href: string; inertia: boolean };
 
 const navigation: NavLink[] = [
     { title: 'Início', href: home.url(), inertia: true },
-    { title: 'Produtos', href: produtos.url(), inertia: false },
-    { title: 'Avaliações', href: avaliacoes.url(), inertia: false },
+    { title: 'Produtos', href: products.index.url(), inertia: true },
     { title: 'Sobre o projeto', href: sobre.url(), inertia: true },
 ];
 

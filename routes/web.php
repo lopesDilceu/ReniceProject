@@ -1,18 +1,28 @@
 <?php
 
 use App\Http\Controllers\AvaliacaoController;
+use App\Http\Controllers\Catalog\ProductController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\EstoqueController;
 use App\Http\Controllers\ItensCarrinhoController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendaController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Inertia + React pages (v2). Everything below the legacy marker is v1 Blade,
 // replaced module by module in Phase 3 (ADR 0004).
 Route::inertia('/', 'home')->name('home');
 Route::inertia('/sobre', 'about')->name('sobre');
+
+// v1 catalog URLs. Reviews now live on each product page. Registered before
+// /produtos/{product} so "pesquisa" is not taken for a product slug.
+Route::get('/produtos/pesquisa', fn (Request $request) => redirect()->route('products.index', array_filter(['q' => $request->query('query')]), 301));
+Route::permanentRedirect('/avaliacoes', '/produtos');
+
+Route::get('/produtos', [ProductController::class, 'index'])->name('products.index');
+Route::get('/produtos/{product:slug}', [ProductController::class, 'show'])->name('products.show');
 
 // Authentication routes (/login, /register, /logout, /forgot-password, ...) are
 // registered by Laravel Fortify; see FortifyServiceProvider. The v1 URLs
@@ -21,8 +31,6 @@ Route::permanentRedirect('/usuarios/login', '/login');
 Route::permanentRedirect('/usuarios/cadastro', '/register');
 
 // --- Legacy (v1) routes ---
-
-Route::get('/avaliacoes', [AvaliacaoController::class, 'index'])->name('avaliacoes');
 
 // Rotas relacionadas aos usuários
 Route::prefix('usuarios')->group(function () {
@@ -100,11 +108,8 @@ Route::prefix('adm')->middleware('admin')->group(function () {
     Route::delete('/avaliacoes/{av_id}', [AvaliacaoController::class, 'destroy'])->name('adm.avaliacoes.destroy');
 });
 
-// Rota para listar produtos
-Route::get('/produtos', [ProdutoController::class, 'indexHome'])->name('produtos');
 Route::get('/avaliar-produto/{produto_id}', [ProdutoController::class, 'avaliarProduto'])->name('avaliar.produto');
 Route::post('/salvar-avaliacao', [ProdutoController::class, 'salvarAvaliacao'])->name('salvar.avaliacao');
-Route::get('/produtos/pesquisa', [ProdutoController::class, 'pesquisa'])->name('pesquisa');
 
 // Rota para armazenar no carrinho
 Route::post('/carrinho/store', [ItensCarrinhoController::class, 'store'])->name('carrinho.store');

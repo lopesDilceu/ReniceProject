@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Aggregates loaded on demand with withAvg('reviews', 'rating') and
+ * withCount('reviews'):
+ *
+ * @property-read float|string|null $reviews_avg_rating
+ * @property-read int|null $reviews_count
+ */
 class Product extends Model
 {
     /** @use HasFactory<ProductFactory> */

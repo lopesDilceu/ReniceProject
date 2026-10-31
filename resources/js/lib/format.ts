@@ -10,3 +10,19 @@ export function maskCpf(value: string): string {
         .replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
         .replace(/\.(\d{3})(\d{1,2})$/, '.$1-$2');
 }
+
+const brl = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+});
+
+/** Prices are stored in cents: 1125 -> "R$ 11,25". */
+export function formatMoney(cents: number): string {
+    return brl.format(cents / 100);
+}
+
+export function formatDate(iso: string): string {
+    return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'medium' }).format(
+        new Date(iso),
+    );
+}

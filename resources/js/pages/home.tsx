@@ -2,7 +2,8 @@ import { Head, Link } from '@inertiajs/react';
 import { ArrowRight, CupSoda, Snowflake, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { produtos, sobre } from '@/routes';
+import { sobre } from '@/routes';
+import { index as products } from '@/routes/products';
 
 const highlights = [
     {
@@ -55,11 +56,10 @@ export default function Home() {
                         </p>
                         <div className="mt-10 flex flex-wrap gap-3">
                             <Button size="lg" asChild>
-                                {/* Catalog is still a v1 Blade page until #28. */}
-                                <a href={produtos.url()}>
+                                <Link href={products()}>
                                     Ver produtos{' '}
                                     <ArrowRight className="size-4" />
-                                </a>
+                                </Link>
                             </Button>
                             <Button size="lg" variant="secondary" asChild>
                                 <Link href={sobre.url()}>Sobre o projeto</Link>
