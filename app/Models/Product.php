@@ -43,6 +43,14 @@ class Product extends Model
     }
 
     /**
+     * @return HasMany<InventoryMovement, $this>
+     */
+    public function inventoryMovements(): HasMany
+    {
+        return $this->hasMany(InventoryMovement::class);
+    }
+
+    /**
      * @return HasMany<SupplierPurchase, $this>
      */
     public function supplierPurchases(): HasMany

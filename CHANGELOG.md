@@ -7,6 +7,8 @@ All notable changes to this project are documented here. The format follows [Kee
 ### Added
 - [ADR 0005](docs/adr/0005-postgresql.md): PostgreSQL 18 with pgvector as the database, chosen for Laravel's native vector search and Laravel Cloud's serverless Postgres.
 - Docker development environment on Laravel Sail (`compose.yaml`): PHP 8.5, PostgreSQL 18 + pgvector, Mailpit.
+- Inventory movements ledger: append-only history of every stock change with signed quantity, running balance, source and actor; `RecordInventoryMovement` locks the product row and refuses negative stock. Replaces v1's `atualizar_estoque_produto` procedure and its triggers.
+- `RecordSupplierPurchase`: restocks through the ledger and records unit cost without touching the sale price (fixes BUG-01, where every restock overwrote the price with cost).
 - Versioned domain schema: users, phones, addresses, products, supplier purchases, carts, orders and reviews, in English with Laravel conventions. Money in integer cents, order snapshots (product name, unit price, shipping address), unique and foreign-key rules, and PostgreSQL CHECK constraints. Documented with an ER diagram in [`docs/database.md`](docs/database.md).
 - Eloquent models, factories and the `OrderStatus` enum for the new schema.
 - Schema tests (factories, uniqueness, snapshots, delete restrictions, cart totals scoped to one cart) and PostgreSQL-only constraint tests.

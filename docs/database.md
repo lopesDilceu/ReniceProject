@@ -14,6 +14,8 @@ erDiagram
     products ||--o{ order_items : "sold as"
     products ||--o{ supplier_purchases : "restocked by"
     products ||--o{ reviews : receives
+    products ||--o{ inventory_movements : "stock changed by"
+    users ||--o{ inventory_movements : "triggered"
     orders ||--|{ order_items : contains
 
     users {
@@ -92,6 +94,17 @@ erDiagram
         smallint rating "1 to 5"
         text comment
     }
+    inventory_movements {
+        bigint id PK
+        bigint product_id FK "restrict"
+        string type "purchase, sale, adjustment"
+        int quantity "signed, not zero"
+        int stock_after "running balance, >= 0"
+        morph source "supplier purchase, order..."
+        bigint user_id FK "actor, nullable"
+        string note
+        timestamp created_at "no updated_at: append-only"
+    }
 ```
 
 ## Design rules
@@ -108,9 +121,19 @@ erDiagram
 | Address number is a string; state is `char(2)` | "S/N" and "12A" are valid numbers | DM-03 |
 | CHECK constraints on amounts, quantities, rating, CPF, CEP and UF (PostgreSQL) | Integrity no matter which code path writes; PostgreSQL ignores `unsigned` | — |
 
+## Inventory ledger
+
+Stock is never edited directly. Every change goes through `App\Actions\Inventory\RecordInventoryMovement`, which in one transaction:
+
+1. locks the product row (`SELECT … FOR UPDATE`), so concurrent writers queue instead of overselling;
+2. refuses the change if the balance would go negative (`InsufficientStock`);
+3. appends a movement with the signed quantity, the resulting balance, its source record and actor;
+4. updates `products.stock`, the cached balance.
+
+Movements are append-only: the model throws on update or delete, and a correction is a new `adjustment`. This replaces v1's `atualizar_estoque_produto` procedure and its four triggers. Supplier purchases go through `RecordSupplierPurchase`, which records cost on the purchase and adds a `purchase` movement. It never copies cost into the sale price, which was v1's BUG-01.
+
 ## Coming next
 
-- **Inventory movements ledger** ([#12](https://github.com/lopesDilceu/ReniceProject/issues/12)): append-only history of every stock change. `products.stock` becomes its cached sum.
 - **Embeddings** ([#36](https://github.com/lopesDilceu/ReniceProject/issues/36)): a `vector` column on products for semantic search.
 
 ## Testing

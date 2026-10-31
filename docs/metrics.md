@@ -19,7 +19,7 @@ How each number is collected is in [How to measure](#how-to-measure).
 
 | Metric | v1.0-academic | Current | Target |
 |---|---|---|---|
-| Automated tests | 0 (2 framework examples) | 41 passing on SQLite, 48 on PostgreSQL; 12 pending security tests | — |
+| Automated tests | 0 (2 framework examples) | 51 passing on SQLite, 58 on PostgreSQL; 12 pending security tests | — |
 | Test suite status | 1 of 2 example tests failing | green | green |
 | Line coverage on `app/` | 0% | 13.9% (new models: covered; legacy controllers: 0%) | ≥ 80% |
 | Static analysis | not configured | Larastan level 6, 158 legacy errors baselined (new code: 0) | level 6+, empty baseline |
@@ -33,8 +33,8 @@ How each number is collected is in [How to measure](#how-to-measure).
 | Open audit findings (critical / high) | 3 / 6 | 3 / 6 | 0 / 0 |
 | State-changing routes without `auth` (excluding login, sign-up, logout) | 6 | 6 | 0 |
 | Raw SQL with interpolated input | 1 | 1 | 0 |
-| Domain tables with migrations | 0 of 11 | 10 of 11 (inventory ledger: #12) | all |
-| Business rules in procedures / triggers | 2 / 8 | 2 / 8 | 0 / 0 |
+| Domain tables with migrations | 0 of 11 | 11 of 11 | all |
+| Business rules in procedures / triggers | 2 / 8 | 1 / 1: stock procedure and 7 triggers replaced by tested actions or FK rules; pending: `finalizar_venda` and its sale trigger (#13) | 0 / 0 |
 | Fresh clone → running app | not possible | Sail + `migrate`, no demo data yet (#16) | one command |
 
 ## Size
