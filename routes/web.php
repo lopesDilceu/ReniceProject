@@ -17,6 +17,7 @@ use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Catalog\ProductController;
 use App\Http\Controllers\Catalog\ReviewController;
 use App\Http\Controllers\Checkout\CheckoutController;
+use App\Http\Controllers\Checkout\ConfirmCheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PixController;
 use App\Http\Controllers\Webhooks\MercadoPagoWebhookController;
@@ -52,6 +53,13 @@ Route::middleware('auth')->group(function () {
     Route::middleware('verified')->group(function () {
         Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
         Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+
+        // Checkouts prepared by an AI agent (MCP start-checkout): signed,
+        // expiring links that only the customer can confirm.
+        Route::middleware('signed')->group(function () {
+            Route::get('/checkout/confirmar', [ConfirmCheckoutController::class, 'show'])->name('checkout.confirm');
+            Route::post('/checkout/confirmar', [ConfirmCheckoutController::class, 'store'])->name('checkout.confirm.store');
+        });
     });
 
     Route::get('/conta/pedidos', [OrderController::class, 'index'])->name('orders.index');
