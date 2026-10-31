@@ -5,25 +5,21 @@ use App\Http\Controllers\Account\AvatarController;
 use App\Http\Controllers\Account\PasswordController;
 use App\Http\Controllers\Account\PhoneController;
 use App\Http\Controllers\Account\ProfileController;
+use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InventoryController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Admin\SupplierPurchaseController;
-use App\Http\Controllers\AvaliacaoController;
 use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Catalog\ProductController;
 use App\Http\Controllers\Catalog\ReviewController;
 use App\Http\Controllers\Checkout\CheckoutController;
-use App\Http\Controllers\CompraController;
-use App\Http\Controllers\EstoqueController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProdutoController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\VendaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// Inertia + React pages (v2). Everything below the legacy marker is v1 Blade,
-// replaced module by module in Phase 3 (ADR 0004).
 Route::inertia('/', 'home')->name('home');
 Route::inertia('/sobre', 'about')->name('sobre');
 
@@ -36,10 +32,7 @@ Route::get('/produtos', [ProductController::class, 'index'])->name('products.ind
 Route::get('/produtos/{product:slug}', [ProductController::class, 'show'])->name('products.show');
 
 // Authentication routes (/login, /register, /logout, /forgot-password, ...) are
-// registered by Laravel Fortify; see FortifyServiceProvider. The v1 URLs
-// redirect permanently so old links and bookmarks keep working.
-Route::permanentRedirect('/usuarios/login', '/login');
-Route::permanentRedirect('/usuarios/cadastro', '/register');
+// registered by Laravel Fortify; see FortifyServiceProvider.
 
 // Cart, checkout and orders. The cart is always the signed-in customer's own:
 // no route takes a cart id (SEC-02, SEC-03). Checkout is a CSRF-protected POST
@@ -76,9 +69,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/produtos/{product:slug}/avaliacoes', [ReviewController::class, 'store'])->name('reviews.store');
 });
 
-// Admin (v2). Every route requires the 'admin' ability (see AppServiceProvider).
+// Admin. Every route requires the 'admin' ability (see AppServiceProvider).
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'can:admin'])->group(function () {
-    Route::redirect('/', '/admin/produtos')->name('home');
+    Route::get('/', DashboardController::class)->name('home');
+
+    Route::get('/pedidos', [AdminOrderController::class, 'index'])->name('orders.index');
+    Route::get('/pedidos/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
+    Route::patch('/pedidos/{order}/status', [AdminOrderController::class, 'update'])->name('orders.update');
 
     Route::get('/produtos', [AdminProductController::class, 'index'])->name('products.index');
     Route::get('/produtos/novo', [AdminProductController::class, 'create'])->name('products.create');
@@ -95,61 +92,21 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'can:admin'])->group
 
     Route::get('/compras', [SupplierPurchaseController::class, 'index'])->name('purchases.index');
     Route::post('/compras', [SupplierPurchaseController::class, 'store'])->name('purchases.store');
+
+    Route::get('/clientes', [AdminCustomerController::class, 'index'])->name('customers.index');
+    Route::patch('/clientes/{user}/admin', [AdminCustomerController::class, 'toggleAdmin'])->name('customers.toggle-admin');
+
+    Route::get('/avaliacoes', [AdminReviewController::class, 'index'])->name('reviews.index');
+    Route::delete('/avaliacoes/{review}', [AdminReviewController::class, 'destroy'])->name('reviews.destroy');
 });
 
-// v1 cart, payment and account URLs.
+// v1 URLs, so old links and bookmarks keep working.
+Route::permanentRedirect('/usuarios/login', '/login');
+Route::permanentRedirect('/usuarios/cadastro', '/register');
 Route::permanentRedirect('/usuarios/carrinho', '/carrinho');
 Route::permanentRedirect('/usuarios/pagamento', '/checkout');
 Route::permanentRedirect('/usuarios/minha-conta', '/conta');
 Route::permanentRedirect('/usuarios/editar-dados', '/conta');
 Route::permanentRedirect('/usuarios/minhas-compras', '/conta/pedidos');
-
-// --- Legacy (v1) routes ---
-
-// Rotas relacionadas à área administrativa
-Route::prefix('adm')->middleware('admin')->group(function () {
-    Route::get('/', function () {
-        return view('adm.home');
-    })->name('adm.home');
-
-    Route::get('/estoque', function () {
-        return view('adm.estoque.list');
-    })->name('adm.estoque.list');
-
-    Route::get('/produtos', function () {
-        return view('adm.produtos.list');
-    })->name('adm.produtos.list');
-
-    Route::get('/avaliacoes', function () {
-        return view('adm.avaliacoes.list');
-    })->name('adm.avaliacoes.list');
-
-    Route::get('/usuarios', function () {
-        return view('adm.usuarios.list');
-    })->name('adm.usuarios.list');
-
-    Route::get('/vendas', function () {
-        return view('adm.vendas.list');
-    })->name('adm.vendas.list');
-
-    Route::get('/compras', [CompraController::class, 'index'])->name('adm.compras.list');
-    Route::post('/compras', [CompraController::class, 'store'])->name('adm.compras.store');
-    Route::delete('/compras/{co_id}', [CompraController::class, 'destroy'])->name('adm.compras.destroy');
-
-    Route::get('/estoque', [EstoqueController::class, 'index'])->name('adm.estoque.list');
-
-    Route::get('/produtos', [ProdutoController::class, 'index'])->name('adm.produtos.list');
-    Route::post('/produto', [ProdutoController::class, 'store'])->name('adm.produto.store');
-    Route::put('/produtos/{pr_id?}', [ProdutoController::class, 'edit'])->name('adm.produto.edit');
-    Route::delete('/produtos/{pr_id}', [ProdutoController::class, 'destroy'])->name('adm.produtos.destroy');
-
-    Route::get('/usuarios', [UserController::class, 'index'])->name('adm.usuarios.list');
-    Route::put('/usuarios/{pr_id?}', [UserController::class, 'edit'])->name('adm.usuario.edit');
-    // Route::post('/produto', [ProdutoController::class, 'store'])->name('adm.produto.store');
-    Route::delete('/usuarios/{pr_id}', [UserController::class, 'destroy'])->name('adm.usuarios.destroy');
-
-    Route::get('/vendas', [VendaController::class, 'index'])->name('adm.vendas.list');
-
-    Route::get('/avaliacoes', [AvaliacaoController::class, 'listAvaliacoes'])->name('adm.avaliacoes.list');
-    Route::delete('/avaliacoes/{av_id}', [AvaliacaoController::class, 'destroy'])->name('adm.avaliacoes.destroy');
-});
+Route::permanentRedirect('/adm', '/admin');
+Route::get('/adm/{any}', fn () => redirect('/admin', 301))->where('any', '.*');
