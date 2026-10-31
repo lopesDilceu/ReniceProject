@@ -9,6 +9,7 @@
         "bacon/bacon-qr-code": "^3.0",
         "dedoc/scramble": "^0.13",
         "inertiajs/inertia-laravel": "^3.0",
+        "laravel/ai": "~1.2.3",
         "laravel/fortify": "^1.37",
         "laravel/framework": "^13.0",
         "laravel/mcp": "~1.0.2",

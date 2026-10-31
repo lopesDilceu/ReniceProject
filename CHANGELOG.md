@@ -37,6 +37,12 @@ All notable changes to this project are documented here. The format follows [Kee
 - **Agent checkouts are confirmed by the customer:**
   - `start-checkout` returns a signed, 15-minute link to `/checkout/confirmar`. The order is placed only when the customer confirms it there, signed in.
   - The link pins the customer, the address and the exact cart and prices, so a changed cart, another account, tampering or a second use places nothing.
+- **Semantic search** on PostgreSQL + pgvector ([ADR 0007](docs/adr/0007-semantic-search-with-pgvector.md), [`docs/search.md`](docs/search.md)):
+  - **Hybrid ranking:** keyword and vector candidates fused with Reciprocal Rank Fusion, so "desenho japonês" finds the anime cup.
+  - **Embeddings** come from any `laravel/ai` provider (Voyage AI `voyage-4` recommended). They are stored in `product_embeddings` with an HNSW index, created by a queued, debounced job on create or text change, and skipped when the text and model are unchanged. `products:embed` backfills the catalog.
+  - **Off by default:** without a provider, or when the provider fails or takes more than 3 s, search stays keyword-only, and the failure is logged.
+  - **Measured:** an HNSW query over 10,000 vectors of 1024 dimensions takes p50 0.96 ms, against 23.9 ms without the index.
+  - **Opt-in relevance test** against the real provider (`--group=provider`).
 
 ### Changed
 - Closing an account (soft delete) deletes its passkeys and revokes its API tokens, so it keeps no working credentials.
