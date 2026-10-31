@@ -14,26 +14,18 @@ use Illuminate\Support\Facades\Route;
 Route::inertia('/', 'home')->name('home');
 Route::inertia('/sobre', 'about')->name('sobre');
 
+// Authentication routes (/login, /register, /logout, /forgot-password, ...) are
+// registered by Laravel Fortify; see FortifyServiceProvider. The v1 URLs
+// redirect permanently so old links and bookmarks keep working.
+Route::permanentRedirect('/usuarios/login', '/login');
+Route::permanentRedirect('/usuarios/cadastro', '/register');
+
 // --- Legacy (v1) routes ---
 
 Route::get('/avaliacoes', [AvaliacaoController::class, 'index'])->name('avaliacoes');
 
 // Rotas relacionadas aos usuários
 Route::prefix('usuarios')->group(function () {
-    Route::get('/login', function () {
-        return view('main.usuarios.login');
-    })->name('usuarios.login');
-
-    Route::post('/login', [UserController::class, 'login'])->name('usuarios.login.submit');
-
-    Route::get('/cadastro', function () {
-        return view('main.usuarios.create');
-    })->name('usuarios.cadastro');
-
-    Route::post('/logout', [UserController::class, 'logout'])->name('usuarios.logout.submit');
-
-    Route::post('/store', [UserController::class, 'store'])->name('usuarios.store');
-
     Route::get('/carrinho', function () {
         return view('main.usuarios.carrinho');
     })->name('usuarios.carrinho');

@@ -531,13 +531,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property App\\Models\\User\:\:\$us_id\.$#'
 			identifier: property.notFound
-			count: 8
-			path: app/Http/Controllers/UserController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\UserController\:\:create\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
+			count: 6
 			path: app/Http/Controllers/UserController.php
 
 		-
@@ -571,18 +565,6 @@ parameters:
 			path: app/Http/Controllers/UserController.php
 
 		-
-			message: '#^Method App\\Http\\Controllers\\UserController\:\:login\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/UserController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\UserController\:\:logout\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/UserController.php
-
-		-
 			message: '#^Method App\\Http\\Controllers\\UserController\:\:minhaConta\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -597,12 +579,6 @@ parameters:
 		-
 			message: '#^Method App\\Http\\Controllers\\UserController\:\:show\(\) has parameter \$id with no type specified\.$#'
 			identifier: missingType.parameter
-			count: 1
-			path: app/Http/Controllers/UserController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\UserController\:\:store\(\) has no return type specified\.$#'
-			identifier: missingType.return
 			count: 1
 			path: app/Http/Controllers/UserController.php
 

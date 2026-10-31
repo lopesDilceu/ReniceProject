@@ -120,7 +120,7 @@
                       <li><a class="dropdown-item" href="{{ route('minhas-compras') }}">Minhas Compras</a></li>
                       <li>
                           <!-- Formulário para fazer logout -->
-                          <form action="{{ route('usuarios.logout.submit') }}" method="POST">
+                          <form action="{{ route('logout') }}" method="POST">
                               @csrf <!-- Adiciona o token CSRF -->
                               <button type="submit" class="dropdown-item">Sair</button>
                           </form>
@@ -128,7 +128,7 @@
                   @else 
                   <!-- Se o usuário não estiver autenticado -->
                       <!-- Exibe o menu de login -->
-                      <li><a class="dropdown-item" href="{{ route('usuarios.login') }}">ENTRAR</a></li>
+                      <li><a class="dropdown-item" href="{{ route('login') }}">ENTRAR</a></li>
                   @endauth
               </ul>
 
