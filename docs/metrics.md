@@ -19,7 +19,7 @@ How each number is collected is in [How to measure](#how-to-measure).
 
 | Metric | v1.0-academic | Current | Target |
 |---|---|---|---|
-| Automated tests | 0 (2 framework examples) | 196 passing on SQLite, 203 on PostgreSQL; 0 pending | — |
+| Automated tests | 0 (2 framework examples) | 232 passing on SQLite, 239 on PostgreSQL; 0 pending | — |
 | Test suite status | 1 of 2 example tests failing | green | green |
 | Line coverage on `app/` | 0% | **80.3%** (target met; remaining gap is the legacy admin) | ≥ 80% |
 | Static analysis | not configured | Larastan level 6, 98 legacy errors baselined (a test keeps new code out of the baseline) (new code: 0) | level 6+, empty baseline |

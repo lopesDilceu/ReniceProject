@@ -15,6 +15,7 @@ All notable changes to this project are documented here. The format follows [Kee
 - Product page (`/produtos/{slug}`): price, availability, description, rating summary with distribution and the latest reviews (author shown as first name and last initial).
 - `Model::preventLazyLoading()` outside production, so N+1 queries fail in tests.
 - Cart in React (`/carrinho`): add from the product page, quantity steppers capped at stock, remove, totals; header badge with the number of units.
+- Admin area in React (`/admin`, `admin` gate): products with price in reais, image upload, stable unique slugs, soft delete and restore; per-product stock history with manual adjustments that require a reason; supplier purchases that restock without touching the sale price.
 - Account area (`/conta`): personal data (CPF shown masked and not editable), photo upload, phones, addresses and password change; changing the e-mail asks for confirmation again.
 - Order history (`/conta/pedidos`) and reviews from the order page, for delivered products only, one per product.
 - Checkout (`/checkout`, requires a confirmed e-mail): saved addresses or a new one with CEP lookup (ViaCEP), order through `PlaceOrder`, order page (`/pedidos/{id}`) visible to its owner and admins.
@@ -44,6 +45,7 @@ All notable changes to this project are documented here. The format follows [Kee
 - Cart total counts only the customer's own items (BUG-03).
 - Privilege escalation fixed: no route takes a user id, and the profile form can change only name, e-mail and birth date (SEC-01, critical).
 - Reviews only from customers who received the product, once per product, rating 1–5 (SEC-05).
+- Product creation requires a valid price (BUG-04: v1 never saved it).
 
 ## [2.0.0-alpha.3] — 2026-10-31
 
