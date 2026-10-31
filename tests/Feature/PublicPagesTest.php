@@ -8,7 +8,7 @@ uses(RefreshDatabase::class);
 
 /*
 | Smoke tests for the public pages. Inertia pages assert the component and
-| shared props; legacy Blade pages assert the rendered title.
+| shared props. Auth pages are covered in tests/Feature/Auth.
 */
 
 it('renders the Inertia pages', function (string $uri, string $component) {
@@ -21,15 +21,6 @@ it('renders the Inertia pages', function (string $uri, string $component) {
 })->with([
     'home' => ['/', 'home'],
     'about' => ['/sobre', 'about'],
-]);
-
-it('renders the legacy Blade pages', function (string $uri, string $title) {
-    $this->get($uri)
-        ->assertOk()
-        ->assertSee("Renice - {$title}", escape: false);
-})->with([
-    'login' => ['/usuarios/login', 'Login'],
-    'sign-up' => ['/usuarios/cadastro', 'Cadastro'],
 ]);
 
 it('shares only non-sensitive fields of the signed-in user', function () {

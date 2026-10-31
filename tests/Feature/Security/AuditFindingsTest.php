@@ -32,8 +32,3 @@ describe('SEC-05 reviews', function () {
     it('accepts reviews only from customers who bought the product')->todo(issue: 21);
     it('validates the rating between 1 and 5')->todo(issue: 21);
 });
-
-describe('SEC-06 authentication', function () {
-    it('throttles repeated failed logins')->todo(issue: 22);
-    it('regenerates the session on login and invalidates it on logout')->todo(issue: 22);
-});
