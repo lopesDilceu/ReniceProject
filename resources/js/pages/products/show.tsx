@@ -3,6 +3,8 @@ import { ArrowLeft } from 'lucide-react';
 import AddToCart from '@/components/catalog/add-to-cart';
 import ProductImage from '@/components/catalog/product-image';
 import RatingStars from '@/components/catalog/rating-stars';
+import ReviewSummary from '@/components/catalog/review-summary';
+import type { ReviewSummaryData } from '@/components/catalog/review-summary';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { formatDate, formatMoney } from '@/lib/format';
@@ -13,6 +15,7 @@ type Props = {
     product: Product;
     ratingDistribution: { stars: number; count: number }[];
     reviews: Review[];
+    reviewSummary: ReviewSummaryData | null;
 };
 
 function RatingSummary({
@@ -70,6 +73,7 @@ export default function ProductsShow({
     product,
     ratingDistribution,
     reviews,
+    reviewSummary,
 }: Props) {
     return (
         <>
@@ -145,6 +149,8 @@ export default function ProductsShow({
                         product={product}
                         distribution={ratingDistribution}
                     />
+
+                    {reviewSummary && <ReviewSummary data={reviewSummary} />}
 
                     {reviews.length > 0 && (
                         <ul className="divide-y rounded-xl border">

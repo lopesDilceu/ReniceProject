@@ -8,6 +8,7 @@ use App\Http\Requests\Catalog\ProductIndexRequest;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ReviewResource;
 use App\Models\Product;
+use App\Models\ReviewSummary;
 use App\Queries\CatalogQuery;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -49,6 +50,8 @@ class ProductController extends Controller
             'reviews' => ReviewResource::collection(
                 $product->reviews()->with('user:id,name')->latest()->limit(20)->get()
             )->resolve($request),
+            // Read from the database only: the page never waits on an AI provider.
+            'reviewSummary' => ReviewSummary::query()->whereKey($product->getKey())->first()?->only(['summary', 'pros', 'cons', 'reviews_count', 'updated_at']),
         ]);
     }
 }
