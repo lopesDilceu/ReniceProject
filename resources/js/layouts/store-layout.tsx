@@ -35,18 +35,12 @@ import { useCurrentUrl } from '@/hooks/use-current-url';
 import { useFlashToast } from '@/hooks/use-flash-toast';
 import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
-import {
-    home,
-    login,
-    logout,
-    minhaConta,
-    minhasCompras,
-    register,
-    sobre,
-} from '@/routes';
+import { home, login, logout, register, sobre } from '@/routes';
+import account from '@/routes/account';
 import adm from '@/routes/adm';
 import products from '@/routes/products';
 import cart from '@/routes/cart';
+import orders from '@/routes/orders';
 import type { User } from '@/types';
 
 /*
@@ -136,14 +130,14 @@ function UserMenu({ user }: { user: User }) {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                    <a href={minhaConta.url()}>
+                    <Link href={account.edit()}>
                         <UserIcon className="size-4" /> Minha conta
-                    </a>
+                    </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                    <a href={minhasCompras.url()}>
-                        <Package className="size-4" /> Minhas compras
-                    </a>
+                    <Link href={orders.index()}>
+                        <Package className="size-4" /> Meus pedidos
+                    </Link>
                 </DropdownMenuItem>
                 {user.is_admin && (
                     <DropdownMenuItem asChild>
