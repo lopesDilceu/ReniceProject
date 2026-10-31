@@ -25,9 +25,17 @@ All notable changes to this project are documented here. The format follows [Kee
 - **OpenAPI 3.1 document** generated from the code with Scramble. It is committed at `docs/api/openapi.json` and served at `/docs/api`.
   - **Contract tests** validate real responses against the committed document.
   - **The PostgreSQL CI job** fails when the document is out of date.
+- **Realtime with Laravel Reverb:**
+  - The admin dashboard and order list update live on new orders, confirmed payments and low stock, with toasts and an "Ao vivo" indicator.
+  - The customer's order page turns to "Pago" the moment the Pix is confirmed. Polling slows to 30 s and becomes the fallback.
+- **Private channels**, authorized by role: `admin` for admins only, and `orders.{id}` for the order's customer and admins.
+- **Broadcast events** are queued and dispatched after commit, so a rolled-back change is never shown and a WebSocket outage never breaks checkout. Their payloads carry no customer data.
+- **`compose.yaml`** now runs `reverb`, `queue` and `scheduler` services next to the app.
 
 ### Changed
 - Closing an account (soft delete) deletes its passkeys and revokes its API tokens, so it keeps no working credentials.
+- `guzzlehttp/guzzle` goes back from 8.3 to 7.16 (the maintained 7.x line), because Laravel Reverb 1.12 still requires `guzzlehttp/psr7` 2.x. Reverb's next release supports Guzzle 8.
+- The test suite sets `memory_limit=512M` in `phpunit.xml`, since it runs in one process and outgrew a stock 128M `php.ini`.
 
 ## [2.0.0-beta.2] — 2026-10-31
 
