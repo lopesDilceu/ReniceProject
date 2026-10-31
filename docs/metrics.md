@@ -21,7 +21,7 @@ How each number is collected is in [How to measure](#how-to-measure).
 |---|---|---|---|
 | Automated tests | 0 (2 framework examples) | 253 passing on SQLite, 260 on PostgreSQL; 0 pending | — |
 | Test suite status | 1 of 2 example tests failing | green | green |
-| Line coverage on `app/` | 0% | **80.3%** (target met; remaining gap is the legacy admin) | ≥ 80% |
+| Line coverage on `app/` | 0% | **98.7%** | ≥ 80% |
 | Static analysis | not configured | Larastan level 6, **no baseline**: 0 ignored errors | level 6+, empty baseline |
 | Enforced code style | no | Pint (Laravel preset) in CI | Pint in CI |
 | CI pipeline | none | lint + analyse + test on PHP 8.4/8.5, migrations + tests on PostgreSQL, dependency audit | lint + analyse + test + audit |
