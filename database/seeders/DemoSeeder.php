@@ -67,14 +67,17 @@ class DemoSeeder extends Seeder
         // The demo customers are fictional: their order e-mails (and the
         // low-stock alerts) are rendered and dropped, not queued for Mailpit,
         // their Pix charges are local fakes, never real provider calls, and
-        // weeks of history are not replayed live to the admin dashboard.
+        // weeks of history are not replayed live to the admin dashboard. Review
+        // summaries are off too (each seeded review would be a call); run
+        // `php artisan reviews:summarize` afterwards.
         $previous = [
             'queue.default' => config('queue.default'),
             'mail.default' => config('mail.default'),
             'payments.gateway' => config('payments.gateway'),
             'broadcasting.default' => config('broadcasting.default'),
+            'reviews.summaries.provider' => config('reviews.summaries.provider'),
         ];
-        config(['queue.default' => 'sync', 'mail.default' => 'array', 'payments.gateway' => 'fake', 'broadcasting.default' => 'null']);
+        config(['queue.default' => 'sync', 'mail.default' => 'array', 'payments.gateway' => 'fake', 'broadcasting.default' => 'null', 'reviews.summaries.provider' => null]);
 
         try {
             $this->seedStore();
