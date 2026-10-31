@@ -43,6 +43,14 @@ All notable changes to this project are documented here. The format follows [Kee
   - **Off by default:** without a provider, or when the provider fails or takes more than 3 s, search stays keyword-only, and the failure is logged.
   - **Measured:** an HNSW query over 10,000 vectors of 1024 dimensions takes p50 0.96 ms, against 23.9 ms without the index.
   - **Opt-in relevance test** against the real provider (`--group=provider`).
+- **AI review summaries** ([`docs/review-summaries.md`](docs/review-summaries.md)): "O que os clientes dizem" on the product page, a short summary plus up to 3 pros and 3 cons, labeled "Resumo gerado por IA".
+  - **Generation:** through `laravel/ai` (Claude recommended; the cheapest model by default). Queued with a 5-minute debounce, skipped when nothing changed.
+  - **Versioning:** structured output, with a prompt version stored on each summary.
+  - **Input:** no author data is sent, and the instructions tell the model to treat reviews as data, not as instructions.
+  - **Output** is validated before it is stored.
+  - **Resilience:** if the provider is down, the previous summary stays, and the page never calls the provider.
+  - **Moderation:** removing a review drops the summary at once.
+  - **Off by default.** `reviews:summarize` backfills.
 
 ### Changed
 - Closing an account (soft delete) deletes its passkeys and revokes its API tokens, so it keeps no working credentials.

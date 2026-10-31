@@ -64,6 +64,7 @@ Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 | [REST API](docs/api/README.md) | `/api/v1` with Sanctum tokens; OpenAPI document at `/docs/api` |
 | [MCP server](docs/mcp.md) | Tools for AI agents at `/mcp`; orders always confirmed by the customer |
 | [Search](docs/search.md) | Hybrid keyword + semantic search (pgvector), measurements and cost |
+| [AI review summaries](docs/review-summaries.md) | Pros and cons per product, labeled as AI, debounced and versioned |
 | [Roadmap](docs/roadmap.md) | Phases, milestones and issues |
 | [Metrics](docs/metrics.md) | Baseline and progress |
 | [Decisions](docs/adr/README.md) | Architecture Decision Records |
