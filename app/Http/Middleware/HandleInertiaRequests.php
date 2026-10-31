@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\CartItem;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -42,6 +43,10 @@ class HandleInertiaRequests extends Middleware
                     'avatar_url' => $user->avatar_path ? asset($user->avatar_path) : null,
                 ] : null,
             ],
+            // Units in the cart, for the header badge. One SUM query.
+            'cartCount' => fn () => $user
+                ? (int) CartItem::query()->whereHas('cart', fn ($cart) => $cart->whereBelongsTo($user))->sum('quantity')
+                : 0,
         ];
     }
 }

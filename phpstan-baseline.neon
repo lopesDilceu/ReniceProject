@@ -43,48 +43,6 @@ parameters:
 			path: app/Http/Controllers/AvaliacaoController.php
 
 		-
-			message: '#^Method App\\Http\\Controllers\\CarrinhoController\:\:create\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/CarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\CarrinhoController\:\:destroy\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/CarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\CarrinhoController\:\:edit\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/CarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\CarrinhoController\:\:index\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/CarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\CarrinhoController\:\:show\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/CarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\CarrinhoController\:\:store\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/CarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\CarrinhoController\:\:update\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/CarrinhoController.php
-
-		-
 			message: '#^Method App\\Http\\Controllers\\CompraController\:\:create\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -215,120 +173,6 @@ parameters:
 			identifier: missingType.return
 			count: 1
 			path: app/Http/Controllers/EstoqueController.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\Carrinho\:\:\$ca_id_usuario\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\ItensCarrinho\:\:\$ic_id_carrinho\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\ItensCarrinho\:\:\$ic_id_produto\.$#'
-			identifier: property.notFound
-			count: 2
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\ItensCarrinho\:\:\$ic_quantidade\.$#'
-			identifier: property.notFound
-			count: 5
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\ItensCarrinho\:\:\$produto\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\Produto\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\Produto\>\:\:\$pr_preco\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:compraFinalizada\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:confirmacaoPagamento\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:create\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:destroy\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:edit\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:finalizarCompra\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:finalizarCompra\(\) has parameter \$id with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:index\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:indexPagamento\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:show\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:store\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Method App\\Http\\Controllers\\ItensCarrinhoController\:\:update\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
-
-		-
-			message: '#^Parameter \#1 \$view of function view expects view\-string\|null, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: app/Http/Controllers/ItensCarrinhoController.php
 
 		-
 			message: '#^Method App\\Http\\Controllers\\ItensVendaController\:\:create\(\) has no return type specified\.$#'
@@ -611,6 +455,24 @@ parameters:
 			identifier: missingType.return
 			count: 1
 			path: app/Http/Controllers/VendaController.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Cannot call method label\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Parameter \#1 \$address of static method App\\Http\\Resources\\AddressResource\:\:format\(\) expects array\<string, mixed\>, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Resources/OrderResource.php
 
 		-
 			message: '#^Class App\\Models\\Avaliacao uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
