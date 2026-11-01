@@ -56,6 +56,18 @@ class DemoSeeder extends Seeder
         'cancelled' => [OrderStatus::Cancelled],
     ];
 
+    /**
+     * Statuses demo orders cycle through, delivered being the most common.
+     *
+     * @var list<OrderStatus>
+     */
+    private const STATUS_ROTATION = [
+        OrderStatus::Delivered, OrderStatus::Paid, OrderStatus::Delivered, OrderStatus::Shipped,
+        OrderStatus::Delivered, OrderStatus::PendingPayment, OrderStatus::Delivered, OrderStatus::Cancelled,
+    ];
+
+    private int $orders = 0;
+
     public function __construct(
         private readonly RecordSupplierPurchase $recordPurchase,
         private readonly PlaceOrder $placeOrder,
@@ -151,10 +163,9 @@ class DemoSeeder extends Seeder
             $cart->items()->create(['product_id' => $product->getKey(), 'quantity' => fake()->numberBetween(1, 4)]);
         }
 
-        $status = fake()->randomElement([
-            OrderStatus::Delivered, OrderStatus::Delivered, OrderStatus::Delivered,
-            OrderStatus::Shipped, OrderStatus::Paid, OrderStatus::PendingPayment, OrderStatus::Cancelled,
-        ]);
+        // A fixed rotation, not a draw: the demo always shows every status
+        // (and so reviews and a best-sellers ranking), whatever the randomness.
+        $status = self::STATUS_ROTATION[$this->orders++ % count(self::STATUS_ROTATION)];
 
         // The clock is moved back so the order and every step of its timeline
         // (and the stock movements they cause) get realistic dates.
@@ -197,8 +208,9 @@ class DemoSeeder extends Seeder
 
     private function review(User $user, Order $order): void
     {
-        foreach ($order->items as $item) {
-            if (fake()->boolean(60) && ! $user->reviews()->where('product_id', $item->product_id)->exists()) {
+        foreach ($order->items as $index => $item) {
+            // The first product of a delivered order is always reviewed.
+            if (($index === 0 || fake()->boolean(60)) && ! $user->reviews()->where('product_id', $item->product_id)->exists()) {
                 Review::factory()->for($user)->create([
                     'product_id' => $item->product_id,
                     'rating' => fake()->randomElement([3, 4, 4, 5, 5, 5]),
