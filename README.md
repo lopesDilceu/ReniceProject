@@ -57,6 +57,7 @@ Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 
 | | |
 |---|---|
+| [Case study](docs/case-study.md) | The whole story: audit, decisions, hard problems, before/after, lessons |
 | [Original system](docs/legacy/README.md) | What v1 did, its database design and screenshots |
 | [Initial audit](docs/audit/initial-audit.md) | Security, correctness and design findings |
 | [Database](docs/database.md) | Schema diagram and design rules |
