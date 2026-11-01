@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HealthController;
+use App\Http\Middleware\AssignRequestId;
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Application;
@@ -7,6 +9,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Http\Middleware\CheckAbilities;
 use Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
 
@@ -17,8 +20,14 @@ return Application::configure(basePath: dirname(__DIR__))
         channels: __DIR__.'/../routes/channels.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
+        // Outside the web group: no session or cookies for monitors.
+        then: fn () => Route::get('/health', HealthController::class)
+            ->middleware('throttle:60,1')
+            ->name('health'),
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->prepend(AssignRequestId::class);
+
         $middleware->encryptCookies(except: ['appearance']);
 
         $middleware->web(append: [

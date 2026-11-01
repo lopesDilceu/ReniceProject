@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
 import {
+    Activity,
     ArrowLeft,
     LayoutDashboard,
     Menu,
@@ -62,6 +63,13 @@ function Navigation() {
                     <Icon className="size-4" /> {title}
                 </Link>
             ))}
+            {/* Pulse is its own (Livewire) page: a full page load, not Inertia. */}
+            <a
+                href="/pulse"
+                className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            >
+                <Activity className="size-4" /> Monitoramento
+            </a>
             <Link
                 href={home()}
                 className="mt-4 flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground"
