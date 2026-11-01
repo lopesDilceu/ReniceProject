@@ -77,6 +77,8 @@ The notification body is never trusted: the job reads the payment's status back 
 
 ## What a visitor sees
 
+The [showcase](showcase.md) has every v1 screen next to its v2 version and a GIF of a purchase. `docker compose -f compose.demo.yaml up --build` runs the demo store locally.
+
 - **Catalog:** search by meaning ("copo com desenho japonês" finds the anime cup) when a provider is configured, and AI review summaries labeled as such.
 - **Checkout:** Pix with a QR code. The order page turns to "Pago" live over WebSockets, and the stock stays reserved for 60 minutes.
 - **Account:** passkeys and two-factor authentication under "Minha conta → Segurança".
@@ -85,15 +87,16 @@ The notification body is never trusted: the job reads the payment's status back 
 
 ## What is not done, or not proven yet
 
-- **No public deploy yet.** That is [#42](https://github.com/lopesDilceu/ReniceProject/issues/42).
+- **No public deploy, on purpose.** Hosting a demo costs money every month, so the project stops at a deployable artifact: CI builds and boots the production image on every pull request and publishes it to the GitHub Container Registry from `main`. A platform's deploy hook is one secret away ([deploy](deploy.md)). Meanwhile the [showcase](showcase.md) and the one-command local demo stand in for a public URL ([#42](https://github.com/lopesDilceu/ReniceProject/issues/42)).
 - **The AI features have only run against fakes.** Real-provider relevance and summary quality are untested, and the relevance test is ready (`--group=provider`). Provider latency is not measured; pgvector latency is (0.96 ms p50 over 10,000 vectors).
+- **Mercado Pago and passkeys have not met real credentials or a real authenticator.** Both are tested against their documented contracts, and the Pix flow runs end to end in the browser with the fake gateway.
 - **Coverage (93.5%) is measured on the SQLite job only.** The PostgreSQL-only code is tested in the other job but sits outside that number.
-- **Screenshots and a demo recording of v2** are still to be made.
 
 ## Lessons
 
 - **An audit is a better plan than a feature list.** It made the order of the work obvious, and "closed with a regression test" made "done" verifiable.
 - **The fast test suite is not the real environment.** SQLite, `runningUnitTests()` and fake gateways each hid one real bug in this project. A second CI job on the production database, and a few manual checks against the running app, paid for themselves.
+- **Look at it.** Running the demo and scripting a browser through it, for the screenshots, found six bugs that 440 passing tests did not: checkout copy still promising Pix "in the next phase", internal class names ("SupplierPurchase #2") in the admin stock ledger, demo orders numbered out of date order, the product photos lost in the rewrite, `demo:reset` deleting the photos it had just restored, and "Laravel" as the page title when `APP_NAME` is unset.
 - **Mutation-check the tests that guard invariants.** Removing the locks, the after-commit dispatch or the signature check and watching the test fail is the only way to know the test protects anything.
 - **Put the expensive or dangerous edge behind an explicit seam:** payments, AI and agent checkouts. Then the default can be safe and free, and the real thing is a configuration change.
 
@@ -112,4 +115,4 @@ The work was done in pair-programming sessions with an AI coding assistant ([Cla
 | [`v2.0.0-beta.1`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-beta.1) | 2026-10-31 | Inertia + React rewrite; all audit findings closed |
 | [`v2.0.0-beta.2`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-beta.2) | 2026-10-31 | Order lifecycle, Pix, stock reservation, e-mails |
 | [`v2.0.0-rc.1`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-rc.1) | 2026-10-31 | Passkeys, API, realtime, MCP, semantic search, AI summaries |
-| `v2.0.0` | — | Production deploy and this case study |
+| `v2.0.0` | — | Production image, this case study and the showcase |

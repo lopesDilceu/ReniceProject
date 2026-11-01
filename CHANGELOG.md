@@ -20,8 +20,20 @@ All notable changes to this project are documented here. The format follows [Kee
 - **Deploy workflow:** after CI passes on `main`, the image is pushed to the GitHub Container Registry, and an optional `DEPLOY_HOOK_URL` triggers the hosting platform. A new CI job builds and boots the image on every PR.
 - **Public demo mode** (`DEMO_MODE`): a banner on every page, the demo accounts on the login page, and `demo:reset` every night at 04:00 São Paulo time (fresh database, demo seed, uploads removed). `demo:reset` refuses to run outside the demo.
 - `TRUSTED_PROXIES`, for https and signed URLs behind a TLS-terminating proxy.
+- **Showcase** ([`docs/showcase.md`](docs/showcase.md)): every v1 screen next to its v2 version, a GIF of a purchase, and the new admin, account and developer screens. Scripts in `scripts/showcase/` regenerate the pictures with Playwright and the installed Chrome.
+- **`compose.demo.yaml`:** the demo store on any machine with Docker, in one command, with fresh demo data on every start.
+- The demo products have their v1 photos again.
+
+### Changed
+- No public deploy: the project stops at the production image, published to the GitHub Container Registry from `main`, and the local demo.
 
 ### Fixed
+- The checkout still said Pix would come "in the next phase of the project".
+- The admin stock ledger showed class names ("Order #18", "SupplierPurchase #2") as the source of a movement; it now says "Pedido #18" and "Compra #2".
+- Demo orders were numbered out of date order, and the supplier purchases were dated on the day of the seed. They are now placed oldest first, after the stock arrives.
+- `demo:reset` deleted the uploads after seeding, and with them the demo product photos.
+- Without `APP_NAME`, page titles and the API docs said "Laravel"; the default is now "Renice".
+- The rating distribution wrapped "5 estrelas" onto two lines, and seeded reviewers could be shown as "Dr. V." (Faker titles).
 - `php artisan config:cache` failed, because `config/scramble.php` held an object. Found by running the production image; a test now checks that every config value is cacheable.
 - The demo seed could not run in production: `fakerphp/faker` was a dev-only dependency.
 

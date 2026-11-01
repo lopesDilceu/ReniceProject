@@ -10,7 +10,7 @@ The modernization runs in phases. Each phase is a [GitHub milestone](https://git
 | [3 — Inertia + React rewrite](https://github.com/lopesDilceu/ReniceProject/milestone/4) | New UI module by module, closing every security finding with a regression test | `v2.0.0-beta.1` |
 | [4 — Commerce core](https://github.com/lopesDilceu/ReniceProject/milestone/5) | Order lifecycle, Pix payments, concurrency-safe inventory | `v2.0.0-beta.2` |
 | [5 — Showcase features](https://github.com/lopesDilceu/ReniceProject/milestone/6) | Semantic search, AI review summaries, realtime admin, API and MCP server | `v2.0.0-rc.1` |
-| [6 — Production & case study](https://github.com/lopesDilceu/ReniceProject/milestone/7) | Observability, public deploy, final write-up | `v2.0.0` |
+| [6 — Production & case study](https://github.com/lopesDilceu/ReniceProject/milestone/7) | Observability, production image, showcase, final write-up | `v2.0.0` |
 
 ## Phase 0 — Foundation
 
@@ -81,5 +81,5 @@ Rewrite:
 ## Phase 6 — Production & case study
 
 - [#41](https://github.com/lopesDilceu/ReniceProject/issues/41) Observability
-- [#42](https://github.com/lopesDilceu/ReniceProject/issues/42) Public deploy with demo data
+- [#42](https://github.com/lopesDilceu/ReniceProject/issues/42) Public deploy with demo data: replaced by the production image and a local one-command demo (no hosting cost)
 - [#43](https://github.com/lopesDilceu/ReniceProject/issues/43) Case study and `v2.0.0`

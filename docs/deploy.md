@@ -1,5 +1,7 @@
 # Deploy
 
+There is no public instance: hosting a demo costs money every month, so the project stops at a deployable image. To run that image locally with the demo data, use [`compose.demo.yaml`](../compose.demo.yaml) ([showcase](showcase.md#run-it-yourself)). Everything below is what a real deploy takes.
+
 The app ships as **one Docker image** ([`Dockerfile`](../Dockerfile)), run as four processes:
 
 | Role | Command | Notes |
@@ -27,6 +29,7 @@ The `Production image builds` CI job builds the same Dockerfile on every pull re
 The minimum for production:
 
 ```dotenv
+APP_NAME=Renice
 APP_ENV=production
 APP_DEBUG=false
 APP_KEY=base64:...            # php artisan key:generate --show
