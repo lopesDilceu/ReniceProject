@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [2.0.0] — 2026-11-01
+
+End of Phase 6 and of the modernization. The 2024 university project is now a production-ready store: one Docker image, built and booted by CI on every pull request and published from `main`; health checks, request ids and Pulse for operations; a [case study](docs/case-study.md) of the whole rebuild and a [showcase](docs/showcase.md) of v1 and v2 side by side. There is no public deploy, on purpose: `compose.demo.yaml` runs the demo store anywhere with Docker.
+
 ### Added
 - **`GET /health`** ([`docs/observability.md`](docs/observability.md)):
   - Checks the database, cache, queue (backlog age and failed jobs) and the scheduler, through a heartbeat written every minute.
@@ -239,7 +243,8 @@ End of Phase 0 (Foundation). The application code is still the legacy code. This
 
 Original version delivered as the final project for the Programming II and Database II courses at Unimontes. See the [release notes](https://github.com/lopesDilceu/ReniceProject/releases/tag/v1.0-academic) and [`docs/legacy`](docs/legacy/README.md).
 
-[Unreleased]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-rc.1...HEAD
+[Unreleased]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-rc.1...v2.0.0
 [2.0.0-rc.1]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-beta.2...v2.0.0-rc.1
 [2.0.0-beta.2]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-beta.1...v2.0.0-beta.2
 [2.0.0-beta.1]: https://github.com/lopesDilceu/ReniceProject/compare/v2.0.0-alpha.3...v2.0.0-beta.1

@@ -90,7 +90,7 @@ The [showcase](showcase.md) has every v1 screen next to its v2 version and a GIF
 - **No public deploy, on purpose.** Hosting a demo costs money every month, so the project stops at a deployable artifact: CI builds and boots the production image on every pull request and publishes it to the GitHub Container Registry from `main`. A platform's deploy hook is one secret away ([deploy](deploy.md)). Meanwhile the [showcase](showcase.md) and the one-command local demo stand in for a public URL ([#42](https://github.com/lopesDilceu/ReniceProject/issues/42)).
 - **The AI features have only run against fakes.** Real-provider relevance and summary quality are untested, and the relevance test is ready (`--group=provider`). Provider latency is not measured; pgvector latency is (0.96 ms p50 over 10,000 vectors).
 - **Mercado Pago and passkeys have not met real credentials or a real authenticator.** Both are tested against their documented contracts, and the Pix flow runs end to end in the browser with the fake gateway.
-- **Coverage (93.5%) is measured on the SQLite job only.** The PostgreSQL-only code is tested in the other job but sits outside that number.
+- **Coverage (93.4%) is measured on the SQLite job only.** The PostgreSQL-only code is tested in the other job but sits outside that number.
 
 ## Lessons
 
@@ -115,4 +115,4 @@ The work was done in pair-programming sessions with an AI coding assistant ([Cla
 | [`v2.0.0-beta.1`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-beta.1) | 2026-10-31 | Inertia + React rewrite; all audit findings closed |
 | [`v2.0.0-beta.2`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-beta.2) | 2026-10-31 | Order lifecycle, Pix, stock reservation, e-mails |
 | [`v2.0.0-rc.1`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-rc.1) | 2026-10-31 | Passkeys, API, realtime, MCP, semantic search, AI summaries |
-| `v2.0.0` | — | Production image, this case study and the showcase |
+| [`v2.0.0`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0) | 2026-11-01 | Production image, this case study and the showcase |
