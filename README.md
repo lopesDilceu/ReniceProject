@@ -65,6 +65,7 @@ Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 | [MCP server](docs/mcp.md) | Tools for AI agents at `/mcp`; orders always confirmed by the customer |
 | [Search](docs/search.md) | Hybrid keyword + semantic search (pgvector), measurements and cost |
 | [AI review summaries](docs/review-summaries.md) | Pros and cons per product, labeled as AI, debounced and versioned |
+| [Observability](docs/observability.md) | `/health`, request ids in JSON logs, Laravel Pulse |
 | [Roadmap](docs/roadmap.md) | Phases, milestones and issues |
 | [Metrics](docs/metrics.md) | Baseline and progress |
 | [Decisions](docs/adr/README.md) | Architecture Decision Records |
@@ -100,6 +101,7 @@ For better file-system performance, Laravel recommends keeping the project insid
 | Application | http://localhost |
 | Mailpit (caught e-mails) | http://localhost:8025 |
 | Reverb (WebSockets) | `ws://localhost:8080` |
+| Health / Pulse (admins) | http://localhost/health · http://localhost/pulse |
 | PostgreSQL | `localhost:5432`, user `sail`, password `password` |
 
 The seed builds a demo store with the original product line, nine customers, orders, stock history and reviews, all through the real domain actions. Run `migrate:fresh --seed` to reset it.

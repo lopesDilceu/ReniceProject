@@ -9,9 +9,11 @@ use App\Payments\MercadoPago\WebhookSignature;
 use App\Payments\PaymentGateway;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Events\DiagnosingHealth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
@@ -66,6 +68,13 @@ class AppServiceProvider extends ServiceProvider
 
         // The admin area: every /admin route requires this ability.
         Gate::define('admin', fn (User $user): bool => $user->is_admin);
+
+        // The Pulse dashboard (/pulse): metrics, slow queries and exceptions.
+        Gate::define('viewPulse', fn (User $user): bool => $user->is_admin);
+
+        // Laravel's /up answers 200 as long as PHP runs; make it fail when
+        // the database is down too. /health has the detailed report.
+        Event::listen(DiagnosingHealth::class, fn () => DB::select('select 1'));
 
         // Strict in production (including a check against known breaches);
         // Laravel's minimum of 8 characters elsewhere, so demo data and tests
