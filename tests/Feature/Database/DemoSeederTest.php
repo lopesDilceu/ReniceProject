@@ -40,3 +40,14 @@ it('creates order history, reviews and a best-sellers ranking', function () {
         ->and(Review::count())->toBeGreaterThan(0)
         ->and(app(BestSellingProducts::class)->get())->not->toBeEmpty();
 });
+
+// Guaranteed, not left to chance: one CI run once seeded no reviews at all.
+it('always shows every order status and reviews on every delivered order', function () {
+    expect(Order::query()->distinct()->pluck('status')->map->value->sort()->values()->all())
+        ->toBe(['cancelled', 'delivered', 'paid', 'pending_payment', 'shipped']);
+
+    Order::query()->where('status', 'delivered')->with('items')->get()->each(function (Order $order) {
+        expect(Review::query()->where('user_id', $order->user_id)->whereIn('product_id', $order->items->pluck('product_id'))->exists())
+            ->toBeTrue("Delivered order #{$order->id} has no review.");
+    });
+});
