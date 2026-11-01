@@ -4,9 +4,9 @@
 
 **English** · [Português](README.pt-BR.md)
 
-An e-commerce application that started as a university project in 2024 and is being rebuilt, in the open, to a 2026 production standard.
+An e-commerce application that started as a university project in 2024 and was rebuilt, in the open, to a 2026 production standard.
 
-> **Status:** feature-complete (Phases 0–5). The store takes Pix payments, signs in with passkeys and two-factor authentication, searches by meaning, summarizes reviews with AI, and is open to integrations through a REST API and an MCP server for AI agents. Every finding of the [initial audit](docs/audit/initial-audit.md) is resolved. Phase 6 ships it as a production image and tells the story in a [case study](docs/case-study.md). Follow the [roadmap](docs/roadmap.md).
+> **Status:** complete ([`v2.0.0`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0)). The store takes Pix payments, signs in with passkeys and two-factor authentication, searches by meaning, summarizes reviews with AI, and is open to integrations through a REST API and an MCP server for AI agents. Every finding of the [initial audit](docs/audit/initial-audit.md) is resolved. It ships as a production Docker image, and the [case study](docs/case-study.md) tells the story of the rebuild.
 
 ![A purchase in the Renice store: product, cart, checkout, Pix QR code and payment confirmed](docs/images/v2/purchase-flow.gif)
 
@@ -37,7 +37,7 @@ Every step is an issue, a pull request and, when there is a real trade-off, an [
 | 3 — Inertia + React rewrite | Done ([`v2.0.0-beta.1`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-beta.1)) |
 | 4 — Commerce core | Done ([`v2.0.0-beta.2`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-beta.2)) |
 | 5 — Showcase features | Done ([`v2.0.0-rc.1`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-rc.1)) |
-| 6 — Production & case study | In progress: production image, case study and showcase done; `v2.0.0` next |
+| 6 — Production & case study | Done ([`v2.0.0`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0)) |
 
 Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 

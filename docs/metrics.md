@@ -1,6 +1,6 @@
 # Metrics
 
-Baseline numbers for the modernization, updated at every release. The **v1.0-academic** column is the frozen starting point and never changes.
+Baseline numbers for the modernization, updated at every release. The *Current* column is as of `v2.0.0`. The **v1.0-academic** column is the frozen starting point and never changes.
 
 How each number is collected is in [How to measure](#how-to-measure).
 
@@ -19,12 +19,12 @@ How each number is collected is in [How to measure](#how-to-measure).
 
 | Metric | v1.0-academic | Current | Target |
 |---|---|---|---|
-| Automated tests | 0 (2 framework examples) | 405 passing on SQLite, 423 on PostgreSQL (including a concurrent-checkout test with 8 processes and OpenAPI contract tests); 0 pending | — |
+| Automated tests | 0 (2 framework examples) | 428 passing on SQLite, 446 on PostgreSQL (including a concurrent-checkout test with 8 processes and OpenAPI contract tests); 0 pending | — |
 | Test suite status | 1 of 2 example tests failing | green | green |
-| Line coverage on `app/` | 0% | **93.5%** (measured on the SQLite job: the PostgreSQL-only paths, such as vector search, run in the PostgreSQL job, which does not measure coverage) | ≥ 80% |
+| Line coverage on `app/` | 0% | **93.4%** (measured on the SQLite job: the PostgreSQL-only paths, such as vector search, run in the PostgreSQL job, which does not measure coverage) | ≥ 80% |
 | Static analysis | not configured | Larastan level 6, **no baseline**: 0 ignored errors | level 6+, empty baseline |
 | Enforced code style | no | Pint (Laravel preset) in CI | Pint in CI |
-| CI pipeline | none | lint + analyse + test on PHP 8.4/8.5, migrations + tests on PostgreSQL, dependency audit | lint + analyse + test + audit |
+| CI pipeline | none | lint + analyse + test on PHP 8.4/8.5, migrations + tests on PostgreSQL, dependency audit, production image build and boot; the image is published to GHCR from `main` | lint + analyse + test + audit |
 
 ## Security and data
 
@@ -35,7 +35,7 @@ How each number is collected is in [How to measure](#how-to-measure).
 | Raw SQL with interpolated input | 1 | 0 | 0 |
 | Domain tables with migrations | 0 of 11 | 11 of 11 | all |
 | Business rules in procedures / triggers | 2 / 8 | 0 / 0: all replaced by tested actions (`RecordInventoryMovement`, `RecordSupplierPurchase`, `PlaceOrder`) or FK rules | 0 / 0 |
-| Fresh clone → running app | not possible | `docker compose up -d` + `migrate --seed` (demo store) | one command |
+| Fresh clone → running app | not possible | `docker compose -f compose.demo.yaml up --build`: the production image with the demo store | one command |
 | Payment | none: orders marked completed at once (BUG-02) | Pix with signed webhooks, idempotent at three levels (charge, notification, status) | — |
 | Overselling under concurrency | not handled | 8 simultaneous checkouts for the last unit: exactly 1 succeeds (3 without the row locks) | 0 oversold |
 | Sign-in factors | password | password, TOTP two-factor with recovery codes, passkeys (WebAuthn) | — |
@@ -47,10 +47,10 @@ How each number is collected is in [How to measure](#how-to-measure).
 
 | Metric | v1.0-academic | Current |
 |---|---|---|
-| PHP lines (`app/`, `routes/`) | 1,745 | 7,154 (all v2; v1 removed) |
+| PHP lines (`app/`, `routes/`) | 1,745 | 7,409 (all v2; v1 removed) |
 | Blade lines | 2,859 | 47 (the Inertia root view) |
-| TypeScript/React lines (excluding shadcn/ui) | 0 | 6,436 |
-| Controllers / empty methods | 12 / 56 | 26 / 0 |
+| TypeScript/React lines (excluding shadcn/ui) | 0 | 6,487 |
+| Controllers / empty methods | 12 / 56 | 27 / 0 |
 | Routes (application, excluding Fortify and Debugbar) | 45 | 58 web + 12 REST API + 1 MCP endpoint |
 
 ## Performance
