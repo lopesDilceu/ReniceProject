@@ -1,0 +1,57 @@
+# The demo store on your machine, in one command, with no other setup:
+#
+#   docker compose -f compose.demo.yaml up --build
+#
+# Then open http://localhost:8000 and sign in with cliente@renice.test or
+# admin@renice.test (password: password). It builds the production image
+# (see docs/deploy.md) and loads the demo data on every start; payments are
+# simulated. Stop with Ctrl+C; `down -v` also deletes the database.
+name: renice-demo
+
+services:
+    app:
+        build: .
+        image: renice-demo
+        # Fresh demo data on every start, then the web server.
+        command:
+            ['sh', '-c', 'php artisan demo:reset && exec apache2-foreground']
+        ports:
+            - '${DEMO_PORT:-8000}:8080'
+        environment:
+            APP_ENV: production
+            APP_DEBUG: 'false'
+            # Local demo only: never reuse this key anywhere else.
+            APP_KEY: 'base64:Gr4nfBtSMIBXKoOaD7p2+qhteUxweY9ZQ7oxMe289hw='
+            APP_URL: 'http://localhost:${DEMO_PORT:-8000}'
+            DEMO_MODE: 'true'
+            DB_CONNECTION: pgsql
+            DB_HOST: pgsql
+            DB_DATABASE: renice
+            DB_USERNAME: renice
+            DB_PASSWORD: renice
+            CACHE_STORE: database
+            SESSION_DRIVER: database
+            QUEUE_CONNECTION: sync
+            MAIL_MAILER: log
+            LOG_CHANNEL: stderr
+            PAYMENT_GATEWAY: fake
+            BROADCAST_CONNECTION: 'null'
+        depends_on:
+            pgsql:
+                condition: service_healthy
+
+    pgsql:
+        image: 'pgvector/pgvector:pg18'
+        environment:
+            POSTGRES_DB: renice
+            POSTGRES_USER: renice
+            POSTGRES_PASSWORD: renice
+        volumes:
+            - 'renice-demo-pgsql:/var/lib/postgresql'
+        healthcheck:
+            test: ['CMD', 'pg_isready', '-q', '-d', 'renice', '-U', 'renice']
+            interval: 2s
+            retries: 15
+
+volumes:
+    renice-demo-pgsql:

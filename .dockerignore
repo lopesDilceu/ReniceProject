@@ -24,3 +24,7 @@ docs
 compose.yaml
 *.md
 .claude
+# Pictures for the docs and the scripts that make them
+docs/images
+docs/legacy/images
+scripts
