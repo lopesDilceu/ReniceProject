@@ -4,13 +4,79 @@
 
 **English** · [Português](README.pt-BR.md)
 
-An e-commerce application that started as a university project in 2024 and was rebuilt, in the open, to a 2026 production standard.
+An e-commerce store for a Brazilian brand, built on Laravel 13, React 19 and PostgreSQL with pgvector. It takes Pix payments, signs in with passkeys, searches by meaning, summarizes reviews with AI, and lets AI agents shop through an MCP server, without ever letting them spend the customer's money.
 
-> **Status:** complete ([`v2.0.0`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0)). The store takes Pix payments, signs in with passkeys and two-factor authentication, searches by meaning, summarizes reviews with AI, and is open to integrations through a REST API and an MCP server for AI agents. Every finding of the [initial audit](docs/audit/initial-audit.md) is resolved. It ships as a production Docker image, and the [case study](docs/case-study.md) tells the story of the rebuild.
+It started as a university project in 2024 and was rebuilt, in the open, to a 2026 production standard ([`v2.0.0`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0)). The [case study](docs/case-study.md) tells that story.
 
 ![A purchase in the Renice store: product, cart, checkout, Pix QR code and payment confirmed](docs/images/v2/purchase-flow.gif)
 
 **See it:** the [showcase](docs/showcase.md) puts every v1 screen next to its v2 version. **Try it:** with Docker, `docker compose -f compose.demo.yaml up --build` starts the demo store at http://localhost:8000 ([details](docs/showcase.md#run-it-yourself)).
+
+## Highlights
+
+The parts that took engineering, not scaffolding:
+
+- **AI agents that can shop but cannot pay.** An [MCP server](docs/mcp.md) gives assistants such as Claude or ChatGPT eight tools to search, read products and fill a cart, behind scoped tokens. Checkout returns a signed, 15-minute link that pins the customer, address and exact cart, and only the signed-in customer can confirm it. An agent misled by prompt injection can, at most, fill a cart.
+- **Search by meaning.** "copo com desenho japonês" finds the anime cup. Keyword and vector candidates (pgvector, HNSW index) are merged with Reciprocal Rank Fusion. Embeddings are cached, time-boxed and re-computed only when the text changes, and keyword search keeps working when the provider is down ([search](docs/search.md), [ADR 0007](docs/adr/0007-semantic-search-with-pgvector.md)).
+- **AI review summaries with cost control.** Structured output (a one-sentence summary, pros and cons), labeled as AI, debounced so a burst of reviews costs one call, skipped when nothing changed, and versioned so a prompt change re-summarizes ([review summaries](docs/review-summaries.md)).
+- **Payments that cannot be forged or applied twice.** Pix through Mercado Pago: HMAC-verified webhooks, idempotency at three levels (charge, notification, status), and the provider's API, not the webhook body, as the source of truth ([payments](docs/payments.md), [ADR 0006](docs/adr/0006-pix-with-mercado-pago.md)).
+- **Stock that cannot be oversold.** An append-only inventory ledger with row locks. A test fires 8 concurrent checkouts at the last unit on PostgreSQL: exactly one wins. Unpaid orders release their stock after 60 minutes.
+- **Passwordless sign-in.** Passkeys (WebAuthn) and TOTP two-factor authentication with recovery codes.
+- **Realtime without lying.** The admin dashboard and the customer's order page update over WebSockets (Laravel Reverb). Events go out only after the transaction commits, so a rolled-back change is never shown, and pages fall back to polling.
+- **An API with a contract.** REST `/api/v1` with scoped, expiring tokens. The OpenAPI 3.1 document is generated from the code, real responses are validated against it, and CI fails when it drifts ([API](docs/api/README.md)).
+- **Ready to run in production.** One Docker image for web, queue, scheduler and WebSockets, built and booted by CI on every pull request. `/health` checks, request ids in JSON logs and Laravel Pulse ([deploy](docs/deploy.md), [observability](docs/observability.md)).
+
+| | | |
+|---|---|---|
+| ![Admin dashboard](docs/images/v2/12-admin-dashboard.jpg) | ![Pix payment](docs/images/v2/06-order-pix.jpg) | ![Stock ledger](docs/images/v2/17-admin-inventory.jpg) |
+| Admin dashboard, live | Pix checkout | Append-only stock ledger |
+
+More in the [showcase](docs/showcase.md): dark mode, phone, passkeys, API docs and monitoring.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    subgraph clients [Clients]
+        browser["Browser<br/>React 19 + Inertia"]
+        rest["REST clients<br/>/api/v1"]
+        agents["AI agents<br/>MCP /mcp"]
+    end
+    subgraph app [Laravel 13]
+        http["HTTP layer<br/>controllers, API resources, MCP tools"]
+        actions["Domain actions<br/>PlaceOrder, ChangeOrderStatus,<br/>RecordInventoryMovement, ApplyPaymentStatus"]
+        queue["Queue workers<br/>webhooks, e-mails,<br/>embeddings, summaries"]
+    end
+    db[("PostgreSQL 18<br/>+ pgvector")]
+    reverb["Reverb<br/>WebSockets"]
+    mp["Mercado Pago<br/>Pix"]
+    ai["AI provider<br/>via laravel/ai"]
+
+    browser --> http
+    rest --> http
+    agents --> http
+    http --> actions --> db
+    actions -- after commit --> queue
+    queue --> reverb --> browser
+    mp -- signed webhook --> http
+    actions --> mp
+    queue --> ai
+```
+
+Every way into the system (web page, REST API, MCP tool, webhook, scheduler) goes through the same small set of **domain actions**, so a rule such as "stock never goes below zero" or "a status change is always recorded" lives in one tested place. The [ADRs](docs/adr/README.md) explain the larger choices: Inertia + React, rules in the application instead of database triggers, PostgreSQL, Mercado Pago and pgvector.
+
+## By the numbers
+
+| | v1.0-academic (2024) | v2.0.0 (2026) |
+|---|---|---|
+| Automated tests | 0 | 446, on SQLite and PostgreSQL |
+| Line coverage | 0% | 93.4% |
+| Static analysis | none | Larastan level 6, no baseline |
+| Open audit findings | 28 | 0 |
+| Known vulnerable dependencies | 5 | 0 |
+| Overselling under concurrency | not handled | tested: 8 concurrent buyers, 1 sale |
+
+More in [`docs/metrics.md`](docs/metrics.md).
 
 ## The story
 
@@ -43,7 +109,7 @@ Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 
 ## Stack
 
-| | v1.0-academic | Target |
+| | v1.0-academic | v2.0.0 |
 |---|---|---|
 | Backend | Laravel 11, PHP 8.2 | Laravel 13, PHP 8.4+ |
 | Frontend | Blade, Bootstrap, jQuery | Inertia 3, React 19 (React Compiler), TypeScript, Tailwind 4, shadcn/ui, Wayfinder |
