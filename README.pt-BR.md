@@ -39,7 +39,7 @@ Os números de antes e depois ficam em [`docs/metrics.md`](docs/metrics.md).
 
 ## Documentação
 
-A documentação técnica está em inglês. Veja a [versão em inglês deste README](README.md#documentation) para o índice completo.
+A documentação técnica está em inglês. Comece pelo [estudo de caso](docs/case-study.md), que conta a história completa, ou veja a [versão em inglês deste README](README.md#documentation) para o índice completo.
 
 ## Autores
 
