@@ -9,7 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\InventoryAdjustmentRequest;
 use App\Http\Resources\Admin\AdminProductResource;
 use App\Models\InventoryMovement;
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\SupplierPurchase;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -36,7 +38,12 @@ class InventoryController extends Controller
                 'type_label' => $movement->type->label(),
                 'quantity' => $movement->quantity,
                 'stock_after' => $movement->stock_after,
-                'source' => $movement->source_type === null ? null : class_basename($movement->source_type).' #'.$movement->source_id,
+                'source' => match ($movement->source_type) {
+                    null => null,
+                    Order::class => "Pedido #{$movement->source_id}",
+                    SupplierPurchase::class => "Compra #{$movement->source_id}",
+                    default => class_basename($movement->source_type).' #'.$movement->source_id,
+                },
                 'user' => $movement->user?->name,
                 'note' => $movement->note,
                 'created_at' => $movement->created_at->toIso8601String(),
