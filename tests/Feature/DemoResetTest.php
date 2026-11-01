@@ -16,6 +16,7 @@ it('rebuilds the demo: fresh data, demo seed, uploads removed', function () {
     config(['shop.demo' => true]);
     Storage::fake('public');
     Storage::disk('public')->put('avatars/visitor.jpg', 'x');
+    Storage::disk('public')->put('products/visitor.jpg', 'x');
     User::factory()->create(['email' => 'visitante@example.com']);
 
     $this->artisan('demo:reset')->assertSuccessful();
@@ -23,5 +24,8 @@ it('rebuilds the demo: fresh data, demo seed, uploads removed', function () {
     expect(User::where('email', 'visitante@example.com')->exists())->toBeFalse()
         ->and(User::where('email', 'cliente@renice.test')->exists())->toBeTrue()
         ->and(Product::count())->toBe(5);
-    Storage::disk('public')->assertMissing('avatars/visitor.jpg');
+    Storage::disk('public')->assertMissing(['avatars/visitor.jpg', 'products/visitor.jpg']);
+
+    // The demo photos are uploads too, and survive the clean-up.
+    Product::all()->each(fn (Product $product) => Storage::disk('public')->assertExists($product->image_path));
 });

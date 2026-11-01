@@ -18,6 +18,7 @@ use App\Models\User;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 /**
@@ -65,8 +66,6 @@ class DemoSeeder extends Seeder
         OrderStatus::Delivered, OrderStatus::Paid, OrderStatus::Delivered, OrderStatus::Shipped,
         OrderStatus::Delivered, OrderStatus::PendingPayment, OrderStatus::Delivered, OrderStatus::Cancelled,
     ];
-
-    private int $orders = 0;
 
     public function __construct(
         private readonly RecordSupplierPurchase $recordPurchase,
@@ -122,22 +121,27 @@ class DemoSeeder extends Seeder
         }
 
         $products = collect(self::PRODUCTS)->map(function (array $data) use ($admin) {
+            $slug = Str::slug($data['name']);
+
             $product = Product::create([
                 'name' => $data['name'],
-                'slug' => Str::slug($data['name']),
+                'slug' => $slug,
                 'description' => $data['description'],
                 'price_cents' => $data['price_cents'],
+                'image_path' => $this->storeImage($slug),
             ]);
 
             if ($data['stock'] > 0) {
-                $this->recordPurchase->handle(
+                // On the clock too, so its stock movement is dated with it.
+                $this->at(now()->subWeeks(6), fn () => $this->recordPurchase->handle(
                     $product,
                     supplier: 'Gelo Norte Distribuidora',
                     quantity: $data['stock'],
                     unitCostCents: intdiv($data['price_cents'], 2),
-                    purchasedAt: now()->subWeeks(6),
+                    purchasedAt: now(),
                     actor: $admin,
-                );
+                ));
+                Date::setTestNow();
             }
 
             return $product;
@@ -145,17 +149,60 @@ class DemoSeeder extends Seeder
 
         $inStock = $products->filter(fn (Product $product) => $product->stock > 0)->values();
 
+        $plans = [];
+
         foreach ($customers as $user) {
             foreach (range(1, fake()->numberBetween(1, 3)) as $ignored) {
-                $this->placeDemoOrder($user, $inStock->random(fake()->numberBetween(1, 3)), $admin);
+                // A fixed rotation, not a draw: the demo always shows every status
+                // (and so reviews and a best-sellers ranking), whatever the randomness.
+                $status = self::STATUS_ROTATION[count($plans) % count(self::STATUS_ROTATION)];
+
+                $plans[] = [
+                    'user' => $user,
+                    'products' => $inStock->random(fake()->numberBetween(1, 3)),
+                    'status' => $status,
+                    'at' => $this->orderDate($status),
+                ];
             }
         }
+
+        // Placed oldest first, so order numbers and the stock ledger follow the dates.
+        foreach (collect($plans)->sortBy(fn (array $plan) => $plan['at']->getTimestamp()) as $plan) {
+            $this->placeDemoOrder($plan['user'], $plan['products'], $plan['status'], $plan['at'], $admin);
+        }
+    }
+
+    /**
+     * Orders still waiting for payment are recent, inside the payment window.
+     */
+    private function orderDate(OrderStatus $status): CarbonInterface
+    {
+        return $status === OrderStatus::PendingPayment
+            ? now()->subMinutes(fake()->numberBetween(1, 15))
+            : now()->subDays(fake()->numberBetween(5, 40))->setTime(fake()->numberBetween(8, 21), fake()->numberBetween(0, 59));
+    }
+
+    /**
+     * Copies the product's v1 photo (database/seeders/images) to the public
+     * disk, where uploads live, so `demo:reset` can wipe and restore it.
+     */
+    private function storeImage(string $slug): ?string
+    {
+        $source = __DIR__."/images/{$slug}.jpg";
+
+        if (! is_file($source)) {
+            return null;
+        }
+
+        Storage::disk('public')->put("products/{$slug}.jpg", (string) file_get_contents($source));
+
+        return "products/{$slug}.jpg";
     }
 
     /**
      * @param  iterable<Product>  $products
      */
-    private function placeDemoOrder(User $user, iterable $products, User $admin): void
+    private function placeDemoOrder(User $user, iterable $products, OrderStatus $status, CarbonInterface $at, User $admin): void
     {
         $cart = $user->cart()->firstOrCreate();
 
@@ -163,17 +210,8 @@ class DemoSeeder extends Seeder
             $cart->items()->create(['product_id' => $product->getKey(), 'quantity' => fake()->numberBetween(1, 4)]);
         }
 
-        // A fixed rotation, not a draw: the demo always shows every status
-        // (and so reviews and a best-sellers ranking), whatever the randomness.
-        $status = self::STATUS_ROTATION[$this->orders++ % count(self::STATUS_ROTATION)];
-
         // The clock is moved back so the order and every step of its timeline
         // (and the stock movements they cause) get realistic dates.
-        // Orders still waiting for payment are recent, inside the payment window.
-        $at = $status === OrderStatus::PendingPayment
-            ? now()->subMinutes(fake()->numberBetween(1, 15))
-            : now()->subDays(fake()->numberBetween(5, 40))->setTime(fake()->numberBetween(8, 21), fake()->numberBetween(0, 59));
-
         try {
             Date::setTestNow($at);
             $order = $this->placeOrder->handle($user, $user->addresses()->firstOrFail());
