@@ -54,6 +54,10 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    // Proxies allowed to set X-Forwarded-*: "*" on platforms whose proxy
+    // terminates TLS, or a comma-separated list of IPs. Empty: none.
+    'trusted_proxies' => env('TRUSTED_PROXIES'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

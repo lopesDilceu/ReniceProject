@@ -40,4 +40,19 @@ return [
 
     'low_stock_threshold' => (int) env('SHOP_LOW_STOCK_THRESHOLD', 5),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Public demo
+    |--------------------------------------------------------------------------
+    |
+    | On the public demo the store says so on every page, shows the demo
+    | accounts on the login page and resets itself (fresh database and seed)
+    | every night, so whatever visitors change does not last.
+    |
+    */
+
+    'demo' => (bool) env('DEMO_MODE', false),
+
+    'demo_reset_at' => env('DEMO_RESET_AT', '04:00'),
+
 ];

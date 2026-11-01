@@ -13,6 +13,8 @@ declare module '@inertiajs/core' {
             name: string;
             auth: Auth;
             cartCount: number;
+            /** DEMO_MODE: the public demo. */
+            demo: boolean;
             [key: string]: unknown;
         };
     }

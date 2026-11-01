@@ -13,6 +13,7 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
 import AppLogo from '@/components/app-logo';
+import DemoBanner from '@/components/demo-banner';
 import { Button } from '@/components/ui/button';
 import {
     Sheet,
@@ -96,6 +97,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             </aside>
 
             <div className="flex-1">
+                <DemoBanner />
                 <header className="flex h-14 items-center gap-3 border-b bg-background px-4 md:hidden">
                     <Sheet>
                         <SheetTrigger asChild>

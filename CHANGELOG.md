@@ -12,6 +12,18 @@ All notable changes to this project are documented here. The format follows [Kee
 - **Request ids:** every response has an `X-Request-Id`, propagated through Laravel's `Context` to all log lines of the request and to the queued jobs it dispatches. A valid incoming id from a proxy is kept; anything else is replaced.
 - **`json` log channel:** one JSON object per line on stderr, with the request id, for production (`LOG_CHANNEL=json`).
 - **Laravel Pulse** at `/pulse`, for admins only ("Monitoramento" in the admin menu): slow requests, queries, jobs and outgoing calls, exceptions, queues and cache. Health checks are excluded from its request metrics.
+- **Production Docker image** ([`docs/deploy.md`](docs/deploy.md)):
+  - multi-stage: Composer without dev packages, then a PHP + Node stage for Wayfinder and Vite, then PHP 8.5 with Apache;
+  - unprivileged, on port 8080, with OPcache;
+  - one image for four roles: web, queue, scheduler and Reverb;
+  - on start, it caches config, routes, views and events, and runs migrations when `RUN_MIGRATIONS=true`.
+- **Deploy workflow:** after CI passes on `main`, the image is pushed to the GitHub Container Registry, and an optional `DEPLOY_HOOK_URL` triggers the hosting platform. A new CI job builds and boots the image on every PR.
+- **Public demo mode** (`DEMO_MODE`): a banner on every page, the demo accounts on the login page, and `demo:reset` every night at 04:00 São Paulo time (fresh database, demo seed, uploads removed). `demo:reset` refuses to run outside the demo.
+- `TRUSTED_PROXIES`, for https and signed URLs behind a TLS-terminating proxy.
+
+### Fixed
+- `php artisan config:cache` failed, because `config/scramble.php` held an object. Found by running the production image; a test now checks that every config value is cacheable.
+- The demo seed could not run in production: `fakerphp/faker` was a dev-only dependency.
 
 ## [2.0.0-rc.1] — 2026-10-31
 

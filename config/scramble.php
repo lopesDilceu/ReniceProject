@@ -2,7 +2,6 @@
 
 use Dedoc\Scramble\OpenApiVersion;
 use Dedoc\Scramble\SecurityDocumentation\MiddlewareAuthSecurityStrategy;
-use Dedoc\Scramble\Support\Generator\SecurityScheme;
 
 return [
     /*
@@ -186,9 +185,11 @@ return [
      * ],
      */
     // 'security_strategy' => \Dedoc\Scramble\SecurityDocumentation\MiddlewareAuthSecurityStrategy::class,
-    // Bearer auth on routes behind `auth:sanctum`; the catalog stays public.
+    // Bearer auth (the strategy's default scheme) on routes behind
+    // `auth:sanctum`; the catalog stays public. Only scalars here, so
+    // `php artisan config:cache` works: no objects in config.
     'security_strategy' => [
         MiddlewareAuthSecurityStrategy::class,
-        ['middleware' => ['auth:sanctum'], 'scheme' => SecurityScheme::http('bearer')],
+        ['middleware' => ['auth:sanctum']],
     ],
 ];
