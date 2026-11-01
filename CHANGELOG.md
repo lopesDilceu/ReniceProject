@@ -4,6 +4,15 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+- **`GET /health`** ([`docs/observability.md`](docs/observability.md)):
+  - Checks the database, cache, queue (backlog age and failed jobs) and the scheduler, through a heartbeat written every minute.
+  - Status `ok`, `degraded` (200) or `fail` (503). The public response carries no failure details, and no session is started.
+  - Laravel's `/up` now also fails when the database is down.
+- **Request ids:** every response has an `X-Request-Id`, propagated through Laravel's `Context` to all log lines of the request and to the queued jobs it dispatches. A valid incoming id from a proxy is kept; anything else is replaced.
+- **`json` log channel:** one JSON object per line on stderr, with the request id, for production (`LOG_CHANNEL=json`).
+- **Laravel Pulse** at `/pulse`, for admins only ("Monitoramento" in the admin menu): slow requests, queries, jobs and outgoing calls, exceptions, queues and cache. Health checks are excluded from its request metrics.
+
 ## [2.0.0-rc.1] — 2026-10-31
 
 End of Phase 5 (Showcase features). Passkeys and two-factor sign-in, a versioned REST API with an OpenAPI contract, a realtime admin over WebSockets, an MCP server for AI agents (with orders always confirmed by the customer), semantic search on pgvector and AI review summaries. The AI features run through `laravel/ai` and stay off until a provider is configured.
