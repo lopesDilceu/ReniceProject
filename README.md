@@ -67,6 +67,7 @@ Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 | [Search](docs/search.md) | Hybrid keyword + semantic search (pgvector), measurements and cost |
 | [AI review summaries](docs/review-summaries.md) | Pros and cons per product, labeled as AI, debounced and versioned |
 | [Observability](docs/observability.md) | `/health`, request ids in JSON logs, Laravel Pulse |
+| [Deploy](docs/deploy.md) | Production image, deploy from `main`, environment, public demo |
 | [Roadmap](docs/roadmap.md) | Phases, milestones and issues |
 | [Metrics](docs/metrics.md) | Baseline and progress |
 | [Decisions](docs/adr/README.md) | Architecture Decision Records |

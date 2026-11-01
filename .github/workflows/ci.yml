@@ -173,3 +173,23 @@ jobs:
       # Fails on known vulnerabilities and on abandoned packages.
       - name: composer audit
         run: composer audit --locked --abandoned=fail
+
+  image:
+    name: Production image builds
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      # Builds the Dockerfile without pushing: a broken production image
+      # (missing extension, uncacheable config, dev-only dependency) fails
+      # the PR instead of the deploy.
+      - name: Build
+        run: docker build --tag renice:ci .
+
+      - name: Boots with production settings
+        run: |
+          docker run --rm --entrypoint sh \
+            -e APP_ENV=production -e APP_KEY=base64:$(openssl rand -base64 32) \
+            -e DB_CONNECTION=sqlite -e DB_DATABASE=/tmp/ci.sqlite \
+            renice:ci -c 'touch /tmp/ci.sqlite && php artisan optimize && php artisan migrate --force && php artisan about --only=environment'

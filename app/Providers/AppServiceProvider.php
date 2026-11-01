@@ -10,6 +10,7 @@ use App\Payments\PaymentGateway;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Events\DiagnosingHealth;
+use Illuminate\Http\Middleware\TrustProxies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -47,7 +48,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        DB::prohibitDestructiveCommands(app()->isProduction());
+        // The public demo is production that wipes itself nightly (demo:reset).
+        DB::prohibitDestructiveCommands(app()->isProduction() && ! Config::boolean('shop.demo'));
 
         // Any N+1 (lazy loading inside a loop) throws outside production, so
         // tests catch it instead of the database (MNT-01, #26).
@@ -65,6 +67,13 @@ class AppServiceProvider extends ServiceProvider
         // and IP, like the login form.
         RateLimiter::for('api-tokens', fn (Request $request): Limit => Limit::perMinute(5)
             ->by(Str::lower((string) $request->input('email')).'|'.$request->ip()));
+
+        // Behind a platform proxy that terminates TLS (TRUSTED_PROXIES=* or a
+        // list of IPs): needed for https URLs, including signed links. Set here,
+        // not in bootstrap/app.php, so it reads config, which survives config:cache.
+        if (filled($proxies = Config::get('app.trusted_proxies'))) {
+            TrustProxies::at($proxies === '*' ? '*' : explode(',', (string) $proxies));
+        }
 
         // The admin area: every /admin route requires this ability.
         Gate::define('admin', fn (User $user): bool => $user->is_admin);

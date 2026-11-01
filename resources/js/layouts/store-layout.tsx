@@ -32,6 +32,7 @@ import {
 import { useAppearance } from '@/hooks/use-appearance';
 import type { Appearance } from '@/hooks/use-appearance';
 import { useCurrentUrl } from '@/hooks/use-current-url';
+import DemoBanner from '@/components/demo-banner';
 import { useFlashToast } from '@/hooks/use-flash-toast';
 import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
@@ -170,6 +171,7 @@ export default function StoreLayout({ children }: { children: ReactNode }) {
 
     return (
         <div className="flex min-h-svh flex-col bg-background">
+            <DemoBanner />
             <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
                 <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-4">
                     <Sheet>

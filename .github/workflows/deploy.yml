@@ -1,0 +1,63 @@
+name: Deploy
+
+# After CI passes on main: build the production image, push it to the GitHub
+# Container Registry and, when a DEPLOY_HOOK_URL secret is set, ask the
+# hosting platform to deploy it (docs/deploy.md).
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  image:
+    name: Build, push and deploy
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Image name (registry names must be lowercase)
+        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
+
+      - name: Sign in to the GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      # VITE_* are compiled into the JavaScript; set them as repository
+      # variables for the deployed host (empty: pages poll, no WebSockets).
+      - name: Build
+        run: |
+          docker build \
+            --build-arg VITE_REVERB_APP_KEY="${{ vars.VITE_REVERB_APP_KEY }}" \
+            --build-arg VITE_REVERB_HOST="${{ vars.VITE_REVERB_HOST }}" \
+            --build-arg VITE_REVERB_PORT="${{ vars.VITE_REVERB_PORT || '443' }}" \
+            --build-arg VITE_REVERB_SCHEME="${{ vars.VITE_REVERB_SCHEME || 'https' }}" \
+            --tag "$IMAGE:${{ github.event.workflow_run.head_sha }}" \
+            --tag "$IMAGE:latest" .
+
+      - name: Push
+        run: |
+          docker push "$IMAGE:${{ github.event.workflow_run.head_sha }}"
+          docker push "$IMAGE:latest"
+
+      - name: Trigger the deploy
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$DEPLOY_HOOK_URL" ]; then
+            echo "No DEPLOY_HOOK_URL secret: image pushed, nothing to deploy." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          curl --fail --silent --show-error --request POST "$DEPLOY_HOOK_URL"
+          echo "Deploy of ${{ github.event.workflow_run.head_sha }} requested." >> "$GITHUB_STEP_SUMMARY"

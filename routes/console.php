@@ -4,6 +4,7 @@ use App\Actions\Orders\ExpireUnpaidOrders;
 use App\Support\Health\HealthCheck;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schedule;
 
 Artisan::command('orders:expire-unpaid', function (ExpireUnpaidOrders $expire) {
@@ -16,3 +17,11 @@ Schedule::command('orders:expire-unpaid')->everyMinute()->withoutOverlapping();
 Schedule::call(fn () => Cache::forever(HealthCheck::SCHEDULER_HEARTBEAT, now()->getTimestamp()))
     ->everyMinute()
     ->name('health:scheduler-heartbeat');
+
+// The public demo rebuilds itself every night (DEMO_MODE only).
+if (Config::boolean('shop.demo')) {
+    Schedule::command('demo:reset')
+        ->dailyAt(Config::string('shop.demo_reset_at'))
+        ->timezone(Config::string('shop.timezone'))
+        ->withoutOverlapping();
+}

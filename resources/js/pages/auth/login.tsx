@@ -1,4 +1,4 @@
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, usePage } from '@inertiajs/react';
 import PasskeyButton from '@/components/auth/passkey-button';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
@@ -18,9 +18,22 @@ type Props = {
 };
 
 export default function Login({ status, canResetPassword }: Props) {
+    const { demo } = usePage().props;
+
     return (
         <>
             <Head title="Entrar" />
+
+            {demo && (
+                <div className="space-y-1 rounded-lg border border-dashed p-3 text-sm">
+                    <p className="font-medium">Contas de demonstração</p>
+                    <p className="text-muted-foreground">
+                        Cliente: <code>cliente@renice.test</code> · Admin:{' '}
+                        <code>admin@renice.test</code> · senha{' '}
+                        <code>password</code>
+                    </p>
+                </div>
+            )}
 
             {status && (
                 <div className="text-center text-sm font-medium text-green-600">
