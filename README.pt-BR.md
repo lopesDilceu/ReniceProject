@@ -4,9 +4,11 @@
 
 Um e-commerce que nasceu como projeto de faculdade em 2024 e está sendo reconstruído, em público, no padrão de produção de 2026.
 
-> **Status:** funcionalidades completas (Fases 0 a 5). A loja recebe Pix, tem login com passkeys e verificação em duas etapas, busca por significado, resume avaliações com IA e está aberta a integrações por uma API REST e por um servidor MCP para agentes de IA. Todos os achados da [auditoria inicial](docs/audit/initial-audit.md) estão resolvidos. Próximo passo: deploy em produção e estudo de caso (Fase 6). Acompanhe pelo [roadmap](docs/roadmap.md).
+> **Status:** funcionalidades completas (Fases 0 a 5). A loja recebe Pix, tem login com passkeys e verificação em duas etapas, busca por significado, resume avaliações com IA e está aberta a integrações por uma API REST e por um servidor MCP para agentes de IA. Todos os achados da [auditoria inicial](docs/audit/initial-audit.md) estão resolvidos. A Fase 6 entrega a aplicação como imagem de produção e conta a história num [estudo de caso](docs/case-study.md). Acompanhe pelo [roadmap](docs/roadmap.md).
 
-![Catálogo de produtos da Renice v1](docs/legacy/images/03-product-catalog.jpg)
+![Uma compra na loja Renice: produto, carrinho, checkout, QR Code Pix e pagamento confirmado](docs/images/v2/purchase-flow.gif)
+
+**Veja:** a [vitrine](docs/showcase.md) coloca cada tela da v1 ao lado da versão v2. **Experimente:** com Docker, `docker compose -f compose.demo.yaml up --build` sobe a loja de demonstração em http://localhost:8000 ([detalhes](docs/showcase.md#run-it-yourself), em inglês). Entre com `cliente@renice.test` ou `admin@renice.test`, senha `password`.
 
 ## A história
 
@@ -33,7 +35,7 @@ Cada passo é uma issue, um pull request e, quando há um trade-off real, um [re
 | 3 — Reescrita com Inertia + React | Concluída ([`v2.0.0-beta.1`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-beta.1)) |
 | 4 — Núcleo de comércio | Concluída ([`v2.0.0-beta.2`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-beta.2)) |
 | 5 — Recursos de destaque | Concluída ([`v2.0.0-rc.1`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-rc.1)) |
-| 6 — Produção e estudo de caso | Planejada |
+| 6 — Produção e estudo de caso | Em andamento: imagem de produção, estudo de caso e vitrine prontos; `v2.0.0` em seguida |
 
 Os números de antes e depois ficam em [`docs/metrics.md`](docs/metrics.md).
 

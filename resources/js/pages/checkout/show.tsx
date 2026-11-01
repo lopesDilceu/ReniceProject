@@ -127,9 +127,8 @@ export default function CheckoutShow({ items, total_cents, addresses }: Props) {
                             </span>
                         </div>
                         <p className="text-xs text-muted-foreground">
-                            O pagamento via Pix chega na próxima fase do
-                            projeto. Por enquanto o pedido fica como "Aguardando
-                            pagamento".
+                            O pagamento é por Pix: o QR Code aparece na página
+                            do pedido, logo depois de fazê-lo.
                         </p>
 
                         <Form {...store.form()} disableWhileProcessing>

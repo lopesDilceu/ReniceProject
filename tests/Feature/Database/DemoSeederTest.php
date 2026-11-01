@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\InventoryMovement;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Review;
@@ -8,10 +9,15 @@ use App\Queries\BestSellingProducts;
 use Database\Seeders\DemoSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
-beforeEach(fn () => $this->seed());
+beforeEach(function () {
+    Storage::fake('public');
+
+    $this->seed();
+});
 
 it('creates the documented demo accounts', function () {
     $admin = User::firstWhere('email', 'admin@renice.test');
@@ -29,6 +35,13 @@ it('seeds the original catalog with one product out of stock', function () {
         ->and(Product::where('stock', 0)->pluck('name')->all())->toBe(['Copo Fresh 500ml gelo médio']);
 });
 
+it('gives every product its v1 photo', function () {
+    Product::all()->each(function (Product $product) {
+        expect($product->image_path)->toBe("products/{$product->slug}.jpg");
+        Storage::disk('public')->assertExists($product->image_path);
+    });
+});
+
 it('keeps every product\'s stock equal to its ledger', function () {
     Product::all()->each(function (Product $product) {
         expect($product->stock)->toBe((int) $product->inventoryMovements()->sum('quantity'));
@@ -39,6 +52,14 @@ it('creates order history, reviews and a best-sellers ranking', function () {
     expect(Order::count())->toBeGreaterThan(5)
         ->and(Review::count())->toBeGreaterThan(0)
         ->and(app(BestSellingProducts::class)->get())->not->toBeEmpty();
+});
+
+it('numbers orders in date order, after the stock was bought', function () {
+    $dates = Order::query()->orderBy('id')->pluck('created_at')->map->getTimestamp();
+    $purchases = InventoryMovement::query()->where('type', 'purchase')->pluck('created_at')->map->getTimestamp();
+
+    expect($dates->all())->toBe($dates->sort()->values()->all())
+        ->and($purchases->max())->toBeLessThan($dates->min());
 });
 
 // Guaranteed, not left to chance: one CI run once seeded no reviews at all.

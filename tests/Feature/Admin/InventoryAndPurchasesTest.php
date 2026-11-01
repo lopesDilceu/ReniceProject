@@ -52,7 +52,7 @@ describe('inventory', function () {
                 ->where('movements.data.0.quantity', -2)
                 ->where('movements.data.0.user', 'Admin Renice')
                 ->where('movements.data.1.type', 'purchase')
-                ->where('movements.data.1.source', fn ($source) => str_starts_with($source, 'SupplierPurchase #')));
+                ->where('movements.data.1.source', fn ($source) => str_starts_with($source, 'Compra #')));
     });
 });
 

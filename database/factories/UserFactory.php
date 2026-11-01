@@ -26,7 +26,9 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake('pt_BR')->name(),
+            // Not name(): it adds titles ("Dr.", "Srta."), and reviews show
+            // the first name and an initial, so a reviewer became "Dr. V.".
+            'name' => fake('pt_BR')->firstName().' '.fake('pt_BR')->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

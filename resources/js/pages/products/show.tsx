@@ -48,7 +48,7 @@ function RatingSummary({
             <ul className="flex-1 space-y-1.5">
                 {distribution.map(({ stars, count }) => (
                     <li key={stars} className="flex items-center gap-3 text-sm">
-                        <span className="w-14 text-muted-foreground">
+                        <span className="w-16 shrink-0 whitespace-nowrap text-muted-foreground">
                             {stars} {stars === 1 ? 'estrela' : 'estrelas'}
                         </span>
                         <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">

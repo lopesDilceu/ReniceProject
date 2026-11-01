@@ -6,9 +6,11 @@
 
 An e-commerce application that started as a university project in 2024 and is being rebuilt, in the open, to a 2026 production standard.
 
-> **Status:** feature-complete (Phases 0–5). The store takes Pix payments, signs in with passkeys and two-factor authentication, searches by meaning, summarizes reviews with AI, and is open to integrations through a REST API and an MCP server for AI agents. Every finding of the [initial audit](docs/audit/initial-audit.md) is resolved. Next: production deployment and the case study (Phase 6). Follow the [roadmap](docs/roadmap.md).
+> **Status:** feature-complete (Phases 0–5). The store takes Pix payments, signs in with passkeys and two-factor authentication, searches by meaning, summarizes reviews with AI, and is open to integrations through a REST API and an MCP server for AI agents. Every finding of the [initial audit](docs/audit/initial-audit.md) is resolved. Phase 6 ships it as a production image and tells the story in a [case study](docs/case-study.md). Follow the [roadmap](docs/roadmap.md).
 
-![Renice v1 product catalog](docs/legacy/images/03-product-catalog.jpg)
+![A purchase in the Renice store: product, cart, checkout, Pix QR code and payment confirmed](docs/images/v2/purchase-flow.gif)
+
+**See it:** the [showcase](docs/showcase.md) puts every v1 screen next to its v2 version. **Try it:** with Docker, `docker compose -f compose.demo.yaml up --build` starts the demo store at http://localhost:8000 ([details](docs/showcase.md#run-it-yourself)).
 
 ## The story
 
@@ -35,7 +37,7 @@ Every step is an issue, a pull request and, when there is a real trade-off, an [
 | 3 — Inertia + React rewrite | Done ([`v2.0.0-beta.1`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-beta.1)) |
 | 4 — Commerce core | Done ([`v2.0.0-beta.2`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-beta.2)) |
 | 5 — Showcase features | Done ([`v2.0.0-rc.1`](https://github.com/lopesDilceu/ReniceProject/releases/tag/v2.0.0-rc.1)) |
-| 6 — Production & case study | Planned |
+| 6 — Production & case study | In progress: production image, case study and showcase done; `v2.0.0` next |
 
 Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 
@@ -57,6 +59,7 @@ Before/after numbers are tracked in [`docs/metrics.md`](docs/metrics.md).
 
 | | |
 |---|---|
+| [Showcase](docs/showcase.md) | v1 and v2 side by side, the purchase GIF, and the one-command demo |
 | [Case study](docs/case-study.md) | The whole story: audit, decisions, hard problems, before/after, lessons |
 | [Original system](docs/legacy/README.md) | What v1 did, its database design and screenshots |
 | [Initial audit](docs/audit/initial-audit.md) | Security, correctness and design findings |

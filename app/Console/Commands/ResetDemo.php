@@ -26,11 +26,12 @@ class ResetDemo extends Command
             return self::FAILURE;
         }
 
-        $this->call('migrate:fresh', ['--seed' => true, '--force' => true]);
-
+        // Before the seed, which puts the demo product photos back.
         foreach (self::UPLOAD_FOLDERS as $folder) {
             Storage::disk('public')->deleteDirectory($folder);
         }
+
+        $this->call('migrate:fresh', ['--seed' => true, '--force' => true]);
 
         $this->info('Demo reset.');
 
